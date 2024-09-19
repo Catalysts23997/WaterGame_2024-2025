@@ -1,17 +1,16 @@
-package org.firstinspires.ftc.teamcode.Kotlin_Bromine_Arya
+package org.firstinspires.ftc.teamcode.New.SubSystems.Kotlin
 
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.Kotlin_Bromine_Arya.Auto.Sequencing.Sequencer
 import kotlin.math.PI
-import kotlin.math.cos
 
-private const val double = Math.PI * 2
+
 
 object Angle {
     fun wrap(theta: Double): Double {
+        require(theta in -2*PI..2*PI)
             var angle = theta
-            while (angle > PI) angle -= double
-            while (angle < -PI) angle += double
+            while (angle > PI) angle -= PI*2
+            while (angle < -PI) angle += PI*2
             return angle
     }
 }
@@ -35,16 +34,15 @@ data class PIDFcontroller(var params: PIDParams) {
 }
 
 
-
 object Wait {
     val wait: ElapsedTime = ElapsedTime()
     private var runOnce = false
 
-    fun waitFor(timeInMs: Int) {
-        if (timeStamp(timeInMs)) {
-            Sequencer.MAJORCOMMAND++
-        }
-    }
+//    fun waitFor(timeInMs: Int) {
+//        if (timeStamp(timeInMs)) {
+//            Sequencer.MAJORCOMMAND++
+//        }
+//    }
 
     fun <Parameter> runAsynchActionAfter(
         timeInMs: Int,

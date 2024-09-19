@@ -1,13 +1,13 @@
-package org.firstinspires.ftc.teamcode.New.SubSystems
+package org.firstinspires.ftc.teamcode.New.SubSystems.Kotlin
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.Kotlin_Bromine_Arya.Tele.SubSystems.TeleLocalizer
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Drive(hwMap: HardwareMap, val localizer: TeleLocalizer) : SubSystems {
+//todo Make Java version
+class Drive(hwMap: HardwareMap, private val localizer: TeleLocalizer) : SubSystems {
     enum class States {
         Manual, Auto
     }
@@ -30,8 +30,9 @@ class Drive(hwMap: HardwareMap, val localizer: TeleLocalizer) : SubSystems {
 
             States.Manual -> {
                 val (lateral, axial, turn) = gamepadInput
-                val rotX = axial * cos(-rx) - lateral * sin(-rx)
-                val rotY = axial * sin(-rx) + lateral * cos(-rx)
+                val h = -rx
+                val rotX = axial * cos(h) - lateral * sin(h)
+                val rotY = axial * sin(h) + lateral * cos(h)
 
                 leftFront.power = (rotY + rotX + turn) //front left
                 leftBack.power = (rotY - rotX + turn) // back left
