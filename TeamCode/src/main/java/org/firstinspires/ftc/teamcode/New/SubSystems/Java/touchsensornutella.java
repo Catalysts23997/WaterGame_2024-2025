@@ -16,7 +16,6 @@ public class touchsensornutella implements JavaSubsystems {
         Right,
         None
 
-
     }
 
     touchsensornutella.States states = States.None;
