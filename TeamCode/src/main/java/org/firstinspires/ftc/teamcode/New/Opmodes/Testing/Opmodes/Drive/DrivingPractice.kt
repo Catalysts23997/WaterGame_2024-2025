@@ -4,8 +4,8 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.New.SubSystems.Kotlin.Drive
-import org.firstinspires.ftc.teamcode.New.SubSystems.Kotlin.TeleLocalizer
+import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Drive
+import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.TeleLocalizer
 
 @TeleOp(name = "DrivingPractice", group = "Linear OpMode")
 class DrivingPractice : LinearOpMode(){
@@ -19,7 +19,7 @@ class DrivingPractice : LinearOpMode(){
 
         while (opModeIsActive() && !isStopRequested) {
 
-            drive.update()
+            drive.update(arrayListOf(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x))
 
             telemetry.addData("heading",Math.toDegrees(localizer.heading))
             telemetry.update()
