@@ -1,44 +1,58 @@
 package org.firstinspires.ftc.teamcode.New.SubSystems;
 
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+
 public class ClawStates implements JavaSubsystems {
 
-    public RightClawjava rightClawsJava;
-    public LeftClawjava leftClawsJava;
+
+    public RightClawsJava rightClawsJava;
+    public LeftClawsJava leftClawsJava;
     public ClawStates(HardwareMap hardwareMap) {
-        leftClawsJava = new LeftClawsJava(hardwareMap);
         rightClawsJava = new RightClawsJava(hardwareMap);
+        leftClawsJava = new LeftClawsJava(hardwareMap);
     }
 
+
+    //SUPER CLASS
     @Override
     public void update() {
         rightClawsJava.update();
         leftClawsJava.update();
     }
 
-    public class RightClawjava {
 
-        public RightClawjava(HardwareMap hardwareMap) {
-            servo = hardwareMap.get(Servo.class, "rightclaw");
 
-            Servo servo;
 
-            @Override
-            public void update () {
-                switch (state) {
+    public static class RightClawsJava implements JavaSubsystems{
+        public RightClawsJava(HardwareMap hardwareMap) {
+            servo = hardwareMap.get(Servo.class, "rightClaw");
+        }
 
-                    case Closed:
-                        servo.setPosition(States.Closed.pose);
-                        break;
-                    case Open:
-                        servo.setPosition(States.Open.pose);
-                        break;
 
-                }
+        Servo servo;
 
+
+
+
+        @Override
+        public void update() {
+
+
+            switch (state){
+
+
+                case Closed :
+                    servo.setPosition(States.Closed.pose);
+                    break;
+                case Open :
+                    servo.setPosition(States.Open.pose);
+                    break;
             }
+
+
         }
         States state = States.Closed;
         enum States {
@@ -51,7 +65,12 @@ public class ClawStates implements JavaSubsystems {
             final double pose;
         }
 
+
     }
+
+
+
+
 
 
     public static class LeftClawsJava implements JavaSubsystems {
@@ -91,8 +110,17 @@ public class ClawStates implements JavaSubsystems {
             final double pose;
         }
 
+
+
+
     }
 
+
 }
+
+
+
+
+
 
 
