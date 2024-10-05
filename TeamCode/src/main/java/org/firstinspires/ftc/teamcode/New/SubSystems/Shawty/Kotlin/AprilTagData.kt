@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
+import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SubSystems.SubSystems
 import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
 import kotlin.math.cos
 import kotlin.math.sin
 
-class AprilTagData(hardwareMap: HardwareMap, private val localizer: TeleLocalizer) : SubSystems {
+class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
 
     enum class State {
         On, Off, TagDiscovered
@@ -56,7 +57,7 @@ class AprilTagData(hardwareMap: HardwareMap, private val localizer: TeleLocalize
             if (detection.id == 12 || detection.id == 16) {
                 state = State.TagDiscovered
                 val data = Vector2d(detection.ftcPose.x, detection.ftcPose.y)
-                return Pose2d(cameraVector(fieldDistanceToTag(data)), localizer.heading)
+                return Pose2d(cameraVector(fieldDistanceToTag(data)), Localizer.pose.heading.toDouble())
             }
         }
         return Pose2d(0.0, 0.0, 0.0)
@@ -68,7 +69,7 @@ class AprilTagData(hardwareMap: HardwareMap, private val localizer: TeleLocalize
         val relY = translateData.y + 1.0
         require(relY > 0)
 
-        val h = -localizer.heading
+        val h = -Localizer.pose.heading.toDouble()
         val x = relX * cos(h) - relY * sin(h)
         val y = relX * sin(h) + relY * cos(h)
 

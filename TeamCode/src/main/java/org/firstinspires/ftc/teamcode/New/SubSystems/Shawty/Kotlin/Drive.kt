@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SubSystems.SubSystems
 import kotlin.math.cos
 import kotlin.math.sin
@@ -22,8 +23,7 @@ class Drive(hwMap: HardwareMap) : SubSystems {
 
 
     override fun update(gamepadInput: ArrayList<Float>) {
-            //todo
-        val rx = 0.0
+        val rx = Localizer.pose.heading.toDouble()
 
         when (state) {
             States.Auto -> {
@@ -36,10 +36,10 @@ class Drive(hwMap: HardwareMap) : SubSystems {
                 val rotX = axial * cos(h) - lateral * sin(h)
                 val rotY = axial * sin(h) + lateral * cos(h)
 
-                leftFront.power = (rotY - rotX + turn) //front left
-                leftBack.power = (rotY + rotX + turn) // back left
-                rightFront.power = (rotY + rotX - turn) //front right
-                rightBack.power = (rotY - rotX - turn) // back right}
+                leftFront.power = (rotY - rotX + turn)
+                leftBack.power = (rotY + rotX + turn)
+                rightFront.power = (rotY + rotX - turn)
+                rightBack.power = (rotY - rotX - turn)
             }
         }
     }
