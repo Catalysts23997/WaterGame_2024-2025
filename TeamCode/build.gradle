@@ -35,10 +35,15 @@ repositories {
 
 dependencies {
     implementation project(':FtcRobotController')
+<<<<<<< HEAD
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'org.testng:testng:6.9.6'
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
     implementation "com.acmerobotics.roadrunner:ftc:0.1.13"
+=======
+
+    implementation "com.acmerobotics.roadrunner:ftc:0.1.14"
+>>>>>>> 5f35f4c22c1ae7c0be5b35da0961c8f3a181ad31
     implementation "com.acmerobotics.roadrunner:core:1.0.0"
     implementation "com.acmerobotics.roadrunner:actions:1.0.0"
     implementation "com.acmerobotics.dashboard:dashboard:0.4.16"
