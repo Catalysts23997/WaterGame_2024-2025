@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.PIDParams;
 
 public class LinearSlides {
 
-    LeftSlide leftSlide;
-    RightSlide rightSlide;
-    int resetValue = 0;
+    public LeftSlide leftSlide;
+    public RightSlide rightSlide;
+    public int resetValue = 0;
     int[] targets;
 
 
@@ -30,7 +30,7 @@ public class LinearSlides {
         IDLE
     }
 
-    State state = State.IDLE;
+    public State state = State.IDLE;
     int target = 0;
 
     public void update( int[] targets){
@@ -53,7 +53,7 @@ public class LinearSlides {
     public class LeftSlide {
 
         DcMotor leftSlide;
-        int leftEncoder;
+        public int leftEncoder;
 
         DigitalChannel leftDigitalChannel;
 
@@ -91,7 +91,7 @@ public class LinearSlides {
 
     public class RightSlide {
         DcMotor rightSlide;
-        int rightEncoder;
+        public int rightEncoder;
 
         DigitalChannel rightDigitalChannel;
 
