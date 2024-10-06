@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
+import org.firstinspires.ftc.teamcode.Kotlin_Bromine_Arya.Auto.PID_Components.PIDdrive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SubSystems.SubSystems
 import org.firstinspires.ftc.vision.VisionPortal
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
 import kotlin.math.cos
 import kotlin.math.sin
 
-class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
+class AprilTagData(hardwareMap: HardwareMap,val autoDrive: PIDdrive) : SubSystems {
 
     enum class State {
         On, Off, TagDiscovered
@@ -46,6 +47,7 @@ class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
             .addProcessor(aprilTag)
 
         visionPortal = builder.build()
+        visionPortal.stopStreaming()
     }
 
     fun searchForTag(): Pose2d {
@@ -94,12 +96,12 @@ class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
             }
 
             State.TagDiscovered -> {
-                val pose = searchForTag()
-                //run to pose
-                //if Pose reached
-                state = State.Off
+                autoDrive.driveTo(searchForTag())
+                if(autoDrive.driveTo(searchForTag())) state = State.Off
+
             }
         }
     }
 
+    //in opmode you would say if autodrive state is not being run, use drive gamepad input
 }

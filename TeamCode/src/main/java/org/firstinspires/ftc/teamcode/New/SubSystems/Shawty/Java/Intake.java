@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
     DcMotor Spinner;
-    IntakeState intakeState;
+    public IntakeState intakeState;
     Servo Flipper1;
-    FlipperState flipperState;
+    public FlipperState flipperState;
     Servo Flipper2;
 
 
@@ -24,7 +24,7 @@ public class Intake {
         Flipper1.setPosition(flipperState.pos);
         Flipper2.setPosition(-flipperState.pos);
     }
-    enum IntakeState{
+    public enum IntakeState{
         IN (1),
         OUT (-1),
         STOPPED (0);
@@ -35,7 +35,7 @@ public class Intake {
         }
     }
 
-    enum FlipperState{
+    public enum FlipperState{
         COLLECTING (0.5),
         TRANSFERRING (0),
         STATIONARY (0.25);

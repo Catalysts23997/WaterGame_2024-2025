@@ -1,20 +1,22 @@
 package org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin
 
+import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SubSystems.SubSystems
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
 //todo Make Java version
-class Drive(hwMap: HardwareMap) : SubSystems {
+class Drive(hwMap: HardwareMap, val aprilTagData: AprilTagData) : SubSystems {
     enum class States {
         Manual, Auto
     }
 
-    override val state = States.Manual
+    override var state = States.Manual
 
     private val rightBack: DcMotor = hwMap.get(DcMotor::class.java, "rightBack")
     private val leftFront: DcMotor = hwMap.get(DcMotor::class.java, "leftFront")
@@ -27,7 +29,15 @@ class Drive(hwMap: HardwareMap) : SubSystems {
 
         when (state) {
             States.Auto -> {
+                //if using april tags
+                aprilTagData.state = AprilTagData.State.On
+                if(aprilTagData.state == AprilTagData.State.Off) {
+                    state = States.Manual
+                    //run deposit sequence
+                }
 
+                //else
+                aprilTagData.autoDrive.driveTo(Pose2d(-72.0, -48.0,-.75* PI))
             }
 
             States.Manual -> {
