@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.PIDParams;
 
 public class ShoudlerJohn {
     DcMotor Shoulder;
-    State state;
+    public State state;
     PIDParams shoulderParams = new PIDParams(0,0,0,0);
     PIDFcontroller shoulderPID = new PIDFcontroller(shoulderParams);
     int target;
@@ -28,7 +28,7 @@ public class ShoudlerJohn {
         Shoulder.setPower(power);
     }
 
-    enum State{
+    public enum State{
         BASKET(0),
         CLIP(0),
         SUBMERSIBLE(0),
