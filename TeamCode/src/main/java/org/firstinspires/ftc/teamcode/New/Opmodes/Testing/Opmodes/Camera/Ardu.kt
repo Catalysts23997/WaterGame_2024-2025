@@ -10,15 +10,15 @@ class Ardu : LinearOpMode() {
 
     override fun runOpMode() {
         val localizer = TeleLocalizer(hardwareMap)
-        val aprilTagProcessor = AprilTagData(hardwareMap,localizer)
+//        val aprilTagProcessor = AprilTagData(hardwareMap)
 
         while (opModeIsActive()){
             localizer.updateHeading()
-            val pose = aprilTagProcessor.searchForTag()
-
-            telemetry.addData("Pose x", pose.position.x)
-            telemetry.addData("Pose y", pose.position.y)
-            telemetry.addData("Pose h", pose.heading)
+//            val pose = aprilTagProcessor.searchForTag()
+//
+//            telemetry.addData("Pose x", pose.position.x)
+//            telemetry.addData("Pose y", pose.position.y)
+//            telemetry.addData("Pose h", pose.heading)
 
         }
     }
