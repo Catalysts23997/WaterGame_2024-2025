@@ -17,7 +17,7 @@ class Localizer(hwmap: HardwareMap, private val offset: Pose2d) {
         the tracking point the Y (strafe) odometry pod is. forward of center is a positive number,
         backwards is a negative number.
          */
-        goBildaPinpointDriver.setOffsets(-84.0, -168.0) //these are tuned for 3110-0002-0001 Product Insight #1
+        goBildaPinpointDriver.setOffsets(130.075, -108.36813)
 
         goBildaPinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD)
 
