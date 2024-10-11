@@ -12,6 +12,8 @@ public class LinearSlides {
     public LeftSlide leftSlide;
     public RightSlide rightSlide;
     public int resetValue = 0;
+    int[] targets;
+
 
     public LinearSlides(HardwareMap hardwareMap){
         leftSlide = new LeftSlide(hardwareMap);
@@ -19,26 +21,29 @@ public class LinearSlides {
     }
 
     public enum State{
-        LOWERED,
         HANG,
         BASKET,
-        BAR1,
-        BAR2,
+        CLIP,
+        SUBMERSIBLE,
+        GROUND,
+        STATIONARY,
         IDLE
     }
 
-    State state = State.IDLE;
+    public State state = State.IDLE;
     int target = 0;
 
-    public void update() {
+    public void update( int[] targets){
+        this.targets = targets;
 
         switch (state){
             //find height values, make code to test
-            case LOWERED: target = 0; break;
-            case BASKET: target = 1; break;
-            case HANG: target = 2; break;
-            case BAR1: target = 3; break;
-            case BAR2: target = 4; break;
+            case HANG: target = targets[0]; break;
+            case BASKET: target = targets[1]; break;
+            case CLIP: target = targets[2]; break;
+            case SUBMERSIBLE: target = targets[3]; break;
+            case STATIONARY: target = targets[4]; break;
+            case GROUND: target = targets[5]; break;
         }
 
         leftSlide.update(target, state);
@@ -48,7 +53,7 @@ public class LinearSlides {
     public class LeftSlide {
 
         DcMotor leftSlide;
-        int leftEncoder;
+        public int leftEncoder;
 
         DigitalChannel leftDigitalChannel;
 
@@ -86,7 +91,7 @@ public class LinearSlides {
 
     public class RightSlide {
         DcMotor rightSlide;
-        int rightEncoder;
+        public int rightEncoder;
 
         DigitalChannel rightDigitalChannel;
 
