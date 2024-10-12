@@ -33,6 +33,15 @@ public class LinearSlides {
     public State state = State.IDLE;
     int target = 0;
 
+    public boolean hasReached(){
+        int leftError = target - leftSlide.leftEncoder;
+        int rightError = target - rightSlide.rightEncoder;
+        int averageError = (rightError + leftError)/2;
+        double tolerance = 0.01;
+
+        return averageError > -tolerance && averageError < tolerance;
+    }
+
     public void update( int[] targets){
         this.targets = targets;
 

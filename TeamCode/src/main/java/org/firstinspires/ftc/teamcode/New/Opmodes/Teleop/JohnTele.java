@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Teleop;
 
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.New.SubSystems.Actions.AutoActions;
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Bucket;
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Intake;
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.LinearSlides;
+import com.acmerobotics.roadrunner.Action;
 
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Bucket;
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Intake;
@@ -32,6 +36,8 @@ public class JohnTele extends LinearOpMode {
 
     boolean tranferring = false;
     double timeMarker;
+
+
 
     @Override
     public void runOpMode() {
@@ -64,6 +70,7 @@ public class JohnTele extends LinearOpMode {
             if (gamepad2.left_bumper && gamepad2.right_bumper){
                 state = RobotState.HANG;
             }
+
 
             update();
 
