@@ -20,6 +20,9 @@ public class ClawJohn  {
     public FlipperState flipperState;
     public ExtenderState extenderState;
     int target;
+    public int maxExtension;
+    public int maxRetaction;
+    public int stationaryGoal;
 
     public ClawJohn(HardwareMap hardwareMap){
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
@@ -28,7 +31,16 @@ public class ClawJohn  {
         clawFlipper = hardwareMap.get(Servo.class, "clawFlipper");
     }
 
-    public void update(int extendingGoal, int stationaryGoal) {
+    public void update(int extendingGoal) {
+
+        if(extendingGoal>maxExtension) {
+            extendingGoal = maxExtension;
+        }
+
+        if(extendingGoal<maxRetaction) {
+            extendingGoal = maxRetaction;
+        }
+
         switch (extenderState){
             case RETRACTED: target = stationaryGoal; break;
             case EXTENDING: target = extendingGoal; break;
