@@ -10,54 +10,32 @@ import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.PIDParams;
 public class ClawJohn  {
     Servo leftClaw;
     Servo rightClaw;
-    DcMotor clawExtender;
-    Servo clawFlipper;
-
-    PIDParams extenderParams = new PIDParams(0,0,0,0);
-    PIDFcontroller extenderPID = new PIDFcontroller(extenderParams);
+    DcMotor linkage;
 
     public ClawState clawState;
-    public FlipperState flipperState;
-    public ExtenderState extenderState;
-    int target;
-    public int maxExtension;
-    public int maxRetaction;
-    public int stationaryGoal;
+    public LinkageState linkageState;
+
+    PIDFcontroller pidFcontroller = new PIDFcontroller(new PIDParams(0,0,0,0));
 
     public ClawJohn(HardwareMap hardwareMap){
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-        clawExtender = hardwareMap.get(DcMotor.class, "clawExtender");
-        clawFlipper = hardwareMap.get(Servo.class, "clawFlipper");
+        linkage = hardwareMap.get(DcMotor.class, "clawFlipper");
     }
 
-    public void update(int extendingGoal) {
-
-        if(extendingGoal>maxExtension) {
-            extendingGoal = maxExtension;
-        }
-
-        if(extendingGoal<maxRetaction) {
-            extendingGoal = maxRetaction;
-        }
-
-        switch (extenderState){
-            case RETRACTED: target = stationaryGoal; break;
-            case EXTENDING: target = extendingGoal; break;
-        }
-
-        double extenderEncoder = clawExtender.getCurrentPosition();
-
-        double extenderPower = extenderPID.calculate(target - extenderEncoder);
-        if (extenderState == ExtenderState.IDLE){
-            extenderPower = 0;
-        }
-
-        clawExtender.setPower(extenderPower);
-
+    public void update() {
         leftClaw.setPosition(clawState.servoPos);
         rightClaw.setPosition(-clawState.servoPos);
-        clawFlipper.setPosition(flipperState.servoPos);
+
+        int linkageEncoder = linkage.getCurrentPosition();
+        double power = pidFcontroller.calculate(linkageState.goalPos - linkageEncoder);
+
+        if(linkageState == LinkageState.IDLE){
+            power = 0;
+        }
+
+        linkage.setPower(power);
+
     }
 
     public enum ClawState {
@@ -70,19 +48,14 @@ public class ClawJohn  {
         }
     }
 
-    public enum FlipperState {
-        DEPOSIT(0),
-        COLLECTION(0.5);
+    public enum LinkageState {
+        VERTICAL(0),
+        HORIZONTAL(0.5),
+        IDLE(0);
 
-        public final double servoPos;
-        FlipperState(double servoPos) {
-            this.servoPos = servoPos;
+        public final double goalPos;
+        LinkageState(double goalPos) {
+            this.goalPos = goalPos;
         }
-    }
-
-    public enum ExtenderState {
-        EXTENDING,
-        IDLE,
-        RETRACTED
     }
 }

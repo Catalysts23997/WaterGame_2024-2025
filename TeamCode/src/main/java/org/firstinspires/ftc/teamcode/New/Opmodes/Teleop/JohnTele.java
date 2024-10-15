@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Teleop;
 
+import android.media.tv.TableRequest;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -13,6 +15,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.Actions.Attachments;
+import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Intake;
 
 import java.util.ArrayList;
 
@@ -40,41 +43,33 @@ public class JohnTele extends LinearOpMode {
 
         elapsedTime.reset();
 
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
 
             //actions:
 
-            if(gamepad2.x){
+            if (gamepad2.y && !Depositing) {
+                runningActions.add(attachments.manualDeposit());
                 Depositing = true;
             }
-            if (Depositing){
-                runningActions.add(attachments.manualDeposit(gamepad2.a));
-            }
-            if (gamepad2.a){
+            if (gamepad2.a && Depositing) {
                 Depositing = false;
             }
 
-
-            //added boolean so that gamepad2.a is constantly updated within the aciton.
-
-            if(gamepad2.y){
+            if (gamepad2.y && !Intaking) {
+                runningActions.add(attachments.manualIntake());
                 Intaking = true;
             }
-            if (Intaking){
-                runningActions.add(attachments.manualIntake(gamepad2.a, gamepad2.left_stick_y));
-            }
-            if (gamepad2.a){
+            if (gamepad2.a && Intaking) {
                 Intaking = false;
             }
 
-
-
+            attachments.update(gamepad2);
 
             ArrayList<Action> newActions = new ArrayList<>();
 
-            runningActions.forEach( (Action) -> {
+            runningActions.forEach((Action) -> {
                 Action.preview(packet.fieldOverlay());
-                if(Action.run(packet)){
+                if (Action.run(packet)) {
                     newActions.add(Action);
                 }
             });
@@ -85,9 +80,6 @@ public class JohnTele extends LinearOpMode {
 
 
 
-            //Example Auto Actions:
-            Actions.runBlocking(new SequentialAction(attachments.autoIntake(1), attachments.autoDeposit(5)));
-
 
             telemetry.addData("rightEncoder", attachments.verticalSlides.rightSlide.rightEncoder);
             telemetry.addData("leftEncoder", attachments.verticalSlides.leftSlide.leftEncoder);
@@ -95,6 +87,7 @@ public class JohnTele extends LinearOpMode {
 
         }
     }
+}
 
 
     enum RobotState {
@@ -106,7 +99,6 @@ public class JohnTele extends LinearOpMode {
         STATIONARY
     }
 
-    RobotState state;
 
     /*
     OLD update system, too long
@@ -236,4 +228,4 @@ public class JohnTele extends LinearOpMode {
     }
 
      */
-}
+

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -14,19 +15,19 @@ public class Attachments {
     public ClawJohn clawJohn;
     public LinearSlides verticalSlides;
     //                         HNG    BSK   CLP   SUB GND STA
-    final int[] slideTargets = {5000, 4000, 3000, 100, 0, 0};
-    int extenderGoal = 50;
-    final int stationaryGoal = 0;
-    final int maxExtension = 100;
-    final int maxRetraction = 20;
+    final int[] slideTargets = {5000, 4000, 3000, 100, 100, 0};
 
     public Attachments(HardwareMap hardwareMap){
         verticalSlides = new LinearSlides(hardwareMap);
         clawJohn = new ClawJohn(hardwareMap);
-        clawJohn.stationaryGoal = stationaryGoal;
-        clawJohn.maxExtension = maxExtension;
-        clawJohn.maxRetaction = maxRetraction;
     }
+
+    public Gamepad gamepad2;
+
+    public void update(Gamepad gamepad2){
+        this.gamepad2 = gamepad2;
+    }
+
 
     public class AutoDeposit implements Action{
         double waitTime;
@@ -40,15 +41,16 @@ public class Attachments {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             clawJohn.clawState = ClawJohn.ClawState.CLOSED;
-            clawJohn.flipperState = ClawJohn.FlipperState.DEPOSIT;
-            clawJohn.extenderState = ClawJohn.ExtenderState.RETRACTED;
+            clawJohn.linkageState = ClawJohn.LinkageState.VERTICAL;
             verticalSlides.state = LinearSlides.State.BASKET;
-            clawJohn.update(extenderGoal);
+            clawJohn.update();
             verticalSlides.update(slideTargets);
 
             if(verticalSlides.hasReached() && elapsedTime.seconds() > waitTime){
                 clawJohn.clawState = ClawJohn.ClawState.OPEN;
-                clawJohn.update(extenderGoal);
+                clawJohn.update();
+                verticalSlides.state = LinearSlides.State.STATIONARY;
+                verticalSlides.update(slideTargets);
                 return false;
             }
 
@@ -62,26 +64,20 @@ public class Attachments {
 
 
     public class ManualDeposit implements Action{
-        boolean condition;
-        ElapsedTime elapsedTime = new ElapsedTime();
-
-        public ManualDeposit(boolean condition){
-            this.condition = condition;
-            elapsedTime.reset();
-        }
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             clawJohn.clawState = ClawJohn.ClawState.CLOSED;
-            clawJohn.flipperState = ClawJohn.FlipperState.DEPOSIT;
-            clawJohn.extenderState = ClawJohn.ExtenderState.RETRACTED;
+            clawJohn.linkageState = ClawJohn.LinkageState.VERTICAL;
             verticalSlides.state = LinearSlides.State.BASKET;
-            clawJohn.update(extenderGoal);
+            clawJohn.update();
             verticalSlides.update(slideTargets);
 
-            if(verticalSlides.hasReached() && condition){
+            if(verticalSlides.hasReached() && gamepad2.a){
                 clawJohn.clawState = ClawJohn.ClawState.OPEN;
-                clawJohn.update(extenderGoal);
+                clawJohn.update();
+                verticalSlides.state = LinearSlides.State.STATIONARY;
+                verticalSlides.update(slideTargets);
                 return false;
             }
 
@@ -89,8 +85,8 @@ public class Attachments {
         }
     }
 
-    public Action manualDeposit(boolean condition){
-        return new ManualDeposit(condition);
+    public Action manualDeposit(){
+        return new ManualDeposit();
     }
 
 
@@ -107,19 +103,20 @@ public class Attachments {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             clawJohn.clawState = ClawJohn.ClawState.OPEN;
-            clawJohn.flipperState = ClawJohn.FlipperState.COLLECTION;
-            clawJohn.extenderState = ClawJohn.ExtenderState.EXTENDING;
+            clawJohn.linkageState = ClawJohn.LinkageState.HORIZONTAL;
             verticalSlides.state = LinearSlides.State.GROUND;
 
-            extenderGoal = 70;
-
-            clawJohn.update(extenderGoal);
+            clawJohn.update();
             verticalSlides.update(slideTargets);
 
 
             if(elapsedTime.seconds() > waitTime){
                 clawJohn.clawState = ClawJohn.ClawState.CLOSED;
-                clawJohn.update(extenderGoal);
+                clawJohn.update();
+                verticalSlides.state = LinearSlides.State.STATIONARY;
+                clawJohn.linkageState = ClawJohn.LinkageState.VERTICAL;
+                clawJohn.update();
+                verticalSlides.update(slideTargets);
                 return false;
             }
             else {
@@ -134,33 +131,26 @@ public class Attachments {
 
 
     public class ManualIntake implements Action{
-        ElapsedTime elapsedTime = new ElapsedTime();
-
-        boolean condition;
-        double Gamepad2leftstickY;
-
-        public ManualIntake (boolean condition, double Gamepad2leftstickY){
-            this.condition = condition;
-            this.Gamepad2leftstickY = Gamepad2leftstickY;
-            elapsedTime.reset();
-        }
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             clawJohn.clawState = ClawJohn.ClawState.OPEN;
-            clawJohn.flipperState = ClawJohn.FlipperState.COLLECTION;
-            clawJohn.extenderState = ClawJohn.ExtenderState.EXTENDING;
+            clawJohn.linkageState = ClawJohn.LinkageState.HORIZONTAL;
             verticalSlides.state = LinearSlides.State.GROUND;
 
-            extenderGoal += (int) (-10 * Gamepad2leftstickY);
+            slideTargets[4] += (int) (-10 * gamepad2.left_stick_y);
 
-            clawJohn.update(extenderGoal);
+            clawJohn.update();
             verticalSlides.update(slideTargets);
 
 
-            if(condition){
+            if(gamepad2.a){
                 clawJohn.clawState = ClawJohn.ClawState.CLOSED;
-                clawJohn.update(extenderGoal);
+                clawJohn.update();
+                verticalSlides.state = LinearSlides.State.STATIONARY;
+                clawJohn.linkageState = ClawJohn.LinkageState.VERTICAL;
+                clawJohn.update();
+                verticalSlides.update(slideTargets);
                 return false;
             }
             else {
@@ -169,8 +159,8 @@ public class Attachments {
         }
     }
 
-    public Action manualIntake(boolean condition, double Gamepad2leftstickY){
-        return new ManualIntake(condition, Gamepad2leftstickY);
+    public Action manualIntake(){
+        return new ManualIntake();
     }
 
 }
