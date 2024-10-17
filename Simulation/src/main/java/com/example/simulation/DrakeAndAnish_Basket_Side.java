@@ -2,18 +2,13 @@ package com.example.simulation;
 
 import static java.lang.Math.PI;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-import org.jetbrains.annotations.NotNull;
-
-public class DrakeandAnishTest {
+public class DrakeAndAnish_Basket_Side {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -40,14 +35,3 @@ public class DrakeandAnishTest {
                 .start();
     }
 }
-
-enum b {
-    basket(new Vector2d(0.0, 0.0), Rotation2d.fromDouble(0.0)),
-    intake(new Vector2d(0.0, 0.0), Rotation2d.fromDouble(0.0));
-
-    b(Vector2d vector, Rotation2d rotation2d) {
-    }
-}
-
-
-
