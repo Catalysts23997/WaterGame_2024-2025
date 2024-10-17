@@ -20,6 +20,7 @@ public class ClawJohn  {
     public ClawJohn(HardwareMap hardwareMap){
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
+        //isaballs was here
         linkage = hardwareMap.get(DcMotor.class, "clawFlipper");
     }
 
