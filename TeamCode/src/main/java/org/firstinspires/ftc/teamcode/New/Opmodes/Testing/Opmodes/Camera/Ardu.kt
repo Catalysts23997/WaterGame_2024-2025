@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Testing.Opmodes.Camera
 
+import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.AprilTagData
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.TeleLocalizer
 
@@ -9,17 +11,15 @@ import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.TeleLocalizer
 class Ardu : LinearOpMode() {
 
     override fun runOpMode() {
-        val localizer = TeleLocalizer(hardwareMap)
-        val aprilTagProcessor = AprilTagData(hardwareMap,localizer)
+        val localizer = Localizer(hardwareMap, Pose2d(0.0,0.0,0.0))
+        val aprilTagProcessor = AprilTagData(hardwareMap)
 
         while (opModeIsActive()){
-            localizer.updateHeading()
+            localizer.update()
             val pose = aprilTagProcessor.searchForTag()
 
-            telemetry.addData("Pose x", pose.position.x)
-            telemetry.addData("Pose y", pose.position.y)
-            telemetry.addData("Pose h", pose.heading)
-
+            telemetry.addData("Pose x", pose.x)
+            telemetry.addData("Pose y", pose.y)
         }
     }
 

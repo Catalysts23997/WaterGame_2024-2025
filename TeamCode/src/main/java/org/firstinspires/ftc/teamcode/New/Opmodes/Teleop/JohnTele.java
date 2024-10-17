@@ -1,71 +1,95 @@
-package org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java;
+package org.firstinspires.ftc.teamcode.New.Opmodes.Teleop;
 
+import android.media.tv.TableRequest;
+
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.canvas.Canvas;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.New.Actions.Attachments;
+import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Intake;
+
+import java.util.ArrayList;
 
 @TeleOp(name = "Tele", group = "Linear OpMode")
 public class JohnTele extends LinearOpMode {
     //note: All gamepad inputs are not final, they are placeholders for the actual input or other booleans
 
-    //                       HNG    BSK  CLP   SUB GND STA
-    int[] verticalTargets = {5000, 4000, 3000, 100, 0, 0};
-    //verttarget[0] controls hang to mannually lower so we don't hang on air
-
-    //                       HNG BSK CLP SUB  GND  STA
-    int[] horizontalTargets = {0, 0, 0, 1000, 1000, 0};
-    //horiztarget[3] controls submersible reach, horiztarget[4] controls ground reach if we have to reach out further or less
-
-    LinearSlides verticalSlides = new LinearSlides(hardwareMap);
-    LinearSlides horizontalSlides = new LinearSlides(hardwareMap);
-    Intake intake = new Intake(hardwareMap);
-    Bucket bucket = new Bucket(hardwareMap);
-
     ElapsedTime elapsedTime = new ElapsedTime();
 
-    boolean tranferring = false;
-    double timeMarker;
+    Attachments attachments = new Attachments(hardwareMap);
+
+
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    TelemetryPacket packet;
+    ArrayList<Action> runningActions = new ArrayList<>();
+
+    boolean Intaking = false;
+    boolean Depositing = false;
 
     @Override
     public void runOpMode() {
-        verticalSlides.resetValue = 0;
-        horizontalSlides.resetValue = 0;
-
-        state = RobotState.STATIONARY;
-        update();
+        attachments.verticalSlides.resetValue = 0;
 
         waitForStart();
 
         elapsedTime.reset();
 
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
 
-            if(gamepad2.x) {
-                state = RobotState.GROUND;
+            //actions:
+
+            if (gamepad2.y && !Depositing) {
+                runningActions.add(attachments.manualDeposit());
+                Depositing = true;
             }
-            if(gamepad2.y) {
-                state = RobotState.SUBMERSIBLE;
-            }
-            if(gamepad2.a) {
-                state = RobotState.BASKET;
-            }
-            /* not needed until we have a clip mechanism
-            if(gamepad2.b) {
-                state = RobotState.CLIP;
-            }
-            */
-            if (gamepad2.left_bumper && gamepad2.right_bumper){
-                state = RobotState.HANG;
+            if (gamepad2.a && Depositing) {
+                Depositing = false;
             }
 
-            update();
+            if (gamepad2.y && !Intaking) {
+                runningActions.add(attachments.manualIntake());
+                Intaking = true;
+            }
+            if (gamepad2.a && Intaking) {
+                Intaking = false;
+            }
 
-            telemetry.addData("rightEncoder", verticalSlides.rightSlide.rightEncoder);
-            telemetry.addData("leftEncoder", verticalSlides.leftSlide.leftEncoder);
+            attachments.update(gamepad2);
+
+            ArrayList<Action> newActions = new ArrayList<>();
+
+            runningActions.forEach((Action) -> {
+                Action.preview(packet.fieldOverlay());
+                if (Action.run(packet)) {
+                    newActions.add(Action);
+                }
+            });
+
+            runningActions = newActions;
+
+            dashboard.sendTelemetryPacket(packet);
+
+
+
+
+            telemetry.addData("rightEncoder", attachments.verticalSlides.rightSlide.rightEncoder);
+            telemetry.addData("leftEncoder", attachments.verticalSlides.leftSlide.leftEncoder);
             telemetry.update();
 
         }
     }
+}
+
+
     enum RobotState {
         HANG,
         BASKET,
@@ -75,8 +99,9 @@ public class JohnTele extends LinearOpMode {
         STATIONARY
     }
 
-    RobotState state;
 
+    /*
+    OLD update system, too long
     private void update(){
         switch(state){
             case HANG:
@@ -201,4 +226,6 @@ public class JohnTele extends LinearOpMode {
 
         telemetry.update();
     }
-}
+
+     */
+

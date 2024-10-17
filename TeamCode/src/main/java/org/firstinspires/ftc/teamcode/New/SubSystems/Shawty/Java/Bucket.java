@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Bucket {
     Servo Bucket1;
     Servo Bucket2;
-    State state;
+    public State state;
 
     public Bucket(HardwareMap hardwareMap){
         Bucket1 = hardwareMap.get(Servo.class, "Bucket");
@@ -18,7 +18,7 @@ public class Bucket {
         Bucket2.setPosition(-state.pos);
     }
 
-    enum State{
+    public enum State{
         STATIONARY(0),
         DROPPING(1);
 
