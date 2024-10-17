@@ -20,6 +20,5 @@ public class VertWristOPMODE extends LinearOpMode {
             }
             verticalwrist.update();
         }
-
     }
 }
