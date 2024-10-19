@@ -15,7 +15,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.Actions.Attachments;
+import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.ClawJohn;
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Intake;
+import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.LinearSlides;
+import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.VerticalSlides;
 
 import java.util.ArrayList;
 
@@ -37,7 +40,8 @@ public class JohnTele extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        attachments.verticalSlides.resetValue = 0;
+
+        attachments.init();
 
         waitForStart();
 
@@ -51,7 +55,7 @@ public class JohnTele extends LinearOpMode {
                 runningActions.add(attachments.manualDeposit());
                 Depositing = true;
             }
-            if (gamepad2.a && Depositing) {
+            if (gamepad2.a && Depositing && attachments.verticalSlides.hasReached()) {
                 Depositing = false;
             }
 
@@ -59,7 +63,7 @@ public class JohnTele extends LinearOpMode {
                 runningActions.add(attachments.manualIntake());
                 Intaking = true;
             }
-            if (gamepad2.a && Intaking) {
+            if (gamepad2.a && Intaking && attachments.verticalSlides.hasReached()) {
                 Intaking = false;
             }
 
