@@ -12,7 +12,6 @@ public class VerticalWrist implements JavaSubsystems {
     Servo wristvert;
 
 
-
     public enum Position{
         Top(1),
         Middle(0),
