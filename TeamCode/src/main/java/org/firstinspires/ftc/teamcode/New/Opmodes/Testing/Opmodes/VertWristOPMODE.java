@@ -19,7 +19,6 @@ public class VertWristOPMODE extends LinearOpMode {
                 verticalwrist.position = VerticalWrist.Position.Bottom;
             }
             verticalwrist.update();
-
         }
     }
 }
