@@ -11,6 +11,7 @@ public class Linkage {
     DcMotor linkage;
 
     public LinkageState linkageState;
+    double goalPos;
 
     PIDFcontroller pidFcontroller = new PIDFcontroller(new PIDParams(0,0,0,0));
 
@@ -18,10 +19,15 @@ public class Linkage {
         linkage = hardwareMap.get(DcMotor.class, "clawFlipper");
     }
 
-    public void update() {
+    public void update(double horizontalGoal) {
+        switch (linkageState){
+            case VERTICAL: goalPos = 0; break;
+            case HORIZONTAL: goalPos = horizontalGoal; break;
+        }
+
 
         int linkageEncoder = linkage.getCurrentPosition();
-        double power = pidFcontroller.calculate(linkageState.goalPos - linkageEncoder);
+        double power = pidFcontroller.calculate(goalPos - linkageEncoder);
 
         if(linkageState == LinkageState.IDLE){
             power = 0;
@@ -32,14 +38,9 @@ public class Linkage {
     }
 
     public enum LinkageState {
-        VERTICAL(0),
-        HORIZONTAL(0.5),
-        IDLE(0);
-
-        public final double goalPos;
-        LinkageState(double goalPos) {
-            this.goalPos = goalPos;
-        }
+        VERTICAL,
+        HORIZONTAL,
+        IDLE
     }
 }
 

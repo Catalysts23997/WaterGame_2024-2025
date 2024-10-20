@@ -1,24 +1,13 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Teleop;
 
-import android.media.tv.TableRequest;
-
-import androidx.annotation.NonNull;
-
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.Actions.Attachments;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.ClawJohn;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Intake;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.LinearSlides;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.VerticalSlides;
 
 import java.util.ArrayList;
 
@@ -60,7 +49,7 @@ public class JohnTele extends LinearOpMode {
             }
 
             if (gamepad2.y && !Intaking) {
-                runningActions.add(attachments.manualIntake());
+                runningActions.add(attachments.manualIntakeGround());
                 Intaking = true;
             }
             if (gamepad2.a && Intaking && attachments.verticalSlides.hasReached()) {
