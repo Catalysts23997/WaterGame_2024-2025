@@ -17,6 +17,7 @@ public class Attachments {
     public LinearSlides verticalSlides;
     public Linkage linkage;
     //                         HNG    BSK   CLP   SUB GND STA
+    //todo name in class, like done for the other one so that you dont commment it, but delcare it via vars
     final int[] slideTargets = {5000, 4000, 3000, 100, 100, 0};
 
     public Attachments(HardwareMap hardwareMap){
@@ -36,7 +37,7 @@ public class Attachments {
 
     double intakeDistance = 15;
 
-    //gamepad updater for manual intakes and deposits.
+    //gamepad updater for manual intakes and deposits. //todo if passing through entier gampead object note what each button does with comments
     public void update(Gamepad gamepad2){
         this.gamepad2 = gamepad2;
         clawJohn.update(intakeDistance);

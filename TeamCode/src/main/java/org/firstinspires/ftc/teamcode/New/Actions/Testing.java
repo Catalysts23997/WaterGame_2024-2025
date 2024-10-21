@@ -14,7 +14,7 @@ public class Testing implements Action {
         this.shoulder = object;
     }
 
-    SequentialAction Sequence = new SequentialAction(Points.basket.runTo, Points.intake.runTo);
+    SequentialAction Sequence = new SequentialAction(Positions.BLwall.runTo, Positions.RRbrick2.runTo);
 
     @Override
     public boolean run(@NotNull TelemetryPacket telemetryPacket) {

@@ -38,5 +38,7 @@ public enum Positions {
         BRinpoint(new Vector2d(22, -12.5), Rotation2d.fromDouble(-PI*.5));
 
         Positions(Vector2d vector, Rotation2d rotation2d) {
+                runTo = new RunTo(vector,rotation2d);
     }
+    final RunTo runTo;
 }
