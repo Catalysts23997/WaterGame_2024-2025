@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.PIDFcontroller;
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.PIDParams;
@@ -19,10 +18,11 @@ public class Linkage {
         linkage = hardwareMap.get(DcMotor.class, "clawFlipper");
     }
 
-    public void update(double horizontalGoal) {
+    //TODO convert degrees to encoder ticks.
+    public void update(double Goal) {
         switch (linkageState){
             case VERTICAL: goalPos = 0; break;
-            case HORIZONTAL: goalPos = horizontalGoal; break;
+            case HORIZONTAL: goalPos = Goal; break;
         }
 
 

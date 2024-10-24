@@ -24,8 +24,7 @@ public class LinearSlides {
         HANG,
         BASKET,
         CLIP,
-        SUBMERSIBLE,
-        GROUND,
+        INTAKE,
         STATIONARY,
         IDLE
     }
@@ -50,9 +49,8 @@ public class LinearSlides {
             case HANG: target = targets[0]; break;
             case BASKET: target = targets[1]; break;
             case CLIP: target = targets[2]; break;
-            case SUBMERSIBLE: target = targets[3]; break;
+            case INTAKE: target = targets[3]; break;
             case STATIONARY: target = targets[4]; break;
-            case GROUND: target = targets[5]; break;
         }
 
         leftSlide.update(target, state);

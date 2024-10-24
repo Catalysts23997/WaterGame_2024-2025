@@ -6,7 +6,6 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.ClawJohn;
 import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.LinearSlides;
@@ -16,9 +15,9 @@ public class Attachments {
     public ClawJohn clawJohn;
     public LinearSlides verticalSlides;
     public Linkage linkage;
-    //                         HNG    BSK   CLP   SUB GND STA
+    //                         HNG    BSK   CLP   INT STA
     //todo name in class, like done for the other one so that you dont commment it, but delcare it via vars
-    final int[] slideTargets = {5000, 4000, 3000, 100, 100, 0};
+    final int[] slideTargets = {5000, 4000, 3000, 100, 0};
 
     public Attachments(HardwareMap hardwareMap){
         verticalSlides = new LinearSlides(hardwareMap);
@@ -42,7 +41,7 @@ public class Attachments {
         this.gamepad2 = gamepad2;
         clawJohn.update(intakeDistance);
 
-        slideTargets[3] = slideTargets [4] = (int) clawJohn.slideLength;
+        slideTargets[3] =(int) clawJohn.slideLength;
 
         verticalSlides.update(slideTargets);
         linkage.update(clawJohn.slideDegree);
@@ -85,7 +84,7 @@ public class Attachments {
             clawJohn.clawState = ClawJohn.ClawState.OPEN;
             clawJohn.armState = ClawJohn.ArmState.COLLECTING;
             linkage.linkageState = Linkage.LinkageState.HORIZONTAL;
-            verticalSlides.state = LinearSlides.State.GROUND;
+            verticalSlides.state = LinearSlides.State.INTAKE;
 
             intakeDistance += (-0.1 * gamepad2.left_stick_y);
 
@@ -108,7 +107,7 @@ public class Attachments {
     }
 
     public class ManualIntakeSub implements Action{
-        boolean Deposited = false;
+        boolean Grabbed = false;
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -116,9 +115,9 @@ public class Attachments {
             clawJohn.yawState = ClawJohn.YawState.ACTIVE;
 
             if(gamepad2.a){
-                Deposited = true;
+                Grabbed = true;
             }
-            if (Deposited){
+            if (Grabbed){
                 linkage.linkageState = Linkage.LinkageState.HORIZONTAL;
                 clawJohn.clawState = ClawJohn.ClawState.CLOSED;
                 clawJohn.armState = ClawJohn.ArmState.PREPARED;
@@ -136,7 +135,7 @@ public class Attachments {
             else {
                 clawJohn.clawState = ClawJohn.ClawState.OPEN;
                 linkage.linkageState = Linkage.LinkageState.HORIZONTAL;
-                verticalSlides.state = LinearSlides.State.GROUND;
+                verticalSlides.state = LinearSlides.State.INTAKE;
                 if(verticalSlides.hasReached()){
                     clawJohn.armState = ClawJohn.ArmState.COLLECTING;
                 }
