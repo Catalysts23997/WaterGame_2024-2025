@@ -1,9 +1,11 @@
-package org.firstinspires.ftc.teamcode.New.SubSystems.Java;
+package org.firstinspires.ftc.teamcode.New.SubSystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-public class touchsensornutella implements JavaSubsystems {
+import org.firstinspires.ftc.teamcode.New.SubSystems.JavaSubsystems;
+
+public class Touchsensornutella implements JavaSubsystems {
     HardwareMap hardwareMap;
     TouchSensor righty;
     TouchSensor lefty;
@@ -18,9 +20,9 @@ public class touchsensornutella implements JavaSubsystems {
 
     }
 
-    touchsensornutella.States states = States.None;
+    Touchsensornutella.States states = States.None;
 
-    public touchsensornutella(HardwareMap hardwareMap) {
+    public Touchsensornutella(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         righty = hardwareMap.get(TouchSensor.class, "righty");
         lefty = hardwareMap.get(TouchSensor.class, "lefty");

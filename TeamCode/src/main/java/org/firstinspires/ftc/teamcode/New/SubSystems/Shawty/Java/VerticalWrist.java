@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.New.SubSystems.JavaSubsystems;
 public class VerticalWrist implements JavaSubsystems {
     HardwareMap hardwareMap;
     Servo wristvert;
-
     public enum Position{
         Top(1),
         Middle(0),
