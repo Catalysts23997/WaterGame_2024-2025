@@ -24,14 +24,22 @@ public class LinearSlides {
         HANG,
         BASKET,
         CLIP,
-        SUBMERSIBLE,
-        GROUND,
+        INTAKE,
         STATIONARY,
         IDLE
     }
 
     public State state = State.IDLE;
     int target = 0;
+
+    public boolean hasReached(){
+        int leftError = target - leftSlide.leftEncoder;
+        int rightError = target - rightSlide.rightEncoder;
+        int averageError = (rightError + leftError)/2;
+        double tolerance = 0.01;
+
+        return averageError > -tolerance && averageError < tolerance;
+    }
 
     public void update( int[] targets){
         this.targets = targets;
@@ -41,9 +49,8 @@ public class LinearSlides {
             case HANG: target = targets[0]; break;
             case BASKET: target = targets[1]; break;
             case CLIP: target = targets[2]; break;
-            case SUBMERSIBLE: target = targets[3]; break;
+            case INTAKE: target = targets[3]; break;
             case STATIONARY: target = targets[4]; break;
-            case GROUND: target = targets[5]; break;
         }
 
         leftSlide.update(target, state);
