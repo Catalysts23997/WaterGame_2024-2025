@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.New.SubSystems.JavaSubsystems;
 
 public class VerticalWrist implements JavaSubsystems {
-
     HardwareMap hardwareMap;
     Servo wristvert;
 
