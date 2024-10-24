@@ -85,7 +85,7 @@ public class ClawJohn  {
         slideLength = (armLength * sin(toRadians(angleOppSlides)))/sin(toRadians(angleOppArm));
     }
 
-    public void update(double goalDistance){
+    public void update(double goalDistance, double rotaterAngle){
 
         switch (armState){
             //when the robot is stationary, we want the claw tucked away
@@ -110,11 +110,7 @@ public class ClawJohn  {
 
         claw.setPosition(clawState.servoPos);
 
-        switch (yawState){
-            case ACTIVE: clawRotater.update(clawYaw);
-            case STRAIGHT: clawRotater.update(-toDegrees(Localizer.pose.heading.toDouble()));
-            case ZERO: clawRotater.update(0.0);
-        }
+        clawRotater.update(rotaterAngle);
     }
 
     public YawState yawState;

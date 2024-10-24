@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.New.Opmodes.Teleop;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.New.Actions.Attachments;
 
 import java.util.ArrayList;
-
+@Disabled
 @TeleOp(name = "Tele", group = "Linear OpMode")
 public class JohnTele extends LinearOpMode {
     //note: All gamepad inputs are not final, they are placeholders for the actual input or other booleans
@@ -82,7 +83,7 @@ public class JohnTele extends LinearOpMode {
     }
 }
 
-
+/*
     enum RobotState {
         HANG,
         BASKET,
@@ -91,7 +92,7 @@ public class JohnTele extends LinearOpMode {
         GROUND,
         STATIONARY
     }
-
+*/
 
     /*
     OLD update system, too long
