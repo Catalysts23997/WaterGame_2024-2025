@@ -20,6 +20,18 @@ public class LinearSlides {
         rightSlide = new RightSlide(hardwareMap);
     }
 
+    public void setTargets(int Hang, int Basket, int Clip, int Intake, int Stationary){
+        targets[0] = Hang;
+        targets[1] = Basket;
+        targets[2] = Clip;
+        targets[3] = Intake;
+        targets[4] = Stationary;
+    }
+
+    public void updateTarget(int place, int newvalue){
+        targets[place] = newvalue;
+    }
+
     public enum State{
         HANG,
         BASKET,
@@ -41,8 +53,7 @@ public class LinearSlides {
         return averageError > -tolerance && averageError < tolerance;
     }
 
-    public void update( int[] targets){
-        this.targets = targets;
+    public void update(){
 
         switch (state){
             //find height values, make code to test
@@ -62,28 +73,17 @@ public class LinearSlides {
         DcMotor leftSlide;
         public int leftEncoder;
 
-        DigitalChannel leftDigitalChannel;
-
         //tune PID coefficients
         PIDParams pidParams = new PIDParams(0.0,0.0,0.0,0.0);
         PIDFcontroller pidFcontroller = new PIDFcontroller(pidParams);
 
         public LeftSlide(HardwareMap hardwareMap){
             leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
-            leftDigitalChannel = hardwareMap.get(DigitalChannel.class, "leftSwitch");
         }
 
-        LimitSwitch leftLimitSwitch = new LimitSwitch(leftDigitalChannel, resetValue);
-        int prevPos = leftSlide.getCurrentPosition();
 
         public void update(int target, State state) {
-            leftEncoder += leftSlide.getCurrentPosition() - prevPos;
-            prevPos = leftSlide.getCurrentPosition();
-
-            leftLimitSwitch.update();
-            if(leftLimitSwitch.state == LimitSwitch.State.PRESSED){
-                leftEncoder = leftLimitSwitch.resetValue;
-            }
+            leftEncoder = leftSlide.getCurrentPosition();
 
             double leftPower = pidFcontroller.calculate(target - leftEncoder);
 
@@ -100,28 +100,16 @@ public class LinearSlides {
         DcMotor rightSlide;
         public int rightEncoder;
 
-        DigitalChannel rightDigitalChannel;
-
         //tune PID coefficients
         PIDParams pidParams = new PIDParams(0.0,0.0,0.0,0.0);
         PIDFcontroller pidFcontroller = new PIDFcontroller(pidParams);
 
         public RightSlide(HardwareMap hardwareMap){
             rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
-            rightDigitalChannel = hardwareMap.get(DigitalChannel.class, "leftSwitch");
         }
 
-        LimitSwitch rightLimitSwitch = new LimitSwitch(rightDigitalChannel, resetValue);
-        int prevPos = rightSlide.getCurrentPosition();
-
         public void update(int target, State state) {
-            rightEncoder += rightSlide.getCurrentPosition() - prevPos;
-            prevPos = rightSlide.getCurrentPosition();
-
-            rightLimitSwitch.update();
-            if(rightLimitSwitch.state == LimitSwitch.State.PRESSED){
-                rightEncoder = rightLimitSwitch.resetValue;
-            }
+            rightEncoder = rightSlide.getCurrentPosition();
 
             double rightPower = pidFcontroller.calculate(target - rightEncoder);
 

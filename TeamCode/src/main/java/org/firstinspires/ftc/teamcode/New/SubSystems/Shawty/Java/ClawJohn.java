@@ -17,7 +17,7 @@ public class ClawJohn  {
     Servo claw;
     Servo armPitch;
     Servo clawPitch;
-    ClawRotater clawRotater;
+    public ClawRotater clawRotater;
 
     public ClawState clawState;
     public ArmState armState;
@@ -51,7 +51,8 @@ public class ClawJohn  {
     double clawLength = 6.5826772;
     double armLength = 6.1338583;
     double slidesFromGround = 2.976378;
-    public double slideDegree = 11.3809843;
+    public double maxLinkageDegree = 11.3809843;
+    public double slideDegree = maxLinkageDegree;
     double maxExtension = 37.7716535;
     double clawServoRot;
     double armServoRot;
@@ -68,6 +69,9 @@ public class ClawJohn  {
 
         if (slideDegree<toDegrees(atan((clawLength-slidesFromGround)/goalDistance))){
             slideDegree = 10 + toDegrees(atan((clawLength-slidesFromGround)/goalDistance));
+        }
+        else {
+            slideDegree = maxLinkageDegree;
         }
 
         double angleOppGround = toDegrees(atan(goalDistance/(clawLength-slidesFromGround)));
@@ -111,13 +115,5 @@ public class ClawJohn  {
         claw.setPosition(clawState.servoPos);
 
         clawRotater.update(rotaterAngle);
-    }
-
-    public YawState yawState;
-
-    public enum YawState {
-        ACTIVE,
-        STRAIGHT,
-        ZERO
     }
 }

@@ -42,7 +42,7 @@ public class JohnTele extends LinearOpMode {
             //actions:
 
             if (gamepad2.y && !Depositing) {
-                runningActions.add(attachments.manualDeposit());
+                runningActions.add(attachments.manualDeposit(false));
                 Depositing = true;
             }
             if (gamepad2.a && Depositing && attachments.verticalSlides.hasReached()) {
@@ -50,7 +50,7 @@ public class JohnTele extends LinearOpMode {
             }
 
             if (gamepad2.y && !Intaking) {
-                runningActions.add(attachments.manualIntakeGround());
+                runningActions.add(attachments.manualIntake(false));
                 Intaking = true;
             }
             if (gamepad2.a && Intaking && attachments.verticalSlides.hasReached()) {
