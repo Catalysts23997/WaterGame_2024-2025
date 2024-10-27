@@ -11,7 +11,6 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
-
 public class PipelineFromScratch implements VisionProcessor {
     public enum Location {
         Left,
