@@ -23,7 +23,7 @@ public class WristJohn {
             this.servoPos = servoPos;
         }
     }
-
+//todo
     public void update(){
         switch (state){
             case BASKET: Wrist.setPosition(State.BASKET.servoPos); break;

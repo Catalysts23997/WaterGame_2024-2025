@@ -30,7 +30,6 @@ public class Attachments {
         verticalSlides.state = LinearSlides.State.STATIONARY;
         clawJohn.clawState = AttachmentsJohn.ClawState.CLOSED;
         linkage.linkageState = Linkage.LinkageState.VERTICAL;
-        verticalSlides.setTargets(5000,4000,3000,100,0);
     }
 
     public Gamepad gamepad2;
@@ -46,8 +45,6 @@ public class Attachments {
         this.gamepad2 = gamepad2;
 
         clawJohn.update(intakeDistance, clawRotaterAngle);
-
-        verticalSlides.updateTarget(3, (int) clawJohn.slideLength);
         verticalSlides.update();
 
         linkage.update(clawJohn.slideDegree);
@@ -146,7 +143,9 @@ public class Attachments {
             else {
                 clawJohn.clawState = AttachmentsJohn.ClawState.OPEN;
                 linkage.linkageState = Linkage.LinkageState.HORIZONTAL;
-                verticalSlides.state = LinearSlides.State.INTAKE;
+                verticalSlides.state = LinearSlides.State.Manual;
+                LinearSlides.manualTarget = (int) clawJohn.slideLength;
+
                 //if we grab from the ground, just have the claw lowered right away and have the claw always adjust to face the same way as the pieces
                 if (grabbingFromGround) {
                     clawJohn.clawRotater.state = ClawRotater.State.ADJUSTING;

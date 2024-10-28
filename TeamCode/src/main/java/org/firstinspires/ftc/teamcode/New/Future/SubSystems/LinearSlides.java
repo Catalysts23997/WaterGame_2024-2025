@@ -18,14 +18,14 @@ public class LinearSlides {
         leftSlide = new LeftSlide(hardwareMap);
         rightSlide = new RightSlide(hardwareMap);
     }
-
     public enum State{
-        HANG(0),
-        BASKET(0),
-        CLIP(0),
-        INTAKE(0),
-        STATIONARY(0),
-        IDLE(100000);
+        HANG(5000),
+        BASKET(430),
+        CLIP(340),
+        INTAKE(550),
+        STATIONARY(220),
+        IDLE(0),
+        Manual(0);
         State(int newEncoder){
             Encoder = newEncoder;
         }
@@ -43,11 +43,13 @@ public class LinearSlides {
 
         return averageError > -tolerance && averageError < tolerance;
     }
-
-    public void updateTarget(int ManualTarget){target = ManualTarget;}
+    public static int manualTarget = 0;
 
     public void update(){
         target = state.Encoder;
+        if(state == State.Manual){
+            target = manualTarget;
+        }
         leftSlide.update(target, state);
         rightSlide.update(target, state);
     }
