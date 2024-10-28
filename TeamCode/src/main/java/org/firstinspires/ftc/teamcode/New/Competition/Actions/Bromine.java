@@ -13,13 +13,13 @@ import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ClawRotater;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ShoudlerJohn;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ColorSensor;
 
-public class BromineArm {
+public class Bromine {
     public Claw claw;
     public ClawRotater clawRotater;
     public ShoudlerJohn shoulder;
     public ColorSensor colorSensor;
 
-    public BromineArm (HardwareMap hardwareMap){
+    public Bromine(HardwareMap hardwareMap){
         claw = new Claw(hardwareMap);
         clawRotater = new ClawRotater(hardwareMap);
         shoulder = new ShoudlerJohn(hardwareMap);
@@ -34,9 +34,13 @@ public class BromineArm {
         clawRotater.update(clawRotaterAngle);
         shoulder.update();
     }
+    public void update(){
+        claw.update();
+        clawRotater.update(clawRotaterAngle);
+        shoulder.update();
+    }
 
-    public class Intake implements Action {
-
+    private class Intake implements Action {
         boolean grabbingFromGround;
 
         public Intake (boolean grabbingFromGround){
@@ -64,8 +68,18 @@ public class BromineArm {
             }
         }
     }
+    private class Deposit implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            //if done return false
+
+            return true;
+        }
+    }
 
     public Action intake(boolean grabbingFromGround) {
         return new Intake(grabbingFromGround);
     }
+    public Action deposit(){return new Deposit();}
 }

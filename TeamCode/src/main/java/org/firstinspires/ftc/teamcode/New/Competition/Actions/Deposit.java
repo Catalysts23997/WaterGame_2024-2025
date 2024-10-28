@@ -16,12 +16,12 @@ public class Deposit{
     public LinearSlides VerticalSlides;
     public Linkage linkage;
 
+
     public Deposit (HardwareMap hardwareMap){
         VerticalSlides = new LinearSlides(hardwareMap);
         clawJohn = new AttachmentsJohn(hardwareMap);
         linkage = new Linkage(hardwareMap);
-    }
-    public void init(){
+
         VerticalSlides.state = LinearSlides.State.STATIONARY;
         clawJohn.clawState = AttachmentsJohn.ClawState.CLOSED;
         linkage.linkageState = Linkage.LinkageState.VERTICAL;
@@ -38,7 +38,6 @@ public class Deposit{
                 clawJohn.clawState = AttachmentsJohn.ClawState.OPEN;
                 return false;
             }
-
             return true;
         }
 
