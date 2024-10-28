@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.New.Actions;
+package org.firstinspires.ftc.teamcode.New.Competition.Actions;
 
 import static java.lang.Math.PI;
 
@@ -40,5 +40,5 @@ public enum Positions {
         Positions(Vector2d vector, Rotation2d rotation2d) {
                 runTo = new RunTo(vector,rotation2d);
     }
-    final RunTo runTo;
+    public final RunTo runTo;
 }
