@@ -11,6 +11,7 @@ public class Linkage {
 
     public LinkageState linkageState;
     double goalPos;
+    final double ticksPerRev = 28;
 
     PIDFcontroller pidFcontroller = new PIDFcontroller(new PIDParams(0,0,0,0));
 
@@ -18,11 +19,18 @@ public class Linkage {
         linkage = hardwareMap.get(DcMotor.class, "clawFlipper");
     }
 
-    //TODO convert degrees to encoder ticks.
-    public void update(double Goal) {
+    public void init() {
+        linkage.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void update(double goalDegrees) {
+
+        double goalTicks = (goalDegrees/360) * ticksPerRev;
+
         switch (linkageState){
-            case VERTICAL: goalPos = 0; break;
-            case HORIZONTAL: goalPos = Goal; break;
+            //7 ticks = 0.25 revolutions = 90 degrees, so straight up
+            case VERTICAL: goalPos = 7; break;
+            case HORIZONTAL: goalPos = goalTicks; break;
         }
 
 

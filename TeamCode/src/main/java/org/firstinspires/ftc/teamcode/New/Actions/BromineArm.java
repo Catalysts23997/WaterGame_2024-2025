@@ -27,7 +27,7 @@ public class BromineArm {
     }
 
     double clawRotaterAngle;
-    //TODO have a way to calculate this with camerag
+    //TODO have a way to calculate the yaw of the claw with camera
 
     public void update(Gamepad gamepad){
         claw.update();

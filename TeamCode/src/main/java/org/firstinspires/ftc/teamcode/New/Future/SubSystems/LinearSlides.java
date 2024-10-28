@@ -13,6 +13,10 @@ public class LinearSlides {
     public RightSlide rightSlide;
     public int resetValue = 0;
 
+    public void init(){
+        leftSlide.leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlide.rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
     public LinearSlides(HardwareMap hardwareMap){
         leftSlide = new LeftSlide(hardwareMap);
