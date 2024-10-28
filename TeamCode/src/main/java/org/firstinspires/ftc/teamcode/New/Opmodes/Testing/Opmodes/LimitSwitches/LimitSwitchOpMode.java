@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.LimitSwitch;
+import org.firstinspires.ftc.teamcode.New.Future.SubSystems.LimitSwitch;
 
 
 @TeleOp(name = "Limit Switch Op Mode", group = "Switch")

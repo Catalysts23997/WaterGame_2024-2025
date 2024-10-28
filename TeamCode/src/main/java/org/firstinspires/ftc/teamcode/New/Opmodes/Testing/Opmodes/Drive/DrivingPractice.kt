@@ -6,8 +6,7 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Drive
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.TeleLocalizer
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive
 
 @TeleOp(name = "DrivingPractice", group = "Linear OpMode")
 class DrivingPractice : LinearOpMode(){

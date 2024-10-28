@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.New.Actions
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.AprilTagData
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Drive
+import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AprilTagData
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive
 
 class AutoDriveToTag(private val aprilTagData: AprilTagData, private val drive: Drive) : Action {
     override fun run(p: TelemetryPacket): Boolean {

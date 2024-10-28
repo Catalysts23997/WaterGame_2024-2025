@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Angle
+import org.firstinspires.ftc.teamcode.New.Angle
 import kotlin.math.abs
 
 //todo bring in PIDF class

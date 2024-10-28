@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Testing.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Bromine.Java.Claws;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.VerticalWrist;
+
+import org.firstinspires.ftc.teamcode.New.Future.SubSystems.Shawty.Java.VerticalWrist;
 public class VertWristOPMODE extends LinearOpMode {
 
     @Override

@@ -5,11 +5,10 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.Actions.AutoDriveToTag
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Drive
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.AprilTagData
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AprilTagData
 
 //todo test after getting wheels in right directions
 class RRActionsTele : LinearOpMode() {

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.New.SubSystems.HangPracticeJohn;
+import org.firstinspires.ftc.teamcode.New.Future.SubSystems.HangPracticeJohn;
 
 @Disabled
 @TeleOp (name= "HangPracticetelel", group= "Linear OpMode")

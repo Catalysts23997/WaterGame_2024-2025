@@ -8,12 +8,10 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.New.SubSystems.Bromine.Java.Claw;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Bromine.Java.ClawRotater;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Bromine.Java.ShoudlerJohn;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Bromine.Kotlin.ColorSensor;
-
-import bsh.org.objectweb.asm.ClassWriter;
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ClawRotater;
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ShoudlerJohn;
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ColorSensor;
 
 public class BromineArm {
     public Claw claw;

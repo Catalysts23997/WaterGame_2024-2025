@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.New.SubSystems
 
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Angle
+import org.firstinspires.ftc.teamcode.New.Angle
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.Random
-import kotlin.math.PI
-import kotlin.math.abs
 
 class AngleTest {
 
