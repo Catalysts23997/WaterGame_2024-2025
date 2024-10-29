@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.New.PinpointLocalizer
 
 import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Angle
+import org.firstinspires.ftc.teamcode.New.Angle
 
 
 class Localizer(hwmap: HardwareMap, private val offset: Pose2d) {
@@ -30,7 +30,8 @@ class Localizer(hwmap: HardwareMap, private val offset: Pose2d) {
     }
 
     fun update(){
-        pose = Pose2d(goBildaPinpointDriver.posX+ offset.position.x,goBildaPinpointDriver.posY+ offset.position.y,Angle.wrap(goBildaPinpointDriver.heading+offset.heading.toDouble()))
+        pose = Pose2d(goBildaPinpointDriver.posX+ offset.position.x,goBildaPinpointDriver.posY+ offset.position.y,
+            Angle.wrap(goBildaPinpointDriver.heading+offset.heading.toDouble()))
     }
     companion object{
         lateinit var pose: Pose2d

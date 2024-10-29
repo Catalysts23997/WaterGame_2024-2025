@@ -4,8 +4,7 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.AprilTagData
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.TeleLocalizer
+import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AprilTagData
 
 @TeleOp(name = "ArduCamAprilTags",group = "Linear OpMode")
 class Ardu : LinearOpMode() {

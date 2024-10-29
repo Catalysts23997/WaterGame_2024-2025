@@ -8,7 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.New.Actions.Attachments;
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ColorSensor;
+import org.firstinspires.ftc.teamcode.New.Future.Actions.Attachments;
 
 import java.util.ArrayList;
 @Disabled
@@ -45,15 +46,15 @@ public class JohnTele extends LinearOpMode {
                 runningActions.add(attachments.manualDeposit(false));
                 Depositing = true;
             }
-            if (gamepad2.a && Depositing && attachments.verticalSlides.hasReached()) {
+            if (gamepad2.left_trigger > 0.5 && Depositing && attachments.verticalSlides.hasReached()) {
                 Depositing = false;
             }
 
-            if (gamepad2.y && !Intaking) {
-                runningActions.add(attachments.manualIntake(false));
+            if (gamepad2.a && !Intaking) {
+                runningActions.add(attachments.manualIntake(false, false));
                 Intaking = true;
             }
-            if (gamepad2.a && Intaking && attachments.verticalSlides.hasReached()) {
+            if ((attachments.colorSensor.checkForRecognition() == ColorSensor.Recognition.IN || gamepad2.right_trigger > 0.5) && Intaking && attachments.verticalSlides.hasReached()) {
                 Intaking = false;
             }
 
