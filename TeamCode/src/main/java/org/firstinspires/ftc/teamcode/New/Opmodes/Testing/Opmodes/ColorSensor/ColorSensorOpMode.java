@@ -1,16 +1,15 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Testing.Opmodes.ColorSensor;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.New.Future.SubSystems.ColorSensorDrake;
 
-
+@Disabled
 @TeleOp(name="Color Sensor OpMode", group="Sensor")
 public class ColorSensorOpMode extends LinearOpMode {
-
-
     ColorSensorDrake colorSensorSubsystem;
 
 

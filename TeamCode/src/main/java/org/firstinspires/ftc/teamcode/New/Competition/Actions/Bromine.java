@@ -72,7 +72,7 @@ public class Bromine {
     }
 
     ParallelAction driveAndRaise = new ParallelAction(
-            Positions.Rbasket.runTo,
+            Positions.Rbasket.runToNearest,
             telemetryPacket2 -> {
 
                 //This is a new action - place actual deposit work here
