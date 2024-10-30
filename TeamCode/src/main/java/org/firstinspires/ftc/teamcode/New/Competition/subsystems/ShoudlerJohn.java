@@ -12,9 +12,7 @@ public class ShoudlerJohn {
     PIDParams shoulderParams = new PIDParams(0,0,0,0);
     PIDFcontroller shoulderPID = new PIDFcontroller(shoulderParams);
     int target;
-//
-//    public void init(){
-//       Shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
     public ShoudlerJohn(HardwareMap hardwareMap){
         Shoulder = hardwareMap.get(DcMotor.class,"Shoulder");
