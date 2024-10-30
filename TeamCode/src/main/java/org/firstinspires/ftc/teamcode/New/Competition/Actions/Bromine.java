@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ClawRotater;
@@ -76,25 +77,35 @@ public class Bromine {
             Positions.Rbasket.runToNearest,
             telemetryPacket2 -> {
                 shoulder.state = ShoudlerJohn.State.BASKET;
-                claw.clawState = Claw.ClawState.CLOSED;
-
-                return true;
+                return !shoulderReachedTarget;
             }
     );
     //after the drive and raise action is completed, the claw opens.
 
-    public SequentialAction depositBasket = new SequentialAction(
+    boolean initilized = false;
+    ElapsedTime timer = new ElapsedTime();
+    double time = 0.8;
+    SequentialAction DepositBasket = new SequentialAction(
             driveAndRaise,
             telemetryPacket2 -> {
-
                 claw.clawState = Claw.ClawState.OPEN;
-
-
-                return true;
+                if (!initilized) {
+                    timer.reset();
+                    initilized = true;
+                }
+                if(timer.seconds()>time){
+                    initilized = false;
+                    return false;
+                } else return true;
             }
     );
 
     public Action intake(boolean grabbingFromGround) {
         return new Intake(grabbingFromGround);
+    }
+
+    public Action depositBasket(double time) {
+        this.time = time;
+        return DepositBasket;
     }
 }

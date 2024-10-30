@@ -53,7 +53,8 @@ public class BromineDeposit{
 
         }
     public Action NataliaDeposit(){return new DepositNatalia();}
-    }
+
+}
 
 
 
