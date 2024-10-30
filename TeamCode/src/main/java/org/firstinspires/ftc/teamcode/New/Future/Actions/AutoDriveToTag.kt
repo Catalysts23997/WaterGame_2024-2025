@@ -12,7 +12,7 @@ class AutoDriveToTag(private val aprilTagData: AprilTagData, private val drive: 
 //      todo change if not using camera
         aprilTagData.state = AprilTagData.State.On
 
-        if(Positions.YLbrick3.runTo.run(p)){
+        if(Positions.YLbrick3.runToNearest.run(p)){
             aprilTagData.state = AprilTagData.State.Off
             drive.state = Drive.States.Manual
             return false

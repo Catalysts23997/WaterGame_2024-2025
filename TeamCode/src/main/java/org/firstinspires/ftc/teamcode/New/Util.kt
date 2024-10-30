@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.New
 
+import com.acmerobotics.roadrunner.Pose2d
+import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AttachmentPositons
 import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AttachmentsJohn
 import kotlin.math.PI
+import kotlin.math.acos
 import kotlin.math.asin
 import kotlin.math.atan
+import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -16,6 +20,14 @@ object Angle {
         var angle = theta
         while (angle > PI) angle -= PI * 2
         while (angle < -PI) angle += PI * 2
+        return angle
+    }
+    fun wrapToPositive(theta: Double): Double {
+        require(theta in -2 * PI..2 * PI)
+        var angle = theta
+        angle = wrap(angle)
+        while (angle>PI) angle -= PI
+        while (angle<0) angle += PI
         return angle
     }
 }
@@ -118,4 +130,36 @@ object Slides{
         )
 
     }
+}
+
+object FindNearestPoint {
+    //todo make unit tests
+    //todo test full robot extension
+
+    //length from center of robot to front in inches
+    private const val OFFSET = 5.0
+
+    /**
+     * @param targetPos Target
+     * @param currentPos Localizer Pose
+     */
+    fun findNearestPoint(targetPos: Vector2d, currentPos: Vector2d): Pose2d {
+
+        //triangle with legs A and A, hypotenuse B
+        val A = targetPos.x - currentPos.x
+        val C = targetPos.y - currentPos.y
+        val B = sqrt(C.pow(2) + A.pow(2))
+
+        //find destination's offset from currentPose
+        val xOffsetFromTarget = OFFSET*(A.pow(2)+B.pow(2)-C.pow(2))/(2*A*B)
+        val yOffsetTarget = sqrt(OFFSET.pow(2) - xOffsetFromTarget.pow(2))
+
+        //Destinations Position
+        val x = A - xOffsetFromTarget + currentPos.x
+        val y = C - yOffsetTarget + currentPos.y
+        val angle = acos((A.pow(2) + B.pow(2) - C.pow(2)) / (2 * A * B))
+
+        return Pose2d(x, y, angle)
+    }
+
 }

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.New.Angle;
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer;
 
 public class ClawRotater {
@@ -50,6 +51,11 @@ public class ClawRotater {
         if(angle<0){
             angle += 180;
         }
+
+        //todo is math above just angle wrap? Why angle <0 PLEASE USE RADIANS
+        //angle = Math.toDegrees(Angle.INSTANCE.wrap(Math.toRadians(angle)));
+        //if(angle<0) angle += 180;
+
         position = angle/180;
         clawRotater.setPosition(position);
     }

@@ -4,6 +4,7 @@ import org.firstinspires.ftc.teamcode.New.Angle
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.Random
+import kotlin.math.PI
 
 class AngleTest {
 
@@ -83,4 +84,26 @@ class AngleTest {
 
     }
 
+
+    @Test
+    //Tests the wrapToPositive function with specific inputs in the 0-PI range
+    fun wrapPositiveToPositiveAngles (){
+        val random = kotlin.random.Random
+        //Test that values > 2PI wrap
+        for (i in 1..100) {
+            val r = random.nextDouble(0.0, PI)
+            assertEquals(r, Angle.wrapToPositive(r), 0.0)
+        }
+    }
+
+    @Test
+    //Tests the wrapToPositive function with specific inputs in the -PI to 0 range
+    fun wrapNegativeToPositiveAngles (){
+        val random = kotlin.random.Random
+        //Test that values > 2PI wrap
+        for (i in 1..100) {
+            val r = random.nextDouble(-PI, 0.0)
+            assertEquals(r + PI, Angle.wrapToPositive(r), 0.0)
+        }
+    }
 }

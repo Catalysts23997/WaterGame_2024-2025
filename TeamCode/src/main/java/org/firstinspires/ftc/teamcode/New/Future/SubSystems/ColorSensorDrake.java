@@ -9,8 +9,6 @@ import org.firstinspires.ftc.teamcode.New.JavaSubsystems;
 
 public class ColorSensorDrake implements JavaSubsystems {
 
-
-    HardwareMap hardwareMap;
     ColorSensor LeftS;
     ColorSensor RightS;
 
