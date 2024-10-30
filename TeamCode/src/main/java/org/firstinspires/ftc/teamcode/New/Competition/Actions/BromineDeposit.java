@@ -11,7 +11,12 @@ import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ShoudlerJohn;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.WristJohn;
 
-public class DepositBromine{
+
+
+
+// i made this for a deposit action, but it appears to be no longer needed
+//since bromine has actions within parallel and sequential actions, the actual "depositing" part of the code was moved there.
+public class BromineDeposit{
 
     public Claw claw;
     public ClawRotater clawrotate;
@@ -19,7 +24,7 @@ public class DepositBromine{
     public ShoudlerJohn shoudlerJohn;
     public WristJohn wrist;
 
-    public DepositBromine (HardwareMap hardwareMap){
+    public BromineDeposit (HardwareMap hardwareMap){
         claw = new Claw(hardwareMap);
         clawrotate = new ClawRotater(hardwareMap);
         drive = new Drive(hardwareMap);
@@ -37,22 +42,19 @@ public class DepositBromine{
             shoudlerJohn.state = ShoudlerJohn.State.BASKET;
             //idk why the state isn't public, it's public in shoulderjohn so should be accessible here.
             // I'll fix it in the morning.
-            wrist.state = WristJohn.state.BASKET;
-            //todo- add has reached function to shoudler john
-            //idk how to see if it's reached postion, bc there isn't an encoder set up on ShoulderJohn
-            if(shoudlerJohn.hasReached()) {
-                claw.clawState = Claw.ClawState.OPEN;
+//            wrist.state = WristJohn.state.BASKET;
+//            //todo- add has reached function to shoudler john
+//            //idk how to see if it's reached postion, bc there isn't an encoder set up on ShoulderJohn
+//            if(shoudlerJohn.hasReached()) {
+//                claw.clawState = Claw.ClawState.OPEN;
 
                 return false;
             }
-            return true;
+
         }
-
-    }
-
-
     public Action NataliaDeposit(){return new DepositNatalia();}
-
     }
+
+
 
 

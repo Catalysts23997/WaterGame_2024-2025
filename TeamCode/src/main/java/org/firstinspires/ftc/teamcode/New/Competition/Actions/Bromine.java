@@ -70,23 +70,24 @@ public class Bromine {
             }
         }
     }
+    //runs to nearest is completed, simultaneously the shoudler is raised and claw is kept closed.
 
     ParallelAction driveAndRaise = new ParallelAction(
             Positions.Rbasket.runToNearest,
             telemetryPacket2 -> {
-
-                //This is a new action - place actual deposit work here
+                shoulder.state = ShoudlerJohn.State.BASKET;
+                claw.clawState = Claw.ClawState.CLOSED;
 
                 return true;
             }
     );
+    //after the drive and raise action is completed, the claw opens.
 
     public SequentialAction depositBasket = new SequentialAction(
             driveAndRaise,
             telemetryPacket2 -> {
 
-
-                //Final Deposit
+                claw.clawState = Claw.ClawState.OPEN;
 
 
                 return true;
