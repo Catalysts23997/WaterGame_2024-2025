@@ -77,7 +77,7 @@ public class Bromine {
             Positions.Rbasket.runToNearest,
             telemetryPacket2 -> {
                 shoulder.state = ShoudlerJohn.State.IDLE_TO_Basket;
-                return false;//!shoulderReachedTarget;
+                return !shoulder.targetReached;
             }
     );
     //after the drive and raise action is completed, the claw opens.

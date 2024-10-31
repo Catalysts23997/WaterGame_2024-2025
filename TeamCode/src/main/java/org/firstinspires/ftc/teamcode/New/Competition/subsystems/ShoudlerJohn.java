@@ -18,6 +18,7 @@ public class ShoudlerJohn {
     public State state;
     ArrayList<AngleRange> targets = Constants.angleRanges;
     Constants constants = new Constants();
+    public boolean targetReached = false;
 
     public ShoudlerJohn(HardwareMap hardwareMap){
         Shoulder = hardwareMap.get(DcMotor.class,"Shoulder");
@@ -27,7 +28,7 @@ public class ShoudlerJohn {
         //use auto tuner
 
         constants.pidfController.resetConstantsAndTarget(state.params, state.target);
-
+        targetReached = constants.pidfController.targetReached(Shoulder.getCurrentPosition(), 4.0);
         double power = constants.pidfController.calculateMotorPower(Shoulder.getCurrentPosition(), looptime);
 
         if(state == State.IDLE){
