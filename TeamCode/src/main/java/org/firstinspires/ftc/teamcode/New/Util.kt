@@ -99,9 +99,8 @@ object Slides{
         val slidesFromGround = 2.976378
         val maxLinkageDegree = 11.3809843
 
-        //minimum
 
-        val goalDistance = gD.coerceIn(0.0,42.0)
+        val goalDistance = gD.coerceIn(12.0,42.0)
 
         val hypotenuse =
             sqrt(goalDistance * goalDistance + (clawLength - slidesFromGround) * (slidesFromGround - clawLength))

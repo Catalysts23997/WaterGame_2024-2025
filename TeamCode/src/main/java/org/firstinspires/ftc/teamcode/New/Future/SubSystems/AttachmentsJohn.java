@@ -49,7 +49,8 @@ public class AttachmentsJohn {
     }
 
 
-    public double maxExtension = 37.7716535;
+    public static double maxExtension = 37.7716535;
+    public static double minExtension = maxExtension - 33;
     public static double slideDegree = 11.3809843;
     public double slideLength = 0;
     public AttachmentPositons attachmentPositons;

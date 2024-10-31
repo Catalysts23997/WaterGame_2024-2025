@@ -12,8 +12,11 @@ public class Claw {
         claw = hardwareMap.get(Servo.class, "Claw");
     }
 
+    public double clawEncoder;
+
     public void update(){
         claw.setPosition(clawState.servoPos);
+        clawEncoder = claw.getPosition();
     }
 
     public enum ClawState {

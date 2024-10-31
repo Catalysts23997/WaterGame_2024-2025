@@ -15,18 +15,21 @@ import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ClawRotater;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ColorSensor;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ShoudlerJohn;
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.WristJohn;
 
 public class Bromine {
     public Claw claw;
     public ClawRotater clawRotater;
     public ShoudlerJohn shoulder;
     public ColorSensor colorSensor;
+    public WristJohn wrist;
 
     public Bromine(HardwareMap hardwareMap) {
         claw = new Claw(hardwareMap);
         clawRotater = new ClawRotater(hardwareMap);
         shoulder = new ShoudlerJohn(hardwareMap);
         colorSensor = new ColorSensor(hardwareMap);
+        wrist = new WristJohn(hardwareMap);
     }
 
     double clawRotaterAngle;
@@ -36,6 +39,7 @@ public class Bromine {
         claw.update();
         clawRotater.update(clawRotaterAngle);
         shoulder.update(looptime);
+        wrist.update();
     }
 
     public void update(double looptime) {

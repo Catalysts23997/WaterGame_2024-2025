@@ -38,12 +38,11 @@ public class AttachmentPositions {
 
         //make sure goal is coerced in range
 
-        double claw =Slides.INSTANCE.linearSlideExtension(30).clawServoRot;
-        double claw2 =Slides.INSTANCE.linearSlideExtension(50).clawServoRot;
 
-        Assert.assertEquals(claw,claw2,0.0);
-        System.out.print(claw);
-        System.out.print(claw2);
+
+        double length = Slides.INSTANCE.linearSlideExtension(11).slideLength;
+        System.out.print(length);
+        Assert.assertEquals(length,AttachmentsJohn.minExtension,0);
 
     }
 }

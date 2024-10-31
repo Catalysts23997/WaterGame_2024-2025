@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer;
 
 public class ClawRotater {
 
-    Servo clawRotater;
+    public Servo clawRotater;
 
     double position = 0;
 
