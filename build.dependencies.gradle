@@ -1,8 +1,6 @@
 repositories {
     mavenCentral()
     google()
-
-    maven{url = "https://maven.brott.dev/"}
 }
 
 dependencies {

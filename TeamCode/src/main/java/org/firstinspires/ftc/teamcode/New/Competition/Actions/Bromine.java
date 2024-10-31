@@ -32,16 +32,16 @@ public class Bromine {
     double clawRotaterAngle;
     //TODO have a way to calculate the yaw of the claw with camera
 
-    public void update(Gamepad gamepad) {
+    public void update(Gamepad gamepad, double looptime) {
         claw.update();
         clawRotater.update(clawRotaterAngle);
-        shoulder.update();
+        shoulder.update(looptime);
     }
 
-    public void update() {
+    public void update(double looptime) {
         claw.update();
         clawRotater.update(clawRotaterAngle);
-        shoulder.update();
+        shoulder.update(looptime);
     }
 
     class Intake implements Action {
@@ -57,10 +57,10 @@ public class Bromine {
             claw.clawState = Claw.ClawState.OPEN;
             if (grabbingFromGround) {
                 clawRotater.state = ClawRotater.State.ADJUSTING;
-                shoulder.state = ShoudlerJohn.State.GROUND;
+                shoulder.state = ShoudlerJohn.State.IDLE_TO_Ground;
             } else {
                 clawRotater.state = ClawRotater.State.INPUT;
-                shoulder.state = ShoudlerJohn.State.SUBMERSIBLE;
+                shoulder.state = ShoudlerJohn.State.IDLE_TO_Submersible;
             }
 
             if (colorSensor.checkForRecognition() == ColorSensor.Recognition.IN) {
@@ -76,8 +76,8 @@ public class Bromine {
     ParallelAction driveAndRaise = new ParallelAction(
             Positions.Rbasket.runToNearest,
             telemetryPacket2 -> {
-                shoulder.state = ShoudlerJohn.State.BASKET;
-                return !shoulderReachedTarget;
+                shoulder.state = ShoudlerJohn.State.IDLE_TO_Basket;
+                return false;//!shoulderReachedTarget;
             }
     );
     //after the drive and raise action is completed, the claw opens.

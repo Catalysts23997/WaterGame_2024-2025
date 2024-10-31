@@ -3,24 +3,32 @@ package org.firstinspires.ftc.teamcode.New.Competition.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.New.Angle;
 import org.firstinspires.ftc.teamcode.New.PIDFcontroller;
 import org.firstinspires.ftc.teamcode.New.PIDParams;
+import org.firstinspires.ftc.teamcode.PIDTuner.Constants;
+
+import java.util.ArrayList;
+
+import CommonUtilities.AngleRange;
+import CommonUtilities.PIDFParams;
 
 public class ShoudlerJohn {
     DcMotor Shoulder;
     public State state;
-    PIDParams shoulderParams = new PIDParams(0,0,0,0);
-    PIDFcontroller shoulderPID = new PIDFcontroller(shoulderParams);
-    int target;
-
+    ArrayList<AngleRange> targets = Constants.angleRanges;
+    Constants constants = new Constants();
 
     public ShoudlerJohn(HardwareMap hardwareMap){
         Shoulder = hardwareMap.get(DcMotor.class,"Shoulder");
     }
 
-    public void update(){
-        target = state.encoderPos;
-        double power = shoulderPID.calculate(target - Shoulder.getCurrentPosition());
+    public void update(double looptime){
+        //use auto tuner
+
+        constants.pidfController.resetConstantsAndTarget(state.params, state.target);
+
+        double power = constants.pidfController.calculateMotorPower(Shoulder.getCurrentPosition(), looptime);
 
         if(state == State.IDLE){
             power = 0;
@@ -30,16 +38,16 @@ public class ShoudlerJohn {
     }
 
     public enum State{
-        BASKET(0),
-        CLIP(0),
-        SUBMERSIBLE(0),
-        GROUND(0),
-        STATIONARY(0),
-        IDLE(0);
-
-        public final int encoderPos;
-        State(int encoderPos) {
-            this.encoderPos = encoderPos;
+        IDLE_TO_Basket(Constants.angleRanges.get(0),Constants.params.get(0)),
+        IDLE_TO_Clip(Constants.angleRanges.get(0),Constants.params.get(0)),
+        IDLE_TO_Submersible(Constants.angleRanges.get(0),Constants.params.get(0)),
+        IDLE_TO_Ground(Constants.angleRanges.get(0),Constants.params.get(0)),
+        IDLE(Constants.angleRanges.get(0),Constants.params.get(0));
+        public final AngleRange target;
+        public final PIDFParams params;
+        State(AngleRange angleRange, PIDFParams params) {
+            this.target = angleRange;
+            this.params = params;
         }
     }
     //todo- implement an actual has reached boolean thing
