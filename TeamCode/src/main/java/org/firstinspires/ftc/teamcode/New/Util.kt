@@ -16,7 +16,6 @@ import kotlin.math.sqrt
 
 object Angle {
     fun wrap(theta: Double): Double {
-        require(theta in -2 * PI..2 * PI)
         var angle = theta
         while (angle > PI) angle -= PI * 2
         while (angle < -PI) angle += PI * 2
