@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
+import org.firstinspires.ftc.teamcode.New.SmoothInput
 import org.firstinspires.ftc.teamcode.New.SubSystems
 import kotlin.math.cos
 import kotlin.math.sin
@@ -47,7 +48,8 @@ class Drive(hwMap: HardwareMap) : SubSystems {
     }
 
     private fun driveManual(gamepadInput: ArrayList<Float>) {
-        val (lateral, axial, turn) = gamepadInput
+        val input = gamepadInput.map{SmoothInput.gamepadStick(it.toDouble())}
+        val (lateral, axial, turn) = input
         val h = -Localizer.pose.heading.toDouble()
         val rotX = axial * cos(h) - lateral * sin(h)
         val rotY = axial * sin(h) + lateral * cos(h)

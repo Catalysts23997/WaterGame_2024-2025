@@ -21,6 +21,10 @@ class DrivingPractice : LinearOpMode(){
         while (opModeIsActive() && !isStopRequested) {
             localizer.update()
 
+            if(gamepad1.a){
+                localizer.resetHeading()
+            }
+
             drive.update(arrayListOf(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x))
 
             telemetry.addData("x", gamepad1.left_stick_x)

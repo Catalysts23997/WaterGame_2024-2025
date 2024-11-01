@@ -181,3 +181,8 @@ class BasicallyIK(private val wristLength: Double, private val armLength: Double
         return 2* PI + angleA + asin((sideB*sin(angleA))/sideA)
     }
 }
+object SmoothInput{
+    fun gamepadStick(input: Double): Double{
+        return if(input>0) input.pow(2.1) else -input.pow(2.1)
+    }
+}

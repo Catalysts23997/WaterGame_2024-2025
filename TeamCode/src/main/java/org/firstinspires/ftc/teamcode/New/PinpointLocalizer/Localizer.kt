@@ -34,6 +34,7 @@ class Localizer(hwmap: HardwareMap, private val offset: Pose2d) {
         pose = Pose2d(goBildaPinpointDriver.posY+ offset.position.y,goBildaPinpointDriver.posX - offset.position.x,
             Angle.wrap(goBildaPinpointDriver.heading+offset.heading.toDouble()))
     }
+    fun resetHeading(){goBildaPinpointDriver.recalibrateIMU()}
     companion object{
         lateinit var pose: Pose2d
     }
