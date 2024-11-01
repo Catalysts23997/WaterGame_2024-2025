@@ -21,53 +21,51 @@ public class Bromine {
     public Claw claw;
     public ClawRotater clawRotater;
     public ShoudlerJohn shoulder;
-    public ColorSensor colorSensor;
     public WristJohn wrist;
 
     public Bromine(HardwareMap hardwareMap) {
         claw = new Claw(hardwareMap);
         clawRotater = new ClawRotater(hardwareMap);
         shoulder = new ShoudlerJohn(hardwareMap);
-        colorSensor = new ColorSensor(hardwareMap);
         wrist = new WristJohn(hardwareMap);
     }
 
-    double clawRotaterAngle;
     //TODO have a way to calculate the yaw of the claw with camera
 
-    public void update(Gamepad gamepad, double looptime) {
+    public void teleUpdate(Gamepad gamepad, double looptime) {
         claw.update();
-        clawRotater.update(clawRotaterAngle);
+        clawRotater.updateTele(gamepad.left_stick_y);
         shoulder.update(looptime);
         wrist.update();
     }
 
-    public void update(double looptime) {
+    public void teleUpdate(double looptime) {
         claw.update();
-        clawRotater.update(clawRotaterAngle);
+        clawRotater.update();
         shoulder.update(looptime);
     }
 
     class Intake implements Action {
-        boolean grabbingFromGround;
+        boolean grabFromFloor;
 
-        public Intake(boolean grabbingFromGround) {
-            this.grabbingFromGround = grabbingFromGround;
+        public Intake(boolean grabFromFloor) {
+            this.grabFromFloor = grabFromFloor;
         }
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
             claw.clawState = Claw.ClawState.OPEN;
-            if (grabbingFromGround) {
+            if (grabFromFloor) {
                 clawRotater.state = ClawRotater.State.ADJUSTING;
                 shoulder.state = ShoudlerJohn.State.IDLE_TO_Ground;
             } else {
+//                clawRotater.angle = ;
                 clawRotater.state = ClawRotater.State.INPUT;
                 shoulder.state = ShoudlerJohn.State.IDLE_TO_Submersible;
             }
 
-            if (colorSensor.checkForRecognition() == ColorSensor.Recognition.IN) {
+            //color sensor not added yet
+            if (1==1) {
                 claw.clawState = Claw.ClawState.CLOSED;
                 return false;
             } else {

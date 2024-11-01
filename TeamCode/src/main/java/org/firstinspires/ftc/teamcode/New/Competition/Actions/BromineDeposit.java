@@ -39,7 +39,7 @@ public class BromineDeposit{
             claw.clawState = Claw.ClawState.CLOSED;
             //todo- review claw rotate and fix which position its in
             clawrotate.state = ClawRotater.State.ZERO;
-            shoudlerJohn.state = ShoudlerJohn.State.BASKET;
+//            shoudlerJohn.state = ShoudlerJohn.State.BASKET;
             //idk why the state isn't public, it's public in shoulderjohn so should be accessible here.
             // I'll fix it in the morning.
 //            wrist.state = WristJohn.state.BASKET;

@@ -1,73 +1,38 @@
-///PACKAGE HERE!!! :)
-
-//What are these?
-
+package org.firstinspires.ftc.teamcode.New.Opmodes.Testing.Opmodes.Lights;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode; 
-import com.qualcomm.robotcore.eventloop.opmode.Teleop;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Disabled
-@TeleOp(group * "Examples")
-r
-/** Build Linea Op Mode next meeting **/
-public class Blinkin extends LinearOpMode{
-
-    private RevBlinkinLedDriver leftlights, rightlights;
-    private boolean blinkinTimer = false;
-    private int blinkinDelay = 2000;
-
+@TeleOp(name = "Blinking", group = "Linear OpMode")
+public class Blinking extends LinearOpMode {
+    RevBlinkinLedDriver leftLights,rightLights;
     @Override
     public void runOpMode() throws InterruptedException {
-        initHardware();
-        while(!isStarted()) {}
+        leftLights = hardwareMap.get(RevBlinkinLedDriver.class, "leftLights");
+        rightLights = hardwareMap.get(RevBlinkinLedDriver.class, "rightLights");
+
         waitForStart();
-        resetBlinkin();
-        while(opModeIsActive()) {
+        resetRuntime();
+        while (opModeIsActive()) {
+            telemetry.addData(" Timer", time);
+            telemetry.update();
             updateBlinkin();
         }
-
     }
-
-    public void initHardware() {
-
-        initLights();
-        sleep(blinkinDelay);
-        blinkinGreen();
-
-    }
-
-    public void initLights () {
-
-        leftLights = hardwareMap.get(RevBlinkinLedDriver.class,"leftLights");
-        rightLights = hardwareMap.get(RevBlinkinLedDriver.class,"rightLights");
-        blinkinOrange();
-
-    }
-
-    public void resetBlinkin() {
-        blinkinTimer = true;
-        resetRuntime();
-
-
-    }
-
     public void updateBlinkin() {
 
-        if(blinkinTimer && time < 5) {
+        if (time < 5) {
             blinkinRed();
-        }
-        else if (blinkinTimer && time >= 5 && time < 10) {
+        } else if ( time >= 5 && time < 10) {
             blinkinGreen();
-        }
-        else if (blinkinTimer && time >= 10 && time < 15) {
+        } else if (time >= 10 && time < 15) {
             blinkinBlue();
-        }
-        else if (blinkinTimer && time >= 15 && time < 20) {
+        } else if (time >= 15 && time < 20) {
             blinkinOrange();
-        }
-        else {
+        } else {
             blinkinBlack();
         }
     }
@@ -95,11 +60,6 @@ public class Blinkin extends LinearOpMode{
     public void blinkinBlack() {
         leftLights.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
         rightLights.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
-    }
-
-    public void timeTelemetry() {
-        telemetry.addData(" Timer", time);
-        telemetry.update();
     }
 
 }

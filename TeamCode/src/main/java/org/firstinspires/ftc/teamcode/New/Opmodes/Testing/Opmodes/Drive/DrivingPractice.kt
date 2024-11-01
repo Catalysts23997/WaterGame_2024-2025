@@ -25,8 +25,9 @@ class DrivingPractice : LinearOpMode(){
 
             telemetry.addData("x", gamepad1.left_stick_x)
             telemetry.addData("y", gamepad1.left_stick_y)
-            telemetry.addData("y", Localizer.pose.heading.toDouble())
-
+            telemetry.addData("Heading", Localizer.pose.heading.toDouble())
+            telemetry.addData("X position", Localizer.pose.position.y)
+            telemetry.addData("Y position", Localizer.pose.position.x *-1)
             telemetry.update()
         }
     }

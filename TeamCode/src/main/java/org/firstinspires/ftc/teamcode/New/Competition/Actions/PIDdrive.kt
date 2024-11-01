@@ -58,6 +58,7 @@ class PIDdrive(hwMap: HardwareMap){
  */
 class RunToNearest(private val targetVector: Vector2d, private val rotation: Rotation2d): Action {
     override fun run(p: TelemetryPacket): Boolean {
+        //todo note that x and y are flipped
         val currentVector = Localizer.pose.position
         val heading = -1* Localizer.pose.heading.toDouble()
         val motors = PIDdrive.instance
@@ -88,6 +89,7 @@ class RunToNearest(private val targetVector: Vector2d, private val rotation: Rot
  */
 class RunToExact(private val targetVector: Vector2d, private val rotation: Rotation2d): Action {
     override fun run(p: TelemetryPacket): Boolean {
+        //todo note that x and y are flipped
         val currentVector = Localizer.pose.position
         val heading = -1* Localizer.pose.heading.toDouble()
         val motors = PIDdrive.instance

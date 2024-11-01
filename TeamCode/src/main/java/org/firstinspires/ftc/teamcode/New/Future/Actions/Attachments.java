@@ -45,7 +45,7 @@ public class Attachments {
     public void update(Gamepad gamepad2){
         this.gamepad2 = gamepad2;
 
-        clawJohn.update(intakeDistance, clawRotaterAngle);
+        clawJohn.update(intakeDistance);
 
         verticalSlides.update();
 

@@ -4,24 +4,21 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Claw {
-    Servo claw;
+    public Servo claw;
 
-    public ClawState clawState;
+    public ClawState clawState = ClawState.OPEN;
 
     public Claw(HardwareMap hardwareMap){
-        claw = hardwareMap.get(Servo.class, "Claw");
+        claw = hardwareMap.get(Servo.class, "claw");
     }
-
-    public double clawEncoder;
 
     public void update(){
         claw.setPosition(clawState.servoPos);
-        clawEncoder = claw.getPosition();
     }
 
     public enum ClawState {
-        CLOSED(0.5),
-        OPEN(0);
+        CLOSED(0.83),
+        OPEN(1.0);
 
         public final double servoPos;
         ClawState(double servoPos) {

@@ -1,63 +1,49 @@
 package org.firstinspires.ftc.teamcode.New.Competition.subsystems;
 
 
-import static java.lang.Math.toDegrees;
+import static java.lang.Math.PI;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.New.Angle;
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer;
+import org.firstinspires.ftc.teamcode.New.ServoPoses;
+import org.firstinspires.ftc.teamcode.New.ServoRange;
 
 public class ClawRotater {
-
     public Servo clawRotater;
 
-    double position = 0;
-
-    public ClawRotater(HardwareMap hardwareMap){
-        clawRotater = hardwareMap.get(Servo.class,"clawRotater");
+    public ClawRotater(HardwareMap hardwareMap) {
+        clawRotater = hardwareMap.get(Servo.class, "clawRotator");
     }
 
-    double angleDegrees;
-    public State state;
+    public State state = State.ZERO;
+    public double angle = 0.0;
 
-    public void update(Double angle) {
-        switch (state){
-            case ZERO: angleDegrees = 0; break;
-            case INPUT: angleDegrees = angle; break;
-            case ADJUSTING: angleDegrees = 90 - toDegrees(Localizer.pose.heading.toDouble()); break;
+    public void update() {
+        switch (state) {
+            case ZERO:
+                angle = 0;
+                break;
+            //todo setup/change
+            case INPUT:
+                break;
+            case ADJUSTING:
+                angle = Angle.INSTANCE.wrap(PI - Localizer.pose.heading.toDouble());
+                break;
         }
-
-        if(angleDegrees>=180){
-            angleDegrees -= 180;
-        }
-        if(angleDegrees<0){
-            angleDegrees += 180;
-        }
-        position = angleDegrees/180;
-        clawRotater.setPosition(position);
+        angle = Angle.INSTANCE.wrapToPositive(angle);
+        clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
     }
 
-    double angle = 0;
+    double start = .3176;
+    double end = 1.0;
 
-    public void updateTele(Gamepad gamepad2){
-        angle -= gamepad2.left_stick_y;
-        if(angle>=180){
-            angle -= 180;
-        }
-        if(angle<0){
-            angle += 180;
-        }
-
-        //todo is math above just angle wrap? Why angle <0 PLEASE USE RADIANS
-        //angle = Math.toDegrees(Angle.INSTANCE.wrap(Math.toRadians(angle)));
-        //if(angle<0) angle += 180;
-
-        position = angle/180;
-        clawRotater.setPosition(position);
+    public void updateTele(double left_stick_y) {
+        angle -= left_stick_y * .02;
+        angle = Angle.INSTANCE.wrapToPositive(angle);
+        clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
     }
 
     public enum State {

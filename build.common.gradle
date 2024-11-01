@@ -116,4 +116,8 @@ android {
     ndkVersion '21.3.6528147'
 }
 
-
+repositories {
+    maven{
+        url = "https://maven.brott.dev/"
+    }
+}

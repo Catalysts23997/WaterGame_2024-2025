@@ -57,7 +57,7 @@ public class AttachmentsJohn {
 
 
 
-    public void update(double goalDistance, double rotaterAngle){
+    public void update(double goalDistance){
 
         attachmentPositons = Slides.INSTANCE.linearSlideExtension(goalDistance);
 
@@ -84,6 +84,6 @@ public class AttachmentsJohn {
 
         claw.setPosition(clawState.servoPos);
 
-        clawRotater.update(rotaterAngle);
+        clawRotater.update();
     }
 }

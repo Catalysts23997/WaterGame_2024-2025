@@ -19,7 +19,7 @@ public class Testing implements Action {
 
     @Override
     public boolean run(@NotNull TelemetryPacket telemetryPacket) {
-        shoulder.state = ShoudlerJohn.State.BASKET;
+//        shoulder.state = ShoudlerJohn.State.BASKET;
         Sequence.run(telemetryPacket);
         return false;
     }

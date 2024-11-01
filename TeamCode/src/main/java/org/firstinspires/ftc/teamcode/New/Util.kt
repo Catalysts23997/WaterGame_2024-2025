@@ -162,3 +162,22 @@ object FindNearestPoint {
     }
 
 }
+data class ServoRange(val zeroDegrees: Double, val halfRotation:Double)
+object ServoPoses{
+    fun findServoPosBasedOnAngle(
+        angle: Double,
+        servo: ServoRange
+    ): Double {
+        return ((angle / (2 * Math.PI)) * (servo.halfRotation - servo.zeroDegrees)) + servo.zeroDegrees
+    }
+}
+
+class BasicallyIK(private val wristLength: Double, private val armLength: Double) {
+    //todo make unit tests
+    fun findWristAngle(targetAngle :Double, armAngle: Double): Double{
+        val angleA = armAngle - targetAngle
+        val sideA = wristLength
+        val sideB = armLength
+        return 2* PI + angleA + asin((sideB*sin(angleA))/sideA)
+    }
+}
