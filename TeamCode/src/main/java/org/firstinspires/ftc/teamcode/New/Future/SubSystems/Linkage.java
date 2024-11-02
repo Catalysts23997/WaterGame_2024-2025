@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.New.Future.SubSystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.New.PIDFcontroller;
+import org.firstinspires.ftc.teamcode.New.PIDcontroller;
 import org.firstinspires.ftc.teamcode.New.PIDParams;
 
 public class Linkage {
@@ -13,7 +13,7 @@ public class Linkage {
     double goalPos;
     final double ticksPerRev = 28;
 
-    PIDFcontroller pidFcontroller = new PIDFcontroller(new PIDParams(0,0,0,0));
+    PIDcontroller PIDcontroller = new PIDcontroller(new PIDParams(0,0,0,0));
 
     public Linkage (HardwareMap hardwareMap){
         linkage = hardwareMap.get(DcMotor.class, "clawFlipper");
@@ -35,7 +35,7 @@ public class Linkage {
 
 
         int linkageEncoder = linkage.getCurrentPosition();
-        double power = pidFcontroller.calculate(goalPos - linkageEncoder);
+        double power = PIDcontroller.calculate(goalPos - linkageEncoder);
 
         if(linkageState == LinkageState.IDLE){
             power = 0;

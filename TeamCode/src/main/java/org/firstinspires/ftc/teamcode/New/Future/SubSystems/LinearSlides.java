@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.New.Future.SubSystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.New.PIDFcontroller;
+import org.firstinspires.ftc.teamcode.New.PIDcontroller;
 import org.firstinspires.ftc.teamcode.New.PIDParams;
 
 public class LinearSlides {
@@ -64,7 +64,7 @@ public class LinearSlides {
 
         //tune PID coefficients
         PIDParams pidParams = new PIDParams(0.0,0.0,0.0,0.0);
-        PIDFcontroller pidFcontroller = new PIDFcontroller(pidParams);
+        PIDcontroller PIDcontroller = new PIDcontroller(pidParams);
 
         public LeftSlide(HardwareMap hardwareMap){
             leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
@@ -74,7 +74,7 @@ public class LinearSlides {
         public void update(int target, State state) {
             leftEncoder = leftSlide.getCurrentPosition();
 
-            double leftPower = pidFcontroller.calculate(target - leftEncoder);
+            double leftPower = PIDcontroller.calculate(target - leftEncoder);
 
             //idle mode for testing or emergency stop
             if(state == State.IDLE){
@@ -91,7 +91,7 @@ public class LinearSlides {
 
         //tune PID coefficients
         PIDParams pidParams = new PIDParams(0.0,0.0,0.0,0.0);
-        PIDFcontroller pidFcontroller = new PIDFcontroller(pidParams);
+        PIDcontroller PIDcontroller = new PIDcontroller(pidParams);
 
         public RightSlide(HardwareMap hardwareMap){
             rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
@@ -100,7 +100,7 @@ public class LinearSlides {
         public void update(int target, State state) {
             rightEncoder = rightSlide.getCurrentPosition();
 
-            double rightPower = pidFcontroller.calculate(target - rightEncoder);
+            double rightPower = PIDcontroller.calculate(target - rightEncoder);
 
             //idle mode for testing or emergency stop
             if(state == State.IDLE){

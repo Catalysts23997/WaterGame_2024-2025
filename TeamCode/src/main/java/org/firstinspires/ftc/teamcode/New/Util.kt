@@ -33,18 +33,17 @@ object Angle {
 
 data class PIDParams(val kp: Double, val ki: Double, val kd: Double, val kf: Double = 0.0)
 
-data class PIDFcontroller(var params: PIDParams) {
+data class PIDcontroller(var params: PIDParams) {
 
     private var integral = 0.0
     private val timer: ElapsedTime = ElapsedTime()
     private var previousError = 0.0
+    private var lastError = 0.0
     fun calculate(error: Double): Double {
-
         integral += (error * timer.seconds())
-        val derivative = (error - previousError) / timer.seconds()
-        timer.reset()
+        val derivative = (error - previousError) / (timer.seconds() - lastError)
+        lastError = timer.seconds()
 
-        //add FF
         return (derivative * params.kd + integral * params.ki + error * params.kp).coerceIn(
             -1.0,
             1.0
