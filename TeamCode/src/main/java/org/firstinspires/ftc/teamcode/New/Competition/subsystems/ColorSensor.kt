@@ -9,16 +9,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 
 class ColorSensor(hwMap: HardwareMap) {
 
-    enum class Recognition {
-        IN,
-        NOT
-    }
-
     private val colorSensor: ColorSensor =
         hwMap.get(ColorSensor::class.java, "colorSensor")
 
-    fun checkForRecognition(): Recognition {
-        val colorSensorRecognition: Recognition
+    fun checkForRecognition(): Boolean {
 
         //right sensor
         (colorSensor as NormalizedColorSensor).gain = 2f
@@ -29,10 +23,6 @@ class ColorSensor(hwMap: HardwareMap) {
         val inside =
             ((colorSensor as DistanceSensor).getDistance(DistanceUnit.CM) < 5) && value >= .06
 
-
-        colorSensorRecognition =
-            if (inside) Recognition.IN else Recognition.NOT
-
-        return colorSensorRecognition
+        return inside
     }
 }

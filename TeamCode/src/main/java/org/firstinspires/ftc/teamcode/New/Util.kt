@@ -184,3 +184,4 @@ object SmoothInput{
         return if(input>0) input.pow(2.1) else -input.pow(2.1)
     }
 }
+

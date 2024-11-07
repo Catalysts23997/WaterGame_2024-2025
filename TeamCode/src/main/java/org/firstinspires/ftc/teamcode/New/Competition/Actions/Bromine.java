@@ -22,12 +22,14 @@ public class Bromine {
     public ClawRotater clawRotater;
     public ShoudlerJohn shoulder;
     public WristJohn wrist;
+    public ColorSensor colorSensor;
 
     public Bromine(HardwareMap hardwareMap) {
         claw = new Claw(hardwareMap);
         clawRotater = new ClawRotater(hardwareMap);
         shoulder = new ShoudlerJohn(hardwareMap);
         wrist = new WristJohn(hardwareMap);
+        colorSensor = new ColorSensor(hardwareMap);
     }
 
     //TODO have a way to calculate the yaw of the claw with camera
@@ -65,8 +67,7 @@ public class Bromine {
                 shoulder.state = ShoudlerJohn.State.IDLE_TO_Submersible;
             }
 
-            //color sensor not added yet
-            if (1==1) {
+            if (colorSensor.checkForRecognition()) {
                 claw.clawState = Claw.ClawState.CLOSED;
                 return false;
             } else {
@@ -74,6 +75,7 @@ public class Bromine {
             }
         }
     }
+
     //runs to nearest is completed, simultaneously the shoudler is raised and claw is kept closed.
 
     ParallelAction driveAndRaise = new ParallelAction(
