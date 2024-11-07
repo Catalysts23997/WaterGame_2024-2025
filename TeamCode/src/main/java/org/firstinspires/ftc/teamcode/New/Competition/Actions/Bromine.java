@@ -45,6 +45,7 @@ public class Bromine {
         shoulder.update(looptime);
     }
 
+
     class Intake implements Action {
         boolean grabFromFloor;
 
@@ -109,5 +110,21 @@ public class Bromine {
     public Action depositBasket(double time) {
         this.time = time;
         return DepositBasket;
+    }
+
+    public class DepositSpecimen implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            shoulder.state = ShoudlerJohn.State.IDLE_TO_Submersible;
+            claw.clawState = Claw.ClawState.CLOSED;
+            if (shoulder.targetReached){
+                claw.clawState = Claw.ClawState.OPEN;
+
+            }
+
+
+            return false;
+        }
     }
 }
