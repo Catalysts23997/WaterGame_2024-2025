@@ -122,7 +122,6 @@ public class Bromine {
                 claw.clawState = Claw.ClawState.OPEN;
 
             }
-
             return false;
         }
     }
