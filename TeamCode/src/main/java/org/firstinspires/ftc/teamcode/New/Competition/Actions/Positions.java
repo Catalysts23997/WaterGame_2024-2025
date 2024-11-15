@@ -6,7 +6,7 @@ import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Vector2d;
 
 public enum Positions {
-    // Top Bricks
+    // Blue side Bricks
     Blueleftbrick1 (new Vector2d(-68, 25.5), Rotation2d.fromDouble(0.0)),
     Blueleftbrick2(new Vector2d(-58, 25.5), Rotation2d.fromDouble(0.0)),
     Blueleftbrick3(new Vector2d(-48, 25.5), Rotation2d.fromDouble(0.0)),
@@ -15,7 +15,7 @@ public enum Positions {
     YellowRightbrick2(new Vector2d(58, 25.5), Rotation2d.fromDouble(0.0)),
     YellowRightbrick3(new Vector2d(68, 25.5), Rotation2d.fromDouble(0.0)),
 
-    //Bottom Bricks
+    // Red side Bricks
     YellowLeftbrick1(new Vector2d(-68, -25.5), Rotation2d.fromDouble(0.0)),
     YellowLeftbrick2(new Vector2d(-58, -25.5), Rotation2d.fromDouble(0.0)),
     YellowLeftbrick3(new Vector2d(-48, -25.5), Rotation2d.fromDouble(0.0)),
