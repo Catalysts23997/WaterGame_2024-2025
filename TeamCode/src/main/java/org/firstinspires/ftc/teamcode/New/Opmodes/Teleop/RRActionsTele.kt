@@ -7,10 +7,8 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
-import org.firstinspires.ftc.teamcode.New.Future.Actions.AutoDriveToTag
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive
-import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AprilTagData
 
 //todo test after getting wheels in right directions
 class RRActionsTele : LinearOpMode() {
@@ -41,9 +39,36 @@ class RRActionsTele : LinearOpMode() {
 
             // actions you are running
 
+
             if(gamepad2.a){
+                runningActions.add(bromine.prepareSpecimenWallIntake)
+            }
+            if(gamepad2.b){
+                runningActions.add(bromine.SpecimenWallIntake)
+            }
+            if(gamepad2.y){
                 runningActions.add(bromine.prepareSpecimenDeposit)
             }
+            if(gamepad2.x){
+                runningActions.add(bromine.fullSpecimenDeposit)
+            }
+            if(gamepad2.right_bumper){
+                runningActions.add(bromine.prepareSampleIntake)
+            }
+            if(gamepad2.right_trigger > 0.5){
+                runningActions.add(bromine.SampleIntake)
+            }
+            if(gamepad2.left_bumper){
+                runningActions.add(bromine.prepForHPdrop)
+            }
+            if(gamepad2.left_trigger > 0.5){
+                runningActions.add(bromine.Drop)
+            }
+            if(gamepad2.dpad_up){
+                runningActions.add(bromine.prepareBasketDeposit)
+            }
+
+
 
 
 
@@ -60,7 +85,7 @@ class RRActionsTele : LinearOpMode() {
             dash.sendTelemetryPacket(packet)
 
             //update subsystems
-            bromine.teleUpdate(gamepad1, timer.seconds())
+            bromine.teleUpdate(gamepad2, timer.seconds())
             timer.reset()
         }
     }

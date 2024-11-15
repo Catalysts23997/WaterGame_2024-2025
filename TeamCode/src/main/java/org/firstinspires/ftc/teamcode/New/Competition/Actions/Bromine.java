@@ -33,7 +33,7 @@ public class Bromine {
 
     public void teleUpdate(Gamepad gamepad, double looptime) {
         claw.update();
-        clawRotater.updateTele(gamepad.left_stick_y);
+        clawRotater.updateTele(gamepad.right_stick_x);
         shoulder.update(looptime);
         wrist.update();
     }
@@ -82,14 +82,6 @@ public class Bromine {
             wrist.state = WristJohn.State.Basket;
             clawRotater.state = ClawRotater.State.ZERO;
             return !shoulder.targetReached;
-        }
-    };
-
-    Action fullDepositBasket = new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            claw.clawState = Claw.ClawState.OPEN;
-            return false;
         }
     };
 
@@ -143,7 +135,7 @@ public class Bromine {
         }
     };
 
-    public Action HPdrop = new Action() {
+    public Action Drop = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             claw.clawState = Claw.ClawState.OPEN;
