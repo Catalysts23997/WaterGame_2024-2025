@@ -1,24 +1,19 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Teleop;
 
-import android.media.tv.TableRequest;
-
-import androidx.annotation.NonNull;
-
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.New.Actions.Attachments;
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Java.Intake;
+import org.firstinspires.ftc.teamcode.New.Future.Actions.Attachments;
+
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ColorSensor;
 
 import java.util.ArrayList;
-
+@Disabled
 @TeleOp(name = "Tele", group = "Linear OpMode")
 public class JohnTele extends LinearOpMode {
     //note: All gamepad inputs are not final, they are placeholders for the actual input or other booleans
@@ -37,7 +32,8 @@ public class JohnTele extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        attachments.verticalSlides.resetValue = 0;
+
+        attachments.init();
 
         waitForStart();
 
@@ -48,18 +44,18 @@ public class JohnTele extends LinearOpMode {
             //actions:
 
             if (gamepad2.y && !Depositing) {
-                runningActions.add(attachments.manualDeposit());
+                runningActions.add(attachments.manualDeposit(false));
                 Depositing = true;
             }
-            if (gamepad2.a && Depositing) {
+            if (gamepad2.left_trigger > 0.5 && Depositing && attachments.verticalSlides.hasReached()) {
                 Depositing = false;
             }
 
-            if (gamepad2.y && !Intaking) {
-                runningActions.add(attachments.manualIntake());
+            if (gamepad2.a && !Intaking) {
+                runningActions.add(attachments.manualIntake(false, false));
                 Intaking = true;
             }
-            if (gamepad2.a && Intaking) {
+            if ((attachments.colorSensor.checkForRecognition() || gamepad2.right_trigger > 0.5) && Intaking && attachments.verticalSlides.hasReached()) {
                 Intaking = false;
             }
 
@@ -89,7 +85,7 @@ public class JohnTele extends LinearOpMode {
     }
 }
 
-
+/*
     enum RobotState {
         HANG,
         BASKET,
@@ -98,7 +94,7 @@ public class JohnTele extends LinearOpMode {
         GROUND,
         STATIONARY
     }
-
+*/
 
     /*
     OLD update system, too long

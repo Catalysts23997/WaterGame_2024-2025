@@ -6,8 +6,7 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.Drive
-import org.firstinspires.ftc.teamcode.New.SubSystems.Shawty.Kotlin.TeleLocalizer
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive
 
 @TeleOp(name = "DrivingPractice", group = "Linear OpMode")
 class DrivingPractice : LinearOpMode(){
@@ -22,12 +21,17 @@ class DrivingPractice : LinearOpMode(){
         while (opModeIsActive() && !isStopRequested) {
             localizer.update()
 
+            if(gamepad1.a){
+                localizer.resetHeading()
+            }
+
             drive.update(arrayListOf(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x))
 
             telemetry.addData("x", gamepad1.left_stick_x)
             telemetry.addData("y", gamepad1.left_stick_y)
-            telemetry.addData("y", Localizer.pose.heading.toDouble())
-
+            telemetry.addData("Heading", Localizer.pose.heading.toDouble())
+            telemetry.addData("X position", Localizer.pose.position.y)
+            telemetry.addData("Y position", Localizer.pose.position.x *-1)
             telemetry.update()
         }
     }
