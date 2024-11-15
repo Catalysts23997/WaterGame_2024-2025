@@ -14,6 +14,7 @@ public enum Positions {
         YLbrick1(new Vector2d(-68, -25.5), Rotation2d.fromDouble(0.0)),
         YLbrick2(new Vector2d(-58, -25.5), Rotation2d.fromDouble(0.0)),
         YLbrick3(new Vector2d(-48, -25.5), Rotation2d.fromDouble(0.0)),
+
 //        YRbrick1 (new Vector2d(48, 25.5), Rotation2d.fromDouble(0.0)),
 //        YRbrick2(new Vector2d(58, 25.5), Rotation2d.fromDouble(0.0)),
 //        YRbrick3(new Vector2d(68, 25.5), Rotation2d.fromDouble(0.0)),
