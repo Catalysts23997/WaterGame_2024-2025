@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode.New.Competition.Actions;
 
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.ParallelAction;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ClawRotater;
@@ -23,6 +19,7 @@ public class Bromine {
     public ShoudlerJohn shoulder;
     public WristJohn wrist;
     public ColorSensor colorSensor;
+    public boolean isAuto = false;
 
     public Bromine(HardwareMap hardwareMap) {
         claw = new Claw(hardwareMap);
@@ -40,32 +37,32 @@ public class Bromine {
         shoulder.update(looptime);
         wrist.update();
     }
-
-    public void teleUpdate(double looptime) {
+    public void updateAuto(double looptime) {
         claw.update();
         clawRotater.update();
         shoulder.update(looptime);
+        wrist.update();
     }
 
-
-    class Intake implements Action {
-        boolean grabFromFloor;
-
-        public Intake(boolean grabFromFloor) {
-            this.grabFromFloor = grabFromFloor;
-        }
-
+    public Action prepareSampleIntake = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             claw.clawState = Claw.ClawState.OPEN;
-            if (grabFromFloor) {
+            if (isAuto) {
                 clawRotater.state = ClawRotater.State.ADJUSTING;
-                shoulder.state = ShoudlerJohn.State.IDLE_TO_Ground;
             } else {
-//                clawRotater.angle = ;
                 clawRotater.state = ClawRotater.State.INPUT;
-                shoulder.state = ShoudlerJohn.State.IDLE_TO_Submersible;
             }
+            wrist.state = WristJohn.State.SamplePrep;
+            shoulder.state = ShoudlerJohn.State.SpecimenIntake;
+            return false;
+        }
+    };
+
+    public Action SampleIntake = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = WristJohn.State.Submersible;
 
             if (colorSensor.checkForRecognition()) {
                 claw.clawState = Claw.ClawState.CLOSED;
@@ -74,57 +71,85 @@ public class Bromine {
                 return true;
             }
         }
-    }
+    };
 
-    //runs to nearest is completed, simultaneously the shoudler is raised and claw is kept closed.
+    //runs to nearest is completed, simultaneously the shoulder is raised and claw is kept closed.
 
-    ParallelAction driveAndRaise = new ParallelAction(
-            Positions.Rbasket.runToNearest,
-            telemetryPacket2 -> {
-                shoulder.state = ShoudlerJohn.State.IDLE_TO_Basket;
-                return !shoulder.targetReached;
-            }
-    );
-    //after the drive and raise action is completed, the claw opens.
-
-    boolean initilized = false;
-    ElapsedTime timer = new ElapsedTime();
-    double time = 0.8;
-    SequentialAction DepositBasket = new SequentialAction(
-            driveAndRaise,
-            telemetryPacket2 -> {
-                claw.clawState = Claw.ClawState.OPEN;
-                if (!initilized) {
-                    timer.reset();
-                    initilized = true;
-                }
-                if(timer.seconds()>time){
-                    initilized = false;
-                    return false;
-                } else return true;
-            }
-    );
-
-    public Action intake(boolean grabbingFromGround) {
-        return new Intake(grabbingFromGround);
-    }
-
-    public Action depositBasket(double time) {
-        this.time = time;
-        return DepositBasket;
-    }
-
-    public class DepositSpecimen implements Action{
-
+    public Action prepareBasketDeposit = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shoulder.state = ShoudlerJohn.State.IDLE_TO_Submersible;
-            claw.clawState = Claw.ClawState.CLOSED;
-            if (shoulder.targetReached){
-                claw.clawState = Claw.ClawState.OPEN;
+            shoulder.state = ShoudlerJohn.State.BasketDeposit;
+            wrist.state = WristJohn.State.Basket;
+            clawRotater.state = ClawRotater.State.ZERO;
+            return !shoulder.targetReached;
+        }
+    };
 
-            }
+    Action fullDepositBasket = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            claw.clawState = Claw.ClawState.OPEN;
             return false;
         }
-    }
+    };
+
+    public Action prepareSpecimenDeposit = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = WristJohn.State.Upwards;
+            clawRotater.state = ClawRotater.State.ZERO;
+            shoulder.state = ShoudlerJohn.State.SpecimenDepositPrep;
+            return !shoulder.targetReached;
+        }
+    };
+
+    public Action fullSpecimenDeposit = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = WristJohn.State.Upwards;
+            clawRotater.state = ClawRotater.State.ZERO;
+            shoulder.state = ShoudlerJohn.State.SpecimenDeposit;
+            return !shoulder.targetReached;
+        }
+    };
+
+    public Action prepareSpecimenWallIntake = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = WristJohn.State.WallIntake;
+            shoulder.state = ShoudlerJohn.State.SpecimenIntake;
+            clawRotater.state = ClawRotater.State.ZERO;
+            return !shoulder.targetReached;
+        }
+    };
+
+    public Action SpecimenWallIntake = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (colorSensor.checkForRecognition()) {
+                claw.clawState = Claw.ClawState.CLOSED;
+            }
+            return !colorSensor.checkForRecognition();
+        }
+    };
+
+
+    public Action prepForHPdrop = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = WristJohn.State.HpDrop;
+            shoulder.state = ShoudlerJohn.State.HPdrop;
+            return false;
+        }
+    };
+
+    public Action HPdrop = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            claw.clawState = Claw.ClawState.OPEN;
+            return false;
+        }
+    };
+
+
 }

@@ -55,7 +55,7 @@ public class JohnTele extends LinearOpMode {
                 runningActions.add(attachments.manualIntake(false, false));
                 Intaking = true;
             }
-            if ((attachments.colorSensor.checkForRecognition() == ColorSensor.Recognition.IN || gamepad2.right_trigger > 0.5) && Intaking && attachments.verticalSlides.hasReached()) {
+            if ((attachments.colorSensor.checkForRecognition() || gamepad2.right_trigger > 0.5) && Intaking && attachments.verticalSlides.hasReached()) {
                 Intaking = false;
             }
 

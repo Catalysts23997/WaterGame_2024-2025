@@ -19,7 +19,7 @@ public class ClawRotater {
     }
 
     public State state = State.ZERO;
-    public double angle = 0.0;
+    public static double angle = 0.0;
 
     public void update() {
         switch (state) {

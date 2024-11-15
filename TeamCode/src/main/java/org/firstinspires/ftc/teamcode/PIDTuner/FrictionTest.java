@@ -32,32 +32,34 @@ public class FrictionTest extends LinearOpMode {
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor.setPower(0.0);
 
-        ArmAngle armAngle = new ArmAngle(constants.motor, constants.testingAngle.getStart());
-
         ElapsedTime timer = new ElapsedTime();
         ArrayList<Double> RPMS = new ArrayList<>();
         double angularAccel;
         int lastPosition = 0;
-        double angularVelocity = 0.0;
+        double angularVelocity;
         double lastAngle = 0.0;
         double lastVelocity = 0.0;
         ArrayList<Double> angularAccelerationData = new ArrayList<>();
         ArrayList<Double> motorPowers = new ArrayList<>();
+
+        boolean run  = true;
 
         waitForStart();
         if (!opModeInInit()) {
             timer.reset();
         }
         while (opModeIsActive()) {
+
             telemetry.addLine("Please rotate your robot so that gravity does not affect your mechanism");
 
             // Running motor at half speed
-            double angle = armAngle.findAngle(motor.getCurrentPosition());
+            double angle = constants.armAngle.findAngle(motor.getCurrentPosition());
+
             //todo double angle = get voltage and convert to Radians if using an absolute encoder
 
             // Run motor
-            motor.setPower(
-                    (angle >= constants.testingAngle.getStart() && angle <= constants.testingAngle.getTarget()) ? 0.5 : 0.0
+            if(run) motor.setPower(
+                    (angle <= constants.testingAngle.getTarget()) ? 0.5 : 0.0
             );
 
             // Measure RPM
@@ -65,29 +67,27 @@ public class FrictionTest extends LinearOpMode {
             double rpm = ((motor.getCurrentPosition() - lastPosition) / ticksPerRevolution) * (60.0 / timer.seconds());
             lastPosition = motor.getCurrentPosition();
             double theoreticalRpmMeasured = constants.motor.getRpm() / 2;
-            if (rpm >= theoreticalRpmMeasured * 0.5 && rpm <= theoreticalRpmMeasured * 1.5) {
+            if (rpm >= theoreticalRpmMeasured * 0.3 && rpm <= theoreticalRpmMeasured * 1.7 && run) {
                 RPMS.add(rpm);
             }
-            else telemetry.addLine("Rpm Constants is incorrect, or your robot is struggling with the amount of weight it has");
+//            else telemetry.addLine("Rpm Constants is incorrect, or your robot is struggling with the amount of weight it has");
+
             double sum = 0;
             // Make sure size is not returning something other than 0
             if (!RPMS.isEmpty()) {
-                for (double num : RPMS) sum += num* 2;
+                for (double num : RPMS) sum += num * 2;
                 telemetry.addData("Motor RPM", sum / RPMS.size());
             }
 
             // Finding Angular Acceleration
-            if (timer.seconds() != 0.0) {
-                angularVelocity = (angle - lastAngle) / timer.seconds();
-                angularAccel = abs((angularVelocity - lastVelocity) / timer.seconds());
-                if (motor.getPower() != 0.0) {
-                    angularAccelerationData.add(angularAccel);
-                    motorPowers.add(motor.getPower());
-                }
-            }
+            angularVelocity = (angle - lastAngle) / timer.seconds();
+            angularAccel = abs((angularVelocity - lastVelocity) / timer.seconds());
+            if (motor.getPower() != 0.0) {
+                angularAccelerationData.add(angularAccel);
+                motorPowers.add(motor.getPower());
+            } else  {
+                // Calculate if friction test is complete and find rotational Inertia
 
-            // Calculate if friction test is complete and find rotational Inertia
-            if ((angle < constants.testingAngle.getStart() || angle > constants.testingAngle.getTarget()) && motor.getPower() == 0.0) {
                 angularAccelerationData = RemoveOutliers.removeOutliers(angularAccelerationData);
                 motorPowers = RemoveOutliers.removeOutliers(motorPowers);
 
@@ -95,11 +95,11 @@ public class FrictionTest extends LinearOpMode {
 
                 for (int i = 0; i < angularAccelerationData.size(); i++) {
                     double rotationalInertia = Models.calculateTmotor(
-                            angularAccelerationData.get(i),
+                            .5,
                             constants.motor,
                             sum / RPMS.size()
-                    ) / motorPowers.get(i);
-                    if (rotationalInertia >= 0.0) {
+                    ) / angularAccelerationData.get(i);
+                    if (rotationalInertia > 0.0) {
                         rotationalInertias.add(rotationalInertia);
                     }
                 }
@@ -107,11 +107,8 @@ public class FrictionTest extends LinearOpMode {
                 double sum2 = 0;
                 rotationalInertias = RemoveOutliers.removeOutliers(rotationalInertias);
                 for (double num : rotationalInertias) sum2 += num;
-
-                telemetry.addData(
-                        "Rotational Inertia: (Add to config)",
-                        sum2/rotationalInertias.size()
-                );
+                telemetry.addLine(String.valueOf(sum2 / rotationalInertias.size()));
+                run = false;
             }
 
             lastAngle = angle;

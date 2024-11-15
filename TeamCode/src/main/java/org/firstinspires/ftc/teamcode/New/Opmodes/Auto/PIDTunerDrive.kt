@@ -26,22 +26,22 @@ class PIDTunerDrive : LinearOpMode() {
 
         while (opModeIsActive()) {
 
-            runBlocking(
-                ParallelAction(
-                    Action {
-                        localizer.update()
-                        false },
-                    SequentialAction(
-                        ParallelAction(Positions.RRbrick1.runToNearest,subsystems.intake(true)),
-                        subsystems.depositBasket(1.0),
-                        ParallelAction(Positions.RRbrick2.runToNearest,subsystems.intake(true)),
-                        subsystems.depositBasket(1.0),
-                        ParallelAction(Positions.RRbrick3.runToNearest,subsystems.intake(true)),
-                        subsystems.depositBasket(1.0),
-                        Positions.Rzone.runToExact
-                    )
-                )
-            )
+//            runBlocking(
+//                ParallelAction(
+//                    Action {
+//                        localizer.update()
+//                        false },
+//                    SequentialAction(
+//                        ParallelAction(Positions.RRbrick1.runToNearest,subsystems.intake(true)),
+//                        subsystems.depositBasket(1.0),
+//                        ParallelAction(Positions.RRbrick2.runToNearest,subsystems.intake(true)),
+//                        subsystems.depositBasket(1.0),
+//                        ParallelAction(Positions.RRbrick3.runToNearest,subsystems.intake(true)),
+//                        subsystems.depositBasket(1.0),
+//                        Positions.Rzone.runToExact
+//                    )
+//                )
+//            )
 
         }
 

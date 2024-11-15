@@ -5,6 +5,8 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
 import org.firstinspires.ftc.teamcode.New.Future.Actions.AutoDriveToTag
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive
@@ -18,17 +20,17 @@ class RRActionsTele : LinearOpMode() {
         val packet = TelemetryPacket()
         var runningActions = ArrayList<Action>()
 
-        val localizer = Localizer(hardwareMap, Pose2d(0.0,0.0,0.0))
-        val drive = Drive(hardwareMap)
-        val driveToTag = AutoDriveToTag(AprilTagData(hardwareMap),drive)
+        val bromine = Bromine(hardwareMap)
+        val timer = ElapsedTime()
+
+        while(opModeInInit()) timer.reset()
 
         while (opModeIsActive()) {
-            localizer.update()
 
             // actions you are running
 
             if(gamepad1.a){
-                runningActions.add(driveToTag)
+                runningActions.add(bromine.prepareSpecimenDeposit)
             }
 
 
@@ -44,10 +46,9 @@ class RRActionsTele : LinearOpMode() {
 
             dash.sendTelemetryPacket(packet)
 
-
             //update subsystems
-            drive.update(arrayListOf(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x))
-
+            bromine.teleUpdate(gamepad1, timer.seconds())
+            timer.reset()
         }
     }
 }

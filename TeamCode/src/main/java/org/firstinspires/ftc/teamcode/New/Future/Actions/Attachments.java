@@ -117,7 +117,7 @@ public class Attachments {
 
             //the color sensor sees the object to intake, switch this variable to true
             //gamepad is a backup to force close it
-            if(colorSensor.checkForRecognition() == ColorSensor.Recognition.IN || gamepad2.right_trigger > 0.5){
+            if(colorSensor.checkForRecognition() || gamepad2.right_trigger > 0.5){
                 Grabbed = true;
             }
 

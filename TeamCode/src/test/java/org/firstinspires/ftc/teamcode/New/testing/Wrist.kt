@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.testing
 
+import org.firstinspires.ftc.teamcode.New.BasicallyIK
 import org.firstinspires.ftc.teamcode.New.ServoPoses
 import org.firstinspires.ftc.teamcode.New.ServoRange
 import org.junit.Assert.assertEquals
@@ -15,6 +16,8 @@ class Wrist {
     @Test
     fun wristAngleTestedInput(){
 
+
+//        val calc = BasicallyIK()
 
 
     }

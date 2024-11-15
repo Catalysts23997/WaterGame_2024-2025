@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine;
+import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ShoudlerJohn;
 @Config
 @TeleOp(name = "WristTest", group = "Linear OpMode")
@@ -19,6 +20,7 @@ public class WristTest extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()){
             bromine.wrist.Wrist.setPosition(servoPose);
+            bromine.claw.claw.setPosition(.83);
         }
 
 
