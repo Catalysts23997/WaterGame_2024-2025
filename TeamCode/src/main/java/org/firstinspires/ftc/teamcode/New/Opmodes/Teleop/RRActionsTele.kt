@@ -22,16 +22,29 @@ class RRActionsTele : LinearOpMode() {
 
         val bromine = Bromine(hardwareMap)
         val timer = ElapsedTime()
+        val drive = Drive(hardwareMap)
+        val localizer = Localizer(hardwareMap, Pose2d(0.0,0.0,0.0))
 
         while(opModeInInit()) timer.reset()
 
         while (opModeIsActive()) {
 
+            //all the drive stuff:
+
+            if (gamepad1.x){
+                localizer.resetHeading()
+            }
+
+            localizer.update()
+
+            drive.update(arrayListOf(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x))
+
             // actions you are running
 
-            if(gamepad1.a){
+            if(gamepad2.a){
                 runningActions.add(bromine.prepareSpecimenDeposit)
             }
+
 
 
             // update running actions
