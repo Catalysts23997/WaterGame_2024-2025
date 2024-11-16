@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.Competition.Actions
 
-import CommonUtilities.PIDFcontroller
+import CommonUtilities.AngleRange
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Rotation2d
@@ -70,28 +70,27 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
         motors.setPID(PIDTunerDrive.pTerm, PIDTunerDrive.iTerm, PIDTunerDrive.dTerm)
 
         val currentVector = Localizer.pose
-        val heading = -1 * Localizer.pose.heading
+        val heading =  Localizer.pose.heading
         val target = findNearestPoint(targetVector, Vector2d(currentVector.x, currentVector.y))
 
-        //todo note that x and y are flipped
-        val axialError = target.position.y - currentVector.y
-        val lateralError = target.position.x - currentVector.x
-        val headingError = Angle.wrap(target.heading.toDouble() + heading)
+        val axialError = target.y - currentVector.y
+        val lateralError = target.x - currentVector.x
+        val headingError = Angle.wrap(target.heading - heading)
+
         val axial = motors.Ypid.calculate(axialError)
         val lateral = motors.Xpid.calculate(lateralError)
         val turn = motors.Rpid.calculate(headingError)
-        //note its + because heading is multiplied by negative 1
 
-        val rotX = lateral * cos(heading) - axial * sin(heading)
-        val rotY = lateral * sin(heading) + axial * cos(heading)
+        val rotX = axial * cos(heading) - lateral * sin(heading)
+        val rotY = axial * sin(heading) + lateral * cos(heading)
 
-        motors.leftFront.power = (rotY + rotX - turn)
-        motors.leftBack.power = (rotY - rotX - turn)
-        motors.rightFront.power = (rotY - rotX + turn)
-        motors.rightBack.power = (rotY + rotX + turn)
+        motors.leftFront.power = (rotY - rotX + turn)
+        motors.leftBack.power = (rotY + rotX - turn)
+        motors.rightFront.power = (rotY + rotX + turn)
+        motors.rightBack.power = (rotY - rotX - turn)
 
         return arrayListOf(axialError, lateralError).all { abs(it) <= 2.0 } &&
-                abs(headingError) <= Math.toRadians(5.0)
+                abs(headingError) <= Math.toRadians(11.0)
     }
 
 }
@@ -101,28 +100,24 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
  */
 class RunToExact(private val targetVector: Vector2d, private val rotation: Rotation2d) : Action {
     override fun run(p: TelemetryPacket): Boolean {
-        //todo note that x and y are flipped
-        val currentVectorY = Localizer.pose.y
-        val currentVectorX = Localizer.pose.x
-        val heading = -1 * Localizer.pose.heading
+        val current = Localizer.pose
         val motors = PIDdrive.instance
 
-        val axial = motors.Ypid.calculate(targetVector.y - currentVectorY)
-        val lateral = motors.Xpid.calculate(targetVector.x - currentVectorX)
-        val turn = motors.Rpid.calculate(rotation.toDouble() +heading)
-        //note its + because heading is multiplied by negative 1
+        val axial = motors.Ypid.calculate(targetVector.y - current.y)
+        val lateral = motors.Xpid.calculate(targetVector.x - current.x)
+        val turn = motors.Rpid.calculate(Angle.wrap(rotation.toDouble() - current.heading))
 
-        val rotX = lateral * Math.cos(heading) - axial * Math.sin(heading)
-        val rotY = lateral * Math.sin(heading) + axial * Math.cos(heading)
+        val rotX = axial * cos(current.heading) - lateral * sin(current.heading)
+        val rotY = axial * sin(current.heading) + lateral * cos(current.heading)
 
-        motors.leftFront.power = (rotY + rotX - turn)
-        motors.leftBack.power = (rotY - rotX - turn)
-        motors.rightFront.power = (rotY - rotX + turn)
-        motors.rightBack.power = (rotY + rotX + turn)
+        motors.leftFront.power = (rotY - rotX + turn)
+        motors.leftBack.power = (rotY + rotX - turn)
+        motors.rightFront.power = (rotY + rotX + turn)
+        motors.rightBack.power = (rotY - rotX - turn)
 
-        return abs(currentVectorX - targetVector.x) <= 2.0 &&
-                abs(currentVectorY - targetVector.y) <= 2.0 &&
-                abs(Angle.wrap(rotation.toDouble() + heading)) <= Math.toRadians(8.0)
+        return abs(current.x - targetVector.x) <= 2.0 &&
+                abs(current.y - targetVector.y) <= 2.0 &&
+                abs(Angle.wrap(rotation.toDouble() - current.heading)) <= Math.toRadians(8.0)
     }
 
 }

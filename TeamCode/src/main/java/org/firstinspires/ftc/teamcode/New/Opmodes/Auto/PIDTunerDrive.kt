@@ -7,11 +7,14 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
+import org.firstinspires.ftc.teamcode.New.Competition.Actions.PIDdrive
 import org.firstinspires.ftc.teamcode.New.Competition.Actions.Positions
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 
 @Config
+@TeleOp
 class PIDTunerDrive : LinearOpMode() {
     companion object {
         var pTerm = doubleArrayOf(0.0, 0.0, 0.0)
@@ -22,28 +25,34 @@ class PIDTunerDrive : LinearOpMode() {
     override fun runOpMode() {
 
         val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
+        val drive = PIDdrive(hardwareMap)
 
-        while (opModeIsActive()) {
-
-            runBlocking(
+       runBlocking(
                 ParallelAction(
                     Action {
                         localizer.update()
+                        drive.setPID(pTerm, iTerm, dTerm)
                        true },
                     SequentialAction(
-//                        Positions.YLbrick1.runToExact,
-//                        Positions.YLbrick3.runToExact,
-//                        Positions.YLbrick1.runToExact,
-//                        Positions.YLbrick3.runToExact,
-//                        Positions.YLbrick1.runToExact,
-//                        Positions.YLbrick3.runToExact,
-//                        Positions.YLbrick1.runToExact,
-//                        Positions.YLbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
+                        Positions.YellowLeftbrick1.runToExact,
+                        Positions.YellowLeftbrick3.runToExact,
                     )
                 )
             )
-
-        }
 
 
     }

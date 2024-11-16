@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AttachmentPositons
 import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AttachmentsJohn
+import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.acos
@@ -131,9 +132,9 @@ object FindNearestPoint {
      * @param targetPos Target
      * @param currentPos Localizer Pose
      */
-    fun findNearestPoint(targetPos: Vector2d, currentPos: Vector2d): Pose2d {
+    fun findNearestPoint(targetPos: Vector2d, currentPos: Vector2d): Localizer.Poses {
 
-        //triangle with legs A and A, hypotenuse B
+        //triangle with legs A and C, hypotenuse B
         val A = targetPos.x - currentPos.x
         val C = targetPos.y - currentPos.y
         val B = sqrt(C.pow(2) + A.pow(2))
@@ -147,7 +148,7 @@ object FindNearestPoint {
         val y = C - yOffsetTarget + currentPos.y
         val angle = acos((A.pow(2) + B.pow(2) - C.pow(2)) / (2 * A * B))
 
-        return Pose2d(x, y, angle)
+        return Localizer.Poses(x, y, angle)
     }
 
 }

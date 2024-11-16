@@ -47,7 +47,7 @@ class RRActionsTele : LinearOpMode() {
                 runningActions.add(bromine.SampleIntake)
             }
             if (gamepad2.left_bumper) {
-                runningActions.add(bromine.prepForHPdrop)
+                runningActions.add(SequentialAction(bromine.prepForHPdrop, bromine.Drop))
             }
             if (gamepad2.left_trigger > 0.5) {
                 runningActions.add(bromine.Drop)

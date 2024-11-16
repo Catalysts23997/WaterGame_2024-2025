@@ -28,6 +28,7 @@ class Localizer(hwmap: HardwareMap, private val offset: Poses) {
         )
 
         goBildaPinpointDriver.resetPosAndIMU()
+        goBildaPinpointDriver.recalibrateIMU()
     }
 
     fun update(){
