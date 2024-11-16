@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.New
 
+import ArmSpecific.Dt
+import CommonUtilities.AngleRange
+import CommonUtilities.PIDFcontroller
 import com.acmerobotics.roadrunner.Pose2d
 import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
@@ -9,6 +12,8 @@ import kotlin.math.PI
 import kotlin.math.acos
 import kotlin.math.asin
 import kotlin.math.atan
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -33,23 +38,6 @@ object Angle {
 
 data class PIDParams(val kp: Double, val ki: Double, val kd: Double, val kf: Double = 0.0)
 
-data class PIDcontroller(var params: PIDParams) {
-
-    private var integral = 0.0
-    private val timer: ElapsedTime = ElapsedTime()
-    private var previousError = 0.0
-    private var lastError = 0.0
-    fun calculate(error: Double): Double {
-        integral += (error * timer.seconds())
-        val derivative = (error - previousError) / (timer.seconds() - lastError)
-        lastError = timer.seconds()
-
-        return (derivative * params.kd + integral * params.ki + error * params.kp).coerceIn(
-            -1.0,
-            1.0
-        )
-    }
-}
 
 
 object Wait {
@@ -166,7 +154,7 @@ object ServoPoses{
         angle: Double,
         servo: ServoRange
     ): Double {
-        return ((angle / (2 * Math.PI)) * (servo.halfRotation - servo.zeroDegrees)) + servo.zeroDegrees
+        return (((angle / (Math.PI)) * (servo.halfRotation - servo.zeroDegrees)) + servo.zeroDegrees).coerceIn(0.0,1.0)
     }
 }
 
@@ -182,6 +170,33 @@ class BasicallyIK(private val wristLength: Double, private val armLength: Double
 object SmoothInput{
     fun gamepadStick(input: Double): Double{
         return if(input>0) input.pow(2.1) else -input.pow(2.1)
+    }
+}
+
+class Controller(var params: PIDParams) {
+    private var prevError = 0.0
+    private var integral = 0.0
+    val timer = ElapsedTime()
+    var pastTime=0.0
+    fun calculate(
+        target: Double,
+        armAngle: Double = 0.0
+    ): Double {
+        val dt = timer.seconds() - pastTime
+        val error = target - dt
+        integral += (error * dt)
+
+        val derivative = (error - prevError) / dt
+        prevError = error
+
+        val ff = if(armAngle>0 ) max(0.0, sin(armAngle)) * params.kf else min(0.0, sin(armAngle)) * params.kf
+        val controlEffort =
+            ((derivative * params.kd + integral * params.ki + error * params.kp) + ff).coerceIn(
+                -1.0,
+                1.0
+            )
+        pastTime = timer.seconds()
+        return controlEffort
     }
 }
 

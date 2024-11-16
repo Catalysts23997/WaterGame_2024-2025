@@ -14,7 +14,7 @@ class SampleAuto : LinearOpMode() {
 
     override fun runOpMode() {
 
-        val localizer = Localizer(hardwareMap, Pose2d(0.0, 0.0, 0.0))
+        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
         val bromine = Bromine(hardwareMap);
         waitForStart()
 
@@ -22,7 +22,8 @@ class SampleAuto : LinearOpMode() {
             ParallelAction(
                 Action {
                     localizer.update()
-                    false
+                    bromine.updateAuto()
+                    true
                 },
                 SequentialAction(
                     bromine.prepareSpecimenDeposit,
@@ -55,14 +56,6 @@ class SampleAuto : LinearOpMode() {
                     bromine.SpecimenWallIntake,
                     bromine.prepareSpecimenDeposit,
                     bromine.fullSpecimenDeposit,
-
-
-                    Positions.Rbasket.runToNearest,
-                    Positions.RRbrick1.runToNearest,
-                    Positions.Rbasket.runToNearest,
-                    Positions.RRbrick2.runToNearest,
-                    Positions.Rbasket.runToNearest,
-                    Positions.RRbrick3.runToNearest
                 )
             )
         )

@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AprilTagData
 class Ardu : LinearOpMode() {
 
     override fun runOpMode() {
-        val localizer = Localizer(hardwareMap, Pose2d(0.0,0.0,0.0))
+        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
         val aprilTagProcessor = AprilTagData(hardwareMap)
 waitForStart()
         while (opModeIsActive()){

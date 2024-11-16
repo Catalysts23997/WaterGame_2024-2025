@@ -13,7 +13,7 @@ class DrivingPractice : LinearOpMode(){
     override fun runOpMode() {
         telemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
 
-        val localizer = Localizer(hardwareMap, Pose2d(0.0,0.0,0.0))
+        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
         val drive = Drive(hardwareMap)
 
         waitForStart()
@@ -29,9 +29,10 @@ class DrivingPractice : LinearOpMode(){
 
             telemetry.addData("x", gamepad1.left_stick_x)
             telemetry.addData("y", gamepad1.left_stick_y)
-            telemetry.addData("Heading", Localizer.pose.heading.toDouble())
-            telemetry.addData("X position", Localizer.pose.position.y)
-            telemetry.addData("Y position", Localizer.pose.position.x *-1)
+
+            telemetry.addData("Heading", Localizer.pose.heading)
+            telemetry.addData("X position", Localizer.pose.x)
+            telemetry.addData("Y position", Localizer.pose.y)
             telemetry.update()
         }
     }

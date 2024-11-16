@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.Competition.subsystems;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -21,7 +23,7 @@ public class WristJohn {
         Upwards(0.0),
         HpDrop(.27),
         Basket(0.0),
-        SamplePrep(0.3),
+        SamplePrep(0.2),
         WallIntake(0.0),
         Submersible(0.0); //not sure if we want to use arm angle or specified pose no matter angle
         public final double servoPos;
@@ -33,16 +35,17 @@ public class WristJohn {
 
     public void update() {
         double targetAngle = ShoudlerJohn.angle;
-        Wrist.setPosition(state.servoPos);
 
         if (state == State.Submersible || state == State.WallIntake) {
             targetAngle += Math.PI / 2;
         }
 
-        if (state == State.Submersible || state == State.WallIntake || state == State.Upwards)
+        if (state == State.Submersible || state == State.WallIntake || state == State.Upwards && targetAngle >0 ) {
             Wrist.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(
-                    targetAngle, new ServoRange(0.0, .62)));
+                    targetAngle, new ServoRange(0.0, 0.62)));
+        }
+        else Wrist.setPosition(state.servoPos);
+        Log.d("YOO", String.valueOf(ShoudlerJohn.angle));
     }
-
 
 }

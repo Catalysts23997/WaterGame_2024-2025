@@ -21,7 +21,7 @@ class ColorSensor(hwMap: HardwareMap) {
         val value = JavaUtil.colorToValue(color)
 
         val inside =
-            ((colorSensor as DistanceSensor).getDistance(DistanceUnit.CM) < 5) && value >= .06
+            ((colorSensor as DistanceSensor).getDistance(DistanceUnit.CM) < 7) && value >= .04
 
         return inside
     }

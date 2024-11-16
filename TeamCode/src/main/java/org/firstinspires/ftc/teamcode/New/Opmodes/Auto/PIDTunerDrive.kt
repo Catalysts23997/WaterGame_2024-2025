@@ -21,27 +21,27 @@ class PIDTunerDrive : LinearOpMode() {
 
     override fun runOpMode() {
 
-        val localizer = Localizer(hardwareMap, Pose2d(0.0, 0.0, 0.0))
-        val subsystems = Bromine(hardwareMap)
+        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
 
         while (opModeIsActive()) {
 
-//            runBlocking(
-//                ParallelAction(
-//                    Action {
-//                        localizer.update()
-//                        false },
-//                    SequentialAction(
-//                        ParallelAction(Positions.RRbrick1.runToNearest,subsystems.intake(true)),
-//                        subsystems.depositBasket(1.0),
-//                        ParallelAction(Positions.RRbrick2.runToNearest,subsystems.intake(true)),
-//                        subsystems.depositBasket(1.0),
-//                        ParallelAction(Positions.RRbrick3.runToNearest,subsystems.intake(true)),
-//                        subsystems.depositBasket(1.0),
-//                        Positions.Rzone.runToExact
-//                    )
-//                )
-//            )
+            runBlocking(
+                ParallelAction(
+                    Action {
+                        localizer.update()
+                       true },
+                    SequentialAction(
+//                        Positions.YLbrick1.runToExact,
+//                        Positions.YLbrick3.runToExact,
+//                        Positions.YLbrick1.runToExact,
+//                        Positions.YLbrick3.runToExact,
+//                        Positions.YLbrick1.runToExact,
+//                        Positions.YLbrick3.runToExact,
+//                        Positions.YLbrick1.runToExact,
+//                        Positions.YLbrick3.runToExact,
+                    )
+                )
+            )
 
         }
 

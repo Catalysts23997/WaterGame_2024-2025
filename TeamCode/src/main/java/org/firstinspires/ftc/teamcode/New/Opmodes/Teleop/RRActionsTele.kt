@@ -4,13 +4,18 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Pose2d
+import com.acmerobotics.roadrunner.SequentialAction
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
+import org.firstinspires.ftc.teamcode.New.Future.Actions.AutoDriveToTag
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AprilTagData
 
 //todo test after getting wheels in right directions
+@TeleOp(name = "Teleop", group = "Linear OpMode")
 class RRActionsTele : LinearOpMode() {
 
     override fun runOpMode() {
@@ -20,31 +25,18 @@ class RRActionsTele : LinearOpMode() {
 
         val bromine = Bromine(hardwareMap)
         val timer = ElapsedTime()
-        val drive = Drive(hardwareMap)
-        val localizer = Localizer(hardwareMap, Pose2d(0.0,0.0,0.0))
 
+        val drive= Drive(hardwareMap)
         while(opModeInInit()) timer.reset()
 
         while (opModeIsActive()) {
 
-            //all the drive stuff:
-
-            if (gamepad1.x){
-                localizer.resetHeading()
-            }
-
-            localizer.update()
-
-            drive.update(arrayListOf(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x))
-
             // actions you are running
 
-
-            if(gamepad2.a){
-                runningActions.add(bromine.prepareSpecimenWallIntake)
-            }
-            if(gamepad2.b){
-                runningActions.add(bromine.SpecimenWallIntake)
+            if(gamepad1.a){
+                runningActions.add(
+                    SequentialAction(bromine.prepareSpecimenWallIntake,bromine.SpecimenWallIntake)
+                )
             }
             if(gamepad2.y){
                 runningActions.add(bromine.prepareSpecimenDeposit)
@@ -69,9 +61,6 @@ class RRActionsTele : LinearOpMode() {
             }
 
 
-
-
-
             // update running actions
             val newActions = ArrayList<Action>()
             runningActions.forEach {
@@ -84,8 +73,10 @@ class RRActionsTele : LinearOpMode() {
 
             dash.sendTelemetryPacket(packet)
 
+
             //update subsystems
-            bromine.teleUpdate(gamepad2, timer.seconds())
+            bromine.teleUpdate(gamepad1)
+            drive.update()
             timer.reset()
         }
     }

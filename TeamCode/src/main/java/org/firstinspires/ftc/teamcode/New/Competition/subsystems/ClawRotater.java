@@ -30,11 +30,15 @@ public class ClawRotater {
             case INPUT:
                 break;
             case ADJUSTING:
-                angle = Angle.INSTANCE.wrap(PI - Localizer.pose.heading.toDouble());
+                angle = Angle.INSTANCE.wrap(PI - Localizer.pose.getHeading());
+                break;
+            case HalfWay:
+                angle = PI/2;
                 break;
         }
         angle = Angle.INSTANCE.wrapToPositive(angle);
         clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
+        if(state == State.HalfWay)  clawRotater.setPosition(.6588);
     }
 
     double start = .3176;
@@ -44,12 +48,14 @@ public class ClawRotater {
         angle -= left_stick_y * .02;
         angle = Angle.INSTANCE.wrapToPositive(angle);
         clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
+        if(state == State.HalfWay)  clawRotater.setPosition(.6588);
     }
 
     public enum State {
         ZERO,
         INPUT,
-        ADJUSTING
+        ADJUSTING,
+        HalfWay
     }
 
 }

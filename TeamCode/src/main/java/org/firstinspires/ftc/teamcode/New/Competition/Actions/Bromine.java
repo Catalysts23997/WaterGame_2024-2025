@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.Competition.Actions;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -31,16 +33,16 @@ public class Bromine {
 
     //TODO have a way to calculate the yaw of the claw with camera
 
-    public void teleUpdate(Gamepad gamepad, double looptime) {
+    public void teleUpdate(Gamepad gamepad) {
         claw.update();
         clawRotater.updateTele(gamepad.right_stick_x);
-        shoulder.update(looptime);
+        shoulder.update();
         wrist.update();
     }
-    public void updateAuto(double looptime) {
+    public void updateAuto() {
         claw.update();
         clawRotater.update();
-        shoulder.update(looptime);
+        shoulder.update();
         wrist.update();
     }
 
@@ -54,7 +56,7 @@ public class Bromine {
                 clawRotater.state = ClawRotater.State.INPUT;
             }
             wrist.state = WristJohn.State.SamplePrep;
-            shoulder.state = ShoudlerJohn.State.SpecimenIntake;
+            shoulder.state = ShoudlerJohn.State.SubmersibleIntake;
             return false;
         }
     };
@@ -80,7 +82,7 @@ public class Bromine {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shoulder.state = ShoudlerJohn.State.BasketDeposit;
             wrist.state = WristJohn.State.Basket;
-            clawRotater.state = ClawRotater.State.ZERO;
+            clawRotater.state = ClawRotater.State.HalfWay;
             return !shoulder.targetReached;
         }
     };
@@ -89,7 +91,8 @@ public class Bromine {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = WristJohn.State.Upwards;
-            clawRotater.state = ClawRotater.State.ZERO;
+            clawRotater.state = ClawRotater.State.HalfWay;
+            claw.clawState = Claw.ClawState.CLOSED;
             shoulder.state = ShoudlerJohn.State.SpecimenDepositPrep;
             return !shoulder.targetReached;
         }
@@ -99,7 +102,8 @@ public class Bromine {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = WristJohn.State.Upwards;
-            clawRotater.state = ClawRotater.State.ZERO;
+            clawRotater.state = ClawRotater.State.HalfWay;
+            claw.clawState = Claw.ClawState.CLOSED;
             shoulder.state = ShoudlerJohn.State.SpecimenDeposit;
             return !shoulder.targetReached;
         }
@@ -109,8 +113,8 @@ public class Bromine {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = WristJohn.State.WallIntake;
+            clawRotater.state = ClawRotater.State.HalfWay;
             shoulder.state = ShoudlerJohn.State.SpecimenIntake;
-            clawRotater.state = ClawRotater.State.ZERO;
             return !shoulder.targetReached;
         }
     };
@@ -124,7 +128,6 @@ public class Bromine {
             return !colorSensor.checkForRecognition();
         }
     };
-
 
     public Action prepForHPdrop = new Action() {
         @Override
