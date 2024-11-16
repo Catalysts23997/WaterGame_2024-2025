@@ -1,14 +1,17 @@
 package org.firstinspires.ftc.teamcode.New
 
+import ArmSpecific.ArmAngle
 import ArmSpecific.Dt
 import CommonUtilities.AngleRange
 import CommonUtilities.PIDFcontroller
+import android.util.Log
 import com.acmerobotics.roadrunner.Pose2d
 import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AttachmentPositons
 import org.firstinspires.ftc.teamcode.New.Future.SubSystems.AttachmentsJohn
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.acos
 import kotlin.math.asin
 import kotlin.math.atan
@@ -169,7 +172,7 @@ class BasicallyIK(private val wristLength: Double, private val armLength: Double
 }
 object SmoothInput{
     fun gamepadStick(input: Double): Double{
-        return if(input>0) input.pow(2.1) else -input.pow(2.1)
+        return if(input>0)(input).pow(2.1)  else -1 * abs(input).pow(2.1)
     }
 }
 
@@ -189,13 +192,16 @@ class Controller(var params: PIDParams) {
         val derivative = (error - prevError) / dt
         prevError = error
 
-        val ff = if(armAngle>0 ) max(0.0, sin(armAngle)) * params.kf else min(0.0, sin(armAngle)) * params.kf
+        val ff = if(armAngle< PI ) max(0.0, sin(armAngle)) * params.kf else min(0.0, -sin(PI-(armAngle - PI))) * params.kf
         val controlEffort =
             ((derivative * params.kd + integral * params.ki + error * params.kp) + ff).coerceIn(
                 -1.0,
                 1.0
             )
         pastTime = timer.seconds()
+
+        Log.d("errorsss", ff.toString())
+        Log.d("errorsss", Math.toDegrees(armAngle).toString())
         return controlEffort
     }
 }

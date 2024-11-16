@@ -105,7 +105,12 @@ public class Bromine {
             clawRotater.state = ClawRotater.State.HalfWay;
             claw.clawState = Claw.ClawState.CLOSED;
             shoulder.state = ShoudlerJohn.State.SpecimenDeposit;
-            return !shoulder.targetReached;
+            if (shoulder.targetReached) {
+                claw.clawState = Claw.ClawState.OPEN;
+                return false;
+            } else {
+                return true;
+            }
         }
     };
 
@@ -124,8 +129,9 @@ public class Bromine {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (colorSensor.checkForRecognition()) {
                 claw.clawState = Claw.ClawState.CLOSED;
+                return false;
             }
-            return !colorSensor.checkForRecognition();
+            return true;
         }
     };
 

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.New.Angle;
 import org.firstinspires.ftc.teamcode.New.Controller;
 import org.firstinspires.ftc.teamcode.New.PIDParams;
 import org.firstinspires.ftc.teamcode.PIDTuner.Constants;
@@ -17,7 +18,7 @@ public class ShoudlerJohn {
     Constants constants = new Constants();
     public boolean targetReached = false;
     public static double angle = 0.0;
-    Controller pidFcontroller = new Controller(new PIDParams(2.2, 0.6363758070970078, 0.4, 0.7522356071054006));
+    Controller pidFcontroller = new Controller(new PIDParams(.5, .01, .17, .3));
 
     public ShoudlerJohn(HardwareMap hardwareMap) {
         Shoulder = hardwareMap.get(DcMotorEx.class, constants.motorName);
@@ -30,13 +31,18 @@ public class ShoudlerJohn {
     public void update() {
         int encoder = Shoulder.getCurrentPosition();
 
-        angle = constants.armAngle.findAngle(encoder);
+        if(Math.abs(angle - state.target) < Math.toRadians(50)) {
+            if(state == State.SpecimenDeposit) pidFcontroller.setParams(new PIDParams(1.5, .2, .15, .4));
+            else pidFcontroller.setParams(new PIDParams(.9, .2, .2, .4));
+        }
+        else pidFcontroller.setParams(new PIDParams(.47, .01, .18, .3));
+        angle = Math.toRadians(3.0) + encoder * (2 * Math.PI / 1995.0);
         double power = pidFcontroller.calculate(state.target -angle, angle);
 
-        Log.d("YOO", String.valueOf(power));
-        Log.d("YOO", String.valueOf(encoder));
+//        Log.d("YOO", String.valueOf(power));
+//        Log.d("YOO", String.valueOf(encoder));
 
-        targetReached = Math.abs(angle - state.target) < Math.toRadians(5.0);
+        targetReached = Math.abs(angle - state.target) < Math.toRadians(10.0);
 
         if (state == State.IDLE) {
             power = 0;
@@ -47,10 +53,10 @@ public class ShoudlerJohn {
 
     public enum State {
         SpecimenDepositPrep(130),
-        SpecimenDeposit(115),
+        SpecimenDeposit(95),
         SpecimenIntake(360-145),
         HPdrop(360-120),
-        BasketDeposit(107),
+        BasketDeposit(108),
         SubmersibleIntake(50),
         IDLE(0.0);
         public final double target;

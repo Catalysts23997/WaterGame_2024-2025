@@ -32,7 +32,7 @@ class Localizer(hwmap: HardwareMap, private val offset: Poses) {
 
     fun update(){
         goBildaPinpointDriver.update()
-        pose = Poses(goBildaPinpointDriver.posX,goBildaPinpointDriver.posY,goBildaPinpointDriver.heading)
+        pose = Poses(goBildaPinpointDriver.posY + offset.x,goBildaPinpointDriver.posX + offset.y,Angle.wrap(-goBildaPinpointDriver.heading))
     }
 
     fun resetHeading(){goBildaPinpointDriver.recalibrateIMU()}

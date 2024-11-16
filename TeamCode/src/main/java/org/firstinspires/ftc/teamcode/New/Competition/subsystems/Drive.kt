@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.Competition.subsystems
 
+import android.util.Log
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -49,8 +50,10 @@ class Drive(hwMap: HardwareMap) : SubSystems {
 
     private fun driveManual(gamepadInput: ArrayList<Float>) {
         val input = gamepadInput.map{SmoothInput.gamepadStick(it.toDouble())}
+        Log.d("f", input.toString())
         val (lateral, axial, turn) = input
-        val h = -Localizer.pose.heading.toDouble()
+
+        val h = Localizer.pose.heading
         val rotX = axial * cos(h) - lateral * sin(h)
         val rotY = axial * sin(h) + lateral * cos(h)
 
