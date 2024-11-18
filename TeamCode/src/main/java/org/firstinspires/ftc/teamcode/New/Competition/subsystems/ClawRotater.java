@@ -38,17 +38,20 @@ public class ClawRotater {
         }
         angle = Angle.INSTANCE.wrapToPositive(angle);
         clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
-        if(state == State.HalfWay)  clawRotater.setPosition(.6588);
+        if(state == State.HalfWay)  clawRotater.setPosition(.67);
     }
 
-    double start = .3176;
+    double start = .34;
     double end = 1.0;
 
     public void updateTele(double left_stick_y) {
-        angle -= left_stick_y * .02;
+
+        if(left_stick_y!=0.0){}
+        else angle = Math.abs(left_stick_y* PI);
+
         angle = Angle.INSTANCE.wrapToPositive(angle);
         clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
-        if(state == State.HalfWay)  clawRotater.setPosition(.6588);
+        if(state == State.HalfWay)  clawRotater.setPosition(.67);
     }
 
     public enum State {

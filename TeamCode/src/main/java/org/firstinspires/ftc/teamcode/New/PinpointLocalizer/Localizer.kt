@@ -1,42 +1,43 @@
 package org.firstinspires.ftc.teamcode.New.PinpointLocalizer
 
-import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.teamcode.New.Angle
 
 
 class Localizer(hwmap: HardwareMap, private val offset: Poses) {
 
-    private val goBildaPinpointDriver: GoBildaPinpointDriver = hwmap.get(GoBildaPinpointDriver::class.java, "odo")
+    private val odo: GoBildaPinpointDriver = hwmap.get(GoBildaPinpointDriver::class.java, "odo")
     init {
+        odo.setOffsets(-6 * 25.4, 4 * 25.4)
+
+        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD)
+
+        //odo.setEncoderResolution(13.26291192);
+
+
         /*
-        Set the odometry pod positions relative to the point that the odometry computer tracks around.
-        The X pod offset refers to how far sideways from the tracking point the
-        X (forward) odometry pod is. Left of the center is a positive number,
-        right of center is a negative number. the Y pod offset refers to how far forwards from
-        the tracking point the Y (strafe) odometry pod is. forward of center is a positive number,
-        backwards is a negative number.
+        Set the direction that each of the two odometry pods count. The X (forward) pod should
+        increase when you move the robot forward. And the Y (strafe) pod should increase when
+        you move the robot to the left.
          */
-        goBildaPinpointDriver.setOffsets(-6.25, -6.0)
-
-        goBildaPinpointDriver.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD)
-
-        goBildaPinpointDriver.setEncoderDirections(
+        odo.setEncoderDirections(
             GoBildaPinpointDriver.EncoderDirection.FORWARD,
-            GoBildaPinpointDriver.EncoderDirection.REVERSED
+            GoBildaPinpointDriver.EncoderDirection.FORWARD
         )
 
-        goBildaPinpointDriver.resetPosAndIMU()
-        goBildaPinpointDriver.recalibrateIMU()
+        odo.resetPosAndIMU()
     }
 
+    var Angleoffset = 0.0
+    //todo add boolean just imu or not
     fun update(){
-        goBildaPinpointDriver.update()
-        pose = Poses(goBildaPinpointDriver.posY + offset.x,goBildaPinpointDriver.posX + offset.y,Angle.wrap(-goBildaPinpointDriver.heading))
+        odo.update()
+        pose = Poses(offset.x - odo.position.getY(DistanceUnit.INCH),offset.y + odo.position.getX(DistanceUnit.INCH),Angle.wrap(odo.position.getHeading(AngleUnit.RADIANS)-Angleoffset))
     }
 
-    fun resetHeading(){goBildaPinpointDriver.recalibrateIMU()}
+    fun resetHeading(){Angleoffset += pose.heading}
     companion object{
         lateinit var pose: Poses
     }

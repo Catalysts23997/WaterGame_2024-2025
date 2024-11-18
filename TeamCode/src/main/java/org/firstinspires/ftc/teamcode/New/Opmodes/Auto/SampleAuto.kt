@@ -27,7 +27,6 @@ class SampleAuto : LinearOpMode() {
                 },
                 SequentialAction(
                     bromine.prepareSpecimenDeposit,
-                    bromine.fullSpecimenDeposit,
 
                     //grabbing the specimens and giving them to Human PLayer
                     bromine.prepareSampleIntake,
@@ -47,15 +46,12 @@ class SampleAuto : LinearOpMode() {
                     bromine.prepareSpecimenWallIntake,
                     bromine.SpecimenWallIntake,
                     bromine.prepareSpecimenDeposit,
-                    bromine.fullSpecimenDeposit,
                     bromine.prepareSpecimenWallIntake,
                     bromine.SpecimenWallIntake,
                     bromine.prepareSpecimenDeposit,
-                    bromine.fullSpecimenDeposit,
                     bromine.prepareSpecimenWallIntake,
                     bromine.SpecimenWallIntake,
                     bromine.prepareSpecimenDeposit,
-                    bromine.fullSpecimenDeposit,
                 )
             )
         )

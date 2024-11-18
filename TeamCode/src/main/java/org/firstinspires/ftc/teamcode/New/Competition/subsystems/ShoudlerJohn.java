@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.New.Competition.subsystems;
 
-import android.util.Log;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.New.Angle;
 import org.firstinspires.ftc.teamcode.New.Controller;
 import org.firstinspires.ftc.teamcode.New.PIDParams;
 import org.firstinspires.ftc.teamcode.PIDTuner.Constants;
@@ -18,7 +15,7 @@ public class ShoudlerJohn {
     Constants constants = new Constants();
     public boolean targetReached = false;
     public static double angle = 0.0;
-    Controller pidFcontroller = new Controller(new PIDParams(.5, .01, .17, .3));
+    Controller pidFcontroller = new Controller(new PIDParams(.4, .01, .15, .32));
 
     public ShoudlerJohn(HardwareMap hardwareMap) {
         Shoulder = hardwareMap.get(DcMotorEx.class, constants.motorName);
@@ -31,18 +28,21 @@ public class ShoudlerJohn {
     public void update() {
         int encoder = Shoulder.getCurrentPosition();
 
-        if(Math.abs(angle - state.target) < Math.toRadians(50)) {
-            if(state == State.SpecimenDeposit) pidFcontroller.setParams(new PIDParams(1.5, .2, .15, .4));
-            else pidFcontroller.setParams(new PIDParams(.9, .2, .2, .4));
+        if(Math.abs(state.target-angle) < Math.toRadians(45)) {
+            pidFcontroller.setParams(new PIDParams(.3, .0, .15, .2));
+            if(state == State.SpecimenDeposit) pidFcontroller.setParams(new PIDParams(.6, 0.0, .05, .4));
+            if(state== State.SpecimenIntake) pidFcontroller.setParams(new PIDParams(.8, .0, .1, .25));
+            if(state == State.SubmersibleIntake) pidFcontroller.setParams(new PIDParams(.5, .0, .08, .2));
         }
-        else pidFcontroller.setParams(new PIDParams(.47, .01, .18, .3));
+        else pidFcontroller.setParams(new PIDParams(.35, .0, .1, .315));
         angle = Math.toRadians(3.0) + encoder * (2 * Math.PI / 1995.0);
         double power = pidFcontroller.calculate(state.target -angle, angle);
+
 
 //        Log.d("YOO", String.valueOf(power));
 //        Log.d("YOO", String.valueOf(encoder));
 
-        targetReached = Math.abs(angle - state.target) < Math.toRadians(10.0);
+        targetReached = Math.abs(angle - state.target) < Math.toRadians(20.0);
 
         if (state == State.IDLE) {
             power = 0;
@@ -52,12 +52,13 @@ public class ShoudlerJohn {
     }
 
     public enum State {
-        SpecimenDepositPrep(130),
-        SpecimenDeposit(95),
-        SpecimenIntake(360-145),
-        HPdrop(360-120),
-        BasketDeposit(108),
-        SubmersibleIntake(50),
+        SpecimenIntakeHigh(360-131),
+        SpecimenIntakeLow(360-123),
+        SpecimenDeposit(123),
+        SpecimenIntake(360-119),
+        HPdrop(360-100),
+        BasketDeposit(130),
+        SubmersibleIntake(56),
         IDLE(0.0);
         public final double target;
         State(double Target) {

@@ -23,9 +23,9 @@ public class WristJohn {
     public enum State {
         Upwards(0.0),
         HpDrop(.7),
-        Basket(.94),
+        Basket(.34),
         SamplePrep(0.6),
-        WallIntake(0.8),
+        WallIntake(0.65),
         Submersible(0.0); //not sure if we want to use arm angle or specified pose no matter angle
         public final double servoPos;
 
@@ -38,7 +38,7 @@ public class WristJohn {
         double targetAngle = ShoudlerJohn.angle;
 
         if (state == State.Submersible) {
-            targetAngle += Math.PI / 2;
+            targetAngle += Math.PI / 2 +.1;
         } else if(state == State.WallIntake){
             targetAngle -= Math.PI;
         }

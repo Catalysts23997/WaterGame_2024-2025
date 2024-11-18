@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.New.Competition.Actions;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Competition.subsystems.ClawRotater;
@@ -35,7 +34,7 @@ public class Bromine {
 
     public void teleUpdate(Gamepad gamepad) {
         claw.update();
-        clawRotater.updateTele(gamepad.right_stick_x);
+        clawRotater.updateTele(gamepad.left_stick_y);
         shoulder.update();
         wrist.update();
     }
@@ -60,18 +59,34 @@ public class Bromine {
             return false;
         }
     };
-
+ ElapsedTime timer = new ElapsedTime();
+ boolean initilized = false;
+    public Action AfterS = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if(!initilized) {
+                timer.reset();
+                initilized = true;}
+            if(timer.seconds() > .4) {
+                wrist.state = WristJohn.State.SamplePrep;
+                initilized = false;
+                return false;
+            }
+            return true;
+        }
+    };
     public Action SampleIntake = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = WristJohn.State.Submersible;
-
+            if(claw.clawState == Claw.ClawState.CLOSED) return false;
             if (colorSensor.checkForRecognition()) {
                 claw.clawState = Claw.ClawState.CLOSED;
                 return false;
             } else {
                 return true;
             }
+
         }
     };
 
@@ -93,24 +108,8 @@ public class Bromine {
             wrist.state = WristJohn.State.Upwards;
             clawRotater.state = ClawRotater.State.HalfWay;
             claw.clawState = Claw.ClawState.CLOSED;
-            shoulder.state = ShoudlerJohn.State.SpecimenDepositPrep;
-            return !shoulder.targetReached;
-        }
-    };
-
-    public Action fullSpecimenDeposit = new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = WristJohn.State.Upwards;
-            clawRotater.state = ClawRotater.State.HalfWay;
-            claw.clawState = Claw.ClawState.CLOSED;
             shoulder.state = ShoudlerJohn.State.SpecimenDeposit;
-            if (shoulder.targetReached) {
-                claw.clawState = Claw.ClawState.OPEN;
-                return false;
-            } else {
-                return true;
-            }
+            return !shoulder.targetReached;
         }
     };
 
@@ -120,7 +119,8 @@ public class Bromine {
             wrist.state = WristJohn.State.WallIntake;
             clawRotater.state = ClawRotater.State.HalfWay;
             shoulder.state = ShoudlerJohn.State.SpecimenIntake;
-            return !shoulder.targetReached;
+            claw.clawState = Claw.ClawState.OPEN;
+            return false;
         }
     };
 
@@ -128,8 +128,15 @@ public class Bromine {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (colorSensor.checkForRecognition()) {
+                if(!initilized) {
+                    timer.reset();
+                    initilized = true;}
+
                 claw.clawState = Claw.ClawState.CLOSED;
-                return false;
+                if(timer.seconds() > .8) {
+                    initilized = false;
+                    return false;
+                }
             }
             return true;
         }
@@ -138,16 +145,33 @@ public class Bromine {
     public Action prepForHPdrop = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            claw.clawState = Claw.ClawState.CLOSED;
             wrist.state = WristJohn.State.HpDrop;
             shoulder.state = ShoudlerJohn.State.HPdrop;
-            return false;
+            return !shoulder.targetReached;
         }
     };
 
     public Action Drop = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            claw.clawState = Claw.ClawState.OPEN;
+            if(claw.clawState == Claw.ClawState.CLOSED)claw.clawState = Claw.ClawState.OPEN;
+            else claw.clawState = Claw.ClawState.CLOSED;
+            return false;
+        }
+    };
+
+    public Action upperDpad = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            shoulder.state = ShoudlerJohn.State.SpecimenIntakeHigh;
+            return false;
+        }
+    };
+    public Action lowDpad = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            shoulder.state = ShoudlerJohn.State.SpecimenIntakeLow;
             return false;
         }
     };

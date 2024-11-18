@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.Competition.Actions
 
 import CommonUtilities.AngleRange
+import android.util.Log
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Rotation2d
@@ -42,6 +43,7 @@ class PIDdrive(hwMap: HardwareMap) {
     val leftBack: DcMotor = hwMap.get(DcMotorEx::class.java, "leftBack")
 
     fun setPID(p: DoubleArray, i: DoubleArray, d: DoubleArray) {
+        Log.d("PID", "setting PID")
         val controllers = listOf(Xpid, Ypid, Rpid)
         controllers.forEachIndexed { index, controller ->
             controller.params = PIDParams(p[index], i[index], d[index], 0.0)
@@ -53,8 +55,10 @@ class PIDdrive(hwMap: HardwareMap) {
         leftFront.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rightBack.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rightFront.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        leftBack.direction = DcMotorSimple.Direction.REVERSE
+        leftBack.direction = DcMotorSimple.Direction.FORWARD
         leftFront.direction = DcMotorSimple.Direction.REVERSE
+        rightFront.direction = DcMotorSimple.Direction.REVERSE
+        rightBack.direction = DcMotorSimple.Direction.FORWARD
     }
 
 
@@ -66,8 +70,6 @@ class PIDdrive(hwMap: HardwareMap) {
 class RunToNearest(private val targetVector: Vector2d) : Action {
     override fun run(p: TelemetryPacket): Boolean {
         val motors = PIDdrive.instance
-        //when tuning ->
-        motors.setPID(PIDTunerDrive.pTerm, PIDTunerDrive.iTerm, PIDTunerDrive.dTerm)
 
         val currentVector = Localizer.pose
         val heading =  Localizer.pose.heading
@@ -84,40 +86,17 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
         val rotX = axial * cos(heading) - lateral * sin(heading)
         val rotY = axial * sin(heading) + lateral * cos(heading)
 
+
         motors.leftFront.power = (rotY - rotX + turn)
         motors.leftBack.power = (rotY + rotX - turn)
         motors.rightFront.power = (rotY + rotX + turn)
         motors.rightBack.power = (rotY - rotX - turn)
+
 
         return arrayListOf(axialError, lateralError).all { abs(it) <= 2.0 } &&
                 abs(headingError) <= Math.toRadians(11.0)
     }
 
-}
 
-/**
- * Runs to exact point
- */
-class RunToExact(private val targetVector: Vector2d, private val rotation: Rotation2d) : Action {
-    override fun run(p: TelemetryPacket): Boolean {
-        val current = Localizer.pose
-        val motors = PIDdrive.instance
-
-        val axial = motors.Ypid.calculate(targetVector.y - current.y)
-        val lateral = motors.Xpid.calculate(targetVector.x - current.x)
-        val turn = motors.Rpid.calculate(Angle.wrap(rotation.toDouble() - current.heading))
-
-        val rotX = axial * cos(current.heading) - lateral * sin(current.heading)
-        val rotY = axial * sin(current.heading) + lateral * cos(current.heading)
-
-        motors.leftFront.power = (rotY - rotX + turn)
-        motors.leftBack.power = (rotY + rotX - turn)
-        motors.rightFront.power = (rotY + rotX + turn)
-        motors.rightBack.power = (rotY - rotX - turn)
-
-        return abs(current.x - targetVector.x) <= 2.0 &&
-                abs(current.y - targetVector.y) <= 2.0 &&
-                abs(Angle.wrap(rotation.toDouble() - current.heading)) <= Math.toRadians(8.0)
-    }
 
 }
