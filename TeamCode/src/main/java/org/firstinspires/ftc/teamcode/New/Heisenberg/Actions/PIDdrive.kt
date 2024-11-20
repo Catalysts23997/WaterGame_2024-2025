@@ -64,36 +64,3 @@ class PIDdrive(hwMap: HardwareMap) {
 /**
  * Runs to the target provided, based on the robots extension
  */
-class RunToNearest(private val targetVector: Vector2d) : Action {
-    override fun run(p: TelemetryPacket): Boolean {
-        val motors = PIDdrive.instance
-
-        val currentVector = Localizer.pose
-        val heading =  Localizer.pose.heading
-        val target = findNearestPoint(targetVector, Vector2d(currentVector.x, currentVector.y))
-
-        val axialError = target.y - currentVector.y
-        val lateralError = target.x - currentVector.x
-        val headingError = Angle.wrap(target.heading - heading)
-
-        val axial = motors.Ypid.calculate(axialError)
-        val lateral = motors.Xpid.calculate(lateralError)
-        val turn = motors.Rpid.calculate(headingError)
-
-        val rotX = axial * cos(heading) - lateral * sin(heading)
-        val rotY = axial * sin(heading) + lateral * cos(heading)
-
-
-        motors.leftFront.power = (rotY - rotX + turn)
-        motors.leftBack.power = (rotY + rotX - turn)
-        motors.rightFront.power = (rotY + rotX + turn)
-        motors.rightBack.power = (rotY - rotX - turn)
-
-
-        return arrayListOf(axialError, lateralError).all { abs(it) <= 2.0 } &&
-                abs(headingError) <= Math.toRadians(11.0)
-    }
-
-
-
-}

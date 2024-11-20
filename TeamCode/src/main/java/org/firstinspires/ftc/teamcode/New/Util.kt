@@ -126,7 +126,7 @@ object FindNearestPoint {
      * @param targetPos Target
      * @param currentPos Localizer Pose
      */
-    fun findNearestPoint(targetPos: Vector2d, currentPos: Vector2d): Localizer.Poses {
+    fun findNearestPoint(targetPos: Vector2d, currentPos: Localizer.Poses): Localizer.Poses {
 
         //triangle with legs A and C, hypotenuse B
         val A = targetPos.x - currentPos.x
