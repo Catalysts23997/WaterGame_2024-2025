@@ -115,12 +115,8 @@ class RunToExact(private val targetVector: Vector2d, private val rotation: Doubl
         drive.rightFront.power = (rotY - rotX - turn)
         drive.rightBack.power = (rotY + rotX - turn)
 
-        if (abs(current.x - targetVector.x) <= 3.3 &&
-            abs(current.y - targetVector.y) <= 3.3 &&
-            abs(Angle.wrap(rotation - current.heading)) <= Math.toRadians(8.0)
-        ) {
-//            Log.d("Z", "welp")
-            return false
-        } else return true
+        return !(abs(current.x - targetVector.x) <= 5.0 &&
+                abs(current.y - targetVector.y) <= 5.0 &&
+                abs(Angle.wrap(rotation + current.heading)) <= Math.toRadians(10.0))
     }
 }

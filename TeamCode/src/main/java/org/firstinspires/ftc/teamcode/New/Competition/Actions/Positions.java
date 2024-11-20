@@ -48,8 +48,11 @@ public enum Positions {
     TopRightSubmersableIntake(new Vector2d(22, 12.5), -PI*.5),
     BackLeftSubmersableIntake(new Vector2d(-22, -12.5), -PI * 0),
     BackRightSubmersableIntake(new Vector2d(22, -12.5), -PI * .5),
-    Test(new Vector2d(0, 10), 0.0),
-    Test2(new Vector2d(0, 0), 0.0);
+    Test(new Vector2d(0, 30), PI/2),
+    Test2(new Vector2d(-10, 20), -PI/2),
+    Test3(new Vector2d(5, 15), PI/2),
+    Test4(new Vector2d(0, 0), 0.0),
+    Test5(new Vector2d(-2, 45), PI);
 
     Positions(Vector2d vector, Double rotation) {
         runToNearest = new RunToNearest(vector);
