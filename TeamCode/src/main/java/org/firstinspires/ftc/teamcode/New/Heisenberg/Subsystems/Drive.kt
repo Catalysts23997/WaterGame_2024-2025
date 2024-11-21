@@ -25,9 +25,9 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         Manual, Auto
     }
 
-    val Xpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Ypid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Rpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
+    val Xpid = Controller(PIDParams(0.2, 0.0001, 0.018, 0.0))
+    val Ypid = Controller(PIDParams(0.2, 0.0001, 0.02, 0.0))
+    val Rpid = Controller(PIDParams(1.2, 0.0001, 0.1, 0.0))
 
     override var state = States.Manual
 
@@ -71,6 +71,13 @@ class Drive(hwMap: HardwareMap) : SubSystems {
     fun WheelDebugger(x: Int) {
         val y = arrayListOf(leftBack, leftFront, rightBack, rightFront)
         y[x].power = .5
+    }
+
+    fun StopRobot(){
+        leftFront.power = 0.0
+        leftBack.power = 0.0
+        rightFront.power = 0.0
+        rightBack.power = 0.0
     }
 
     private fun driveManual(gamepadInput: ArrayList<Float>) {
@@ -121,10 +128,11 @@ class RunToExact(private val targetVector: Vector2d, private val rotation: Doubl
         drive.rightFront.power = (rotY - rotX - turn)
         drive.rightBack.power = (rotY + rotX - turn)
 
-        return !arrayListOf(axialError, latError).all { abs(it) <= 5.0 } &&
-                abs(headingError) <= Math.toRadians(10.0)
+        return !arrayListOf(axialError, latError).all { abs(it) <= 3.0 } &&
+                abs(headingError) <= Math.toRadians(5.0)
     }
 }
+
 
 
 class RunToNearest(private val targetVector: Vector2d) : Action {

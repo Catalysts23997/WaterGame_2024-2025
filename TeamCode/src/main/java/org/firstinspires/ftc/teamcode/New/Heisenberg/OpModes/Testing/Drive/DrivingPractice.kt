@@ -12,7 +12,7 @@ class DrivingPractice : LinearOpMode(){
     override fun runOpMode() {
         telemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
 
-        val localizer = Localizer(hardwareMap, Localizer.Poses(10.0, 5.0, Math.PI/2))
+        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
         val drive = Drive(hardwareMap)
 
         waitForStart()
