@@ -47,7 +47,7 @@ class TiegerTeleopAuto : LinearOpMode() {
     override fun runOpMode() {
         val telemetry = FtcDashboard.getInstance().telemetry
 
-        val localizer = Localizer(hardwareMap, Localizer.Poses(30.5, -57, 0.0))
+        val localizer = Localizer(hardwareMap, Localizer.Poses(30.5, -57.0, 0.0))
         val drive = Drive(hardwareMap)
 
         waitForStart()
@@ -66,11 +66,19 @@ class TiegerTeleopAuto : LinearOpMode() {
                     true
                 },
                 SequentialAction(
-                    Positions.RedSpecieminBar.runToExact,
+
+                    Positions.RedSpecieminBar.runToNearest,
                     Positions.RedBrickMiddle.runToExact,
-                    Positions.CornerOfRedZone.runToExact,
-                    Positions.Test4.runToExact,
-                    Positions.Test5.runToExact
+                    Positions.RedBrickMiddleLeft.runToExact,
+                    Positions.RedBrickMiddle.runToExact,
+                    Positions.RedBrickMiddleRight.runToExact,
+                    Positions.RedBrickMiddle.runToExact,
+                    Positions.CornerOfRedZone.runToNearest,
+                    Positions.RedSpecieminBar.runToNearest,
+                    Positions.CornerOfRedZone.runToNearest,
+                    Positions.RedSpecieminBar.runToNearest,
+                    Positions.CornerOfRedZone.runToNearest,
+                    Positions.RedSpecieminBar.runToNearest,
                 )
             )
         )
