@@ -48,6 +48,14 @@ public enum Positions {
     TopRightSubmersableIntake(new Vector2d(22, 12.5), -PI*.5),
     BackLeftSubmersableIntake(new Vector2d(-22, -12.5), -PI * 0),
     BackRightSubmersableIntake(new Vector2d(22, -12.5), -PI * .5),
+
+    //new points
+    RedBrickMiddle(new Vector2d( 58,-40), -PI * 0),
+    CornerOfRedZone(new Vector2d( 36,-70), -PI * 0),
+
+
+
+    //Not my point's blame arya
     Test(new Vector2d(0, 30), PI/2),
     Test2(new Vector2d(-10, 20), -PI/2),
     Test3(new Vector2d(5, 15), PI/2),
