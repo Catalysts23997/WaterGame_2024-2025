@@ -79,6 +79,8 @@ class TiegerTeleopAuto : LinearOpMode() {
                     Positions.RedSpecieminBar.runToNearest,
                     Positions.CornerOfRedZone.runToNearest,
                     Positions.RedSpecieminBar.runToNearest,
+                    Positions.RedHumanIntake.runToExact
+
                 )
             )
         )
