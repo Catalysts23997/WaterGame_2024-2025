@@ -16,7 +16,6 @@ class DrivingPractice : LinearOpMode(){
         val drive = Drive(hardwareMap)
 
         waitForStart()
-
         while (opModeIsActive() && !isStopRequested) {
             localizer.update()
 

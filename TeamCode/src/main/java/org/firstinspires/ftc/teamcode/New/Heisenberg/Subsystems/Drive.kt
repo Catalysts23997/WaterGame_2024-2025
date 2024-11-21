@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.New.Angle
 import org.firstinspires.ftc.teamcode.New.Controller
+import org.firstinspires.ftc.teamcode.New.FindNearestPoint
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Actions.PIDdrive
 import org.firstinspires.ftc.teamcode.New.PIDParams
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SmoothInput
@@ -23,9 +25,9 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         Manual, Auto
     }
 
-    val Xpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Ypid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Rpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
+    val Xpid = Controller(PIDParams(0.2, 0.0001, 0.018, 0.0))
+    val Ypid = Controller(PIDParams(0.2, 0.0001, 0.02, 0.0))
+    val Rpid = Controller(PIDParams(1.2, 0.0001, 0.1, 0.0))
 
     override var state = States.Manual
 
@@ -71,6 +73,13 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         y[x].power = .5
     }
 
+    fun StopRobot(){
+        leftFront.power = 0.0
+        leftBack.power = 0.0
+        rightFront.power = 0.0
+        rightBack.power = 0.0
+    }
+
     private fun driveManual(gamepadInput: ArrayList<Float>) {
         val input = gamepadInput.map { SmoothInput.gamepadStick(it.toDouble()) }
         Log.d("f", input.toString())
@@ -100,9 +109,13 @@ class RunToExact(private val targetVector: Vector2d, private val rotation: Doubl
         val current = Localizer.pose
         val drive = Drive.instance
 
-        val lateral = drive.Ypid.calculate(targetVector.y - current.y)
-        val axial = drive.Xpid.calculate(targetVector.x - current.x)
-        val turn = drive.Rpid.calculate(Angle.wrap(rotation + current.heading))
+        val latError = targetVector.y - current.y
+        val axialError = targetVector.x - current.x
+        val headingError = Angle.wrap(rotation + current.heading)
+
+        val lateral = drive.Ypid.calculate(latError)
+        val axial = drive.Xpid.calculate(axialError)
+        val turn = drive.Rpid.calculate(headingError)
 
 //        Log.d("Y", doubleArrayOf(axial,lateral,turn, targetVector.y, current.y).contentToString())
 
@@ -115,12 +128,39 @@ class RunToExact(private val targetVector: Vector2d, private val rotation: Doubl
         drive.rightFront.power = (rotY - rotX - turn)
         drive.rightBack.power = (rotY + rotX - turn)
 
-        if (abs(current.x - targetVector.x) <= 3.3 &&
-            abs(current.y - targetVector.y) <= 3.3 &&
-            abs(Angle.wrap(rotation - current.heading)) <= Math.toRadians(8.0)
-        ) {
-//            Log.d("Z", "welp")
-            return false
-        } else return true
+        return !arrayListOf(axialError, latError).all { abs(it) <= 3.0 } &&
+                abs(headingError) <= Math.toRadians(5.0)
     }
+}
+
+
+
+class RunToNearest(private val targetVector: Vector2d) : Action {
+    override fun run(p: TelemetryPacket): Boolean {
+        val current = Localizer.pose
+        val drive = Drive.instance
+
+        val newTarget = FindNearestPoint.findNearestPoint(targetVector,current)
+
+        val latError = newTarget.y - current.y
+        val axialError = newTarget.x - current.x
+        val headingError = Angle.wrap(newTarget.heading + current.heading)
+
+        val lateral = drive.Ypid.calculate(latError)
+        val axial = drive.Xpid.calculate(axialError)
+        val turn = drive.Rpid.calculate(headingError)
+
+        val h = -Localizer.pose.heading
+        val rotX = axial * cos(h) - lateral * sin(h)
+        val rotY = axial * sin(h) + lateral * cos(h)
+
+        drive.leftFront.power = (rotY + rotX + turn)
+        drive.leftBack.power = (rotY - rotX + turn)
+        drive.rightFront.power = (rotY - rotX - turn)
+        drive.rightBack.power = (rotY + rotX - turn)
+
+        return !arrayListOf(axialError, latError).all { abs(it) <= 2.0 } &&
+                abs(headingError) <= Math.toRadians(11.0)
+    }
+
 }

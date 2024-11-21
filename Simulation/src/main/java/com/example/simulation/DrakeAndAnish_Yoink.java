@@ -19,9 +19,12 @@ public class DrakeAndAnish_Yoink {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(30, -57, PI*.5))
-                .strafeToSplineHeading(new Vector2d(34.5,-29),PI*.5)
-                .strafeToSplineHeading(new Vector2d(34.5,-4),PI*.5)
-                .strafeToSplineHeading(new Vector2d(48.5,14),PI*.5)
+
+                .strafeToSplineHeading(new Vector2d( 58.00000001,-40), PI * .5)
+                        .waitSeconds(1)
+                .strafeToSplineHeading(new Vector2d( 58,-40), PI * .75)
+                        .waitSeconds(1)
+                .strafeToSplineHeading(new Vector2d( 58.00000001,-40), PI *.25)
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(34.5,-4),PI*-.5)
                 .strafeToSplineHeading(new Vector2d(34.5,-29),PI*-.5)

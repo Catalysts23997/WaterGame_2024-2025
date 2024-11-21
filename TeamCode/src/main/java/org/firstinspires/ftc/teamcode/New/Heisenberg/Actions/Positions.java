@@ -5,6 +5,7 @@ import static java.lang.Math.PI;
 import com.acmerobotics.roadrunner.Vector2d;
 
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.RunToExact;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.RunToNearest;
 
 public enum Positions {
     // Blue side Bricks
@@ -47,8 +48,21 @@ public enum Positions {
     TopRightSubmersableIntake(new Vector2d(22, 12.5), -PI*.5),
     BackLeftSubmersableIntake(new Vector2d(-22, -12.5), -PI * 0),
     BackRightSubmersableIntake(new Vector2d(22, -12.5), -PI * .5),
-    Test(new Vector2d(0, 10), 0.0),
-    Test2(new Vector2d(0, 0), 0.0);
+
+    //new points
+    RedBrickMiddle(new Vector2d( 58,-40), -PI * 0),
+    RedBrickMiddleLeft(new Vector2d( 58,-40), PI * .75),
+    RedBrickMiddleRight(new Vector2d( 58,-40), PI *.25),
+    CornerOfRedZone(new Vector2d( 36,-70), -PI * 0),
+
+
+
+    //Not my point's blame arya
+    Test(new Vector2d(0, 30), PI/2),
+    Test2(new Vector2d(-10, 20), -PI/2),
+    Test3(new Vector2d(5, 15), PI/2),
+    Test4(new Vector2d(0, 0), 0.0),
+    Test5(new Vector2d(-2, 45), PI);
 
     Positions(Vector2d vector, Double rotation) {
         runToNearest = new RunToNearest(vector);

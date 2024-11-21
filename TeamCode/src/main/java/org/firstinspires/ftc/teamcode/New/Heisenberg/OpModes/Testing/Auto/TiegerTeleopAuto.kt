@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.New.Old.OpModes.Auto
+package org.firstinspires.ftc.teamcode.New.Opmodes.Auto
 
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.config.Config
@@ -14,33 +14,40 @@ import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 
 @Config
 @TeleOp(name = "TuningPIDd", group = "Linear OpMode")
-class PIDTunerDrive : LinearOpMode() {
+class TiegerTeleopAuto : LinearOpMode() {
     companion object {
         @JvmField
-        var paTerm = 0.0
-        @JvmField
-        var iaTerm = 0.0
-        @JvmField
-        var daTerm = 0.0
-        @JvmField
-        var pTerm = 0.1
-        @JvmField
-        var iTerm = 0.0
-        @JvmField
-        var dTerm = 0.03
+        var paTerm = 0.2
 
         @JvmField
-        var spTerm = 0.9
+        var iaTerm = 0.0001
+
         @JvmField
-        var siTerm = 0.001
+        var daTerm = 0.018
+
         @JvmField
-        var sdTerm = 0.03
+        var pTerm = 0.2
+
+        @JvmField
+        var iTerm = 0.0001
+
+        @JvmField
+        var dTerm = 0.02
+
+        @JvmField
+        var spTerm = 1.2
+
+        @JvmField
+        var siTerm = 0.0001
+
+        @JvmField
+        var sdTerm = 0.1
     }
 
     override fun runOpMode() {
         val telemetry = FtcDashboard.getInstance().telemetry
 
-        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
+        val localizer = Localizer(hardwareMap, Localizer.Poses(30.5, -57.0, 0.0))
         val drive = Drive(hardwareMap)
 
         waitForStart()
@@ -59,22 +66,21 @@ class PIDTunerDrive : LinearOpMode() {
                     true
                 },
                 SequentialAction(
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact
+
+                    Positions.RedSpecieminBar.runToNearest,
+                    Positions.RedBrickMiddle.runToExact,
+                    Positions.RedBrickMiddleLeft.runToExact,
+                    Positions.RedBrickMiddle.runToExact,
+                    Positions.RedBrickMiddleRight.runToExact,
+                    Positions.RedBrickMiddle.runToExact,
+                    Positions.CornerOfRedZone.runToNearest,
+                    Positions.RedSpecieminBar.runToNearest,
+                    Positions.CornerOfRedZone.runToNearest,
+                    Positions.RedSpecieminBar.runToNearest,
+                    Positions.CornerOfRedZone.runToNearest,
+                    Positions.RedSpecieminBar.runToNearest,
                 )
             )
         )
-
-
     }
 }
