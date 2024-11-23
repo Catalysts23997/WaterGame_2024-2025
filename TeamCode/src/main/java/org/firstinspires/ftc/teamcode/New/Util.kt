@@ -120,7 +120,6 @@ object Slides{
 
     }
 }
-
 object FindNearestPoint {
     //todo make unit tests
     //todo test full robot extension
@@ -132,7 +131,9 @@ object FindNearestPoint {
      * @param targetPos Target
      * @param currentPos Localizer Pose
      */
-    fun findNearestPoint(targetPos: Vector2d, currentPos: Vector2d): Localizer.Poses {
+    fun findNearestPoint(targetPos: Vector2d, currentPos: Localizer.Poses): Localizer.Poses {
+
+        //Does not work if target x is the same as currentx, will create a divide by 0 error.
 
         //triangle with legs A and C, hypotenuse B
         val A = targetPos.x - currentPos.x
@@ -152,16 +153,6 @@ object FindNearestPoint {
     }
 
 }
-data class ServoRange(val zeroDegrees: Double, val halfRotation:Double)
-object ServoPoses{
-    fun findServoPosBasedOnAngle(
-        angle: Double,
-        servo: ServoRange
-    ): Double {
-        return (((angle / (Math.PI)) * (servo.halfRotation - servo.zeroDegrees)) + servo.zeroDegrees).coerceIn(0.0,1.0)
-    }
-}
-
 class BasicallyIK(private val wristLength: Double, private val armLength: Double) {
     //todo make unit tests
     fun findWristAngle(targetAngle :Double, armAngle: Double): Double{

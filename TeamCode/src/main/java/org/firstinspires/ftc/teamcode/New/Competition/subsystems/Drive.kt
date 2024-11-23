@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.New.Angle
 import org.firstinspires.ftc.teamcode.New.Controller
+import org.firstinspires.ftc.teamcode.New.FindNearestPoint
 import org.firstinspires.ftc.teamcode.New.PIDParams
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SmoothInput
@@ -23,9 +24,9 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         Manual, Auto
     }
 
-    val Xpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Ypid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Rpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
+    val Xpid = Controller(PIDParams(0.2, 0.0001, 0.018, 0.0))
+    val Ypid = Controller(PIDParams(0.2, 0.0001, 0.02, 0.0))
+    val Rpid = Controller(PIDParams(1.2, 0.0001, 0.1, 0.0))
 
     override var state = States.Manual
 
@@ -36,23 +37,22 @@ class Drive(hwMap: HardwareMap) : SubSystems {
     val rightBack: DcMotor = hwMap.get(DcMotor::class.java, "rightFront")
 
     override fun update(gamepadInput: ArrayList<Float>) {
-
         when (state) {
             States.Auto -> {
                 //leave empty
             }
-
             States.Manual -> {
                 driveManual(gamepadInput)
             }
         }
     }
-    fun setPID(p: DoubleArray, i: DoubleArray, d: DoubleArray) {
-        val controllers = listOf(Xpid, Ypid, Rpid)
-        controllers.forEachIndexed { index, controller ->
-            controller.params = PIDParams(p[index], i[index], d[index], 0.0)
-        }
-    }
+
+//    fun setPID(p: DoubleArray, i: DoubleArray, d: DoubleArray) {
+//        val controllers = listOf(Xpid, Ypid, Rpid)
+//        controllers.forEachIndexed { index, controller ->
+//            controller.params = PIDParams(p[index], i[index], d[index], 0.0)
+//        }
+//    }
 
     init {
         leftBack.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
@@ -118,5 +118,35 @@ class RunToExact(private val targetVector: Vector2d, private val rotation: Doubl
         return !(abs(current.x - targetVector.x) <= 5.0 &&
                 abs(current.y - targetVector.y) <= 5.0 &&
                 abs(Angle.wrap(rotation + current.heading)) <= Math.toRadians(10.0))
+    }
+}
+
+class RunToNearest(private val targetVector: Vector2d) : Action {
+    override fun run(p: TelemetryPacket): Boolean {
+        val current = Localizer.pose
+        val drive = Drive.instance
+
+        val newTarget = FindNearestPoint.findNearestPoint(targetVector, current)
+
+        val latError = newTarget.y - current.y
+        val axialError = newTarget.x - current.x
+        val headingError = Angle.wrap(newTarget.heading + current.heading)
+
+        val lateral = drive.Ypid.calculate(latError)
+        val axial = drive.Xpid.calculate(axialError)
+        val turn = drive.Rpid.calculate(headingError)
+
+        val h = -Localizer.pose.heading
+        val rotX = axial * cos(h) - lateral * sin(h)
+        val rotY = axial * sin(h) + lateral * cos(h)
+
+        drive.leftFront.power = (rotY + rotX + turn)
+        drive.leftBack.power = (rotY - rotX + turn)
+        drive.rightFront.power = (rotY - rotX - turn)
+        drive.rightBack.power = (rotY + rotX - turn)
+
+        return !(abs(latError) <= 5.0 &&
+                abs(axialError) <= 5.0 &&
+                abs(Angle.wrap(headingError)) <= Math.toRadians(10.0))
     }
 }

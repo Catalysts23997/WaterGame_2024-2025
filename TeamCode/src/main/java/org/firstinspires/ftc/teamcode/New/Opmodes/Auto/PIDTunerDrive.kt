@@ -43,7 +43,6 @@ class PIDTunerDrive : LinearOpMode() {
         @JvmField
         var sdTerm = 0.1
     }
-
     override fun runOpMode() {
         val telemetry = FtcDashboard.getInstance().telemetry
 
@@ -55,11 +54,11 @@ class PIDTunerDrive : LinearOpMode() {
             ParallelAction(
                 Action {
                     localizer.update()
-                    drive.setPID(
-                        doubleArrayOf(paTerm, pTerm, spTerm),
-                        doubleArrayOf(iaTerm, iTerm, siTerm),
-                        doubleArrayOf(daTerm, dTerm, sdTerm)
-                    )
+//                    drive.setPID(
+//                        doubleArrayOf(paTerm, pTerm, spTerm),
+//                        doubleArrayOf(iaTerm, iTerm, siTerm),
+//                        doubleArrayOf(daTerm, dTerm, sdTerm)
+//                    )
                     telemetry.addData("x", Localizer.pose.x)
                     telemetry.addData("y", Localizer.pose.y)
                     telemetry.update()
@@ -70,7 +69,7 @@ class PIDTunerDrive : LinearOpMode() {
                     Positions.Test2.runToExact,
                     Positions.Test3.runToExact,
                     Positions.Test4.runToExact,
-                    Positions.Test5.runToExact
+                    Positions.Test5.runToNearest
                 )
             )
         )
