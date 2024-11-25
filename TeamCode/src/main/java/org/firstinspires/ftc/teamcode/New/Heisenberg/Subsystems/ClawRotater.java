@@ -38,7 +38,8 @@ public class ClawRotater {
         }
         angle = Angle.INSTANCE.wrapToPositive(angle);
         clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
-        if(state == State.HalfWay)  clawRotater.setPosition(.67);
+            if(state == State.ZERO) clawRotater.setPosition(0.0);
+            if(state == State.HalfWay)  clawRotater.setPosition(0.0);
     }
 
     double start = .34;

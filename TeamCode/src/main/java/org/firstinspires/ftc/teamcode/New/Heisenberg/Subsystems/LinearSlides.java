@@ -1,4 +1,4 @@
-//package org.firstinspires.ftc.teamcode.New.Future.SubSystems;
+//package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems;
 //
 //import com.qualcomm.robotcore.hardware.DcMotor;
 //import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -11,14 +11,11 @@
 //    public RightSlide rightSlide;
 //    public int resetValue = 0;
 //
-//    public void init(){
-//        leftSlide.leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rightSlide.rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//    }
-//
 //    public LinearSlides(HardwareMap hardwareMap){
 //        leftSlide = new LeftSlide(hardwareMap);
 //        rightSlide = new RightSlide(hardwareMap);
+//        leftSlide.leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rightSlide.rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //    }
 //    public enum State{
 //        HANG(5000),

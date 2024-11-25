@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.New.Angle
 import org.firstinspires.ftc.teamcode.New.Controller
 import org.firstinspires.ftc.teamcode.New.FindNearestPoint
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Actions.PIDdrive
 import org.firstinspires.ftc.teamcode.New.PIDParams
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SmoothInput
@@ -18,6 +17,8 @@ import org.firstinspires.ftc.teamcode.New.SubSystems
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
+
+
 
 //todo Make Java version
 class Drive(hwMap: HardwareMap) : SubSystems {
@@ -49,12 +50,12 @@ class Drive(hwMap: HardwareMap) : SubSystems {
             }
         }
     }
-    fun setPID(p: DoubleArray, i: DoubleArray, d: DoubleArray) {
-        val controllers = listOf(Xpid, Ypid, Rpid)
-        controllers.forEachIndexed { index, controller ->
-            controller.params = PIDParams(p[index], i[index], d[index], 0.0)
-        }
-    }
+//    fun setPID(p: DoubleArray, i: DoubleArray, d: DoubleArray) {
+//        val controllers = listOf(Xpid, Ypid, Rpid)
+//        controllers.forEachIndexed { index, controller ->
+//            controller.params = PIDParams(p[index], i[index], d[index], 0.0)
+//        }
+//    }
 
     init {
         leftBack.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
@@ -102,65 +103,4 @@ class Drive(hwMap: HardwareMap) : SubSystems {
     companion object {
         lateinit var instance: Drive
     }
-}
-
-class RunToExact(private val targetVector: Vector2d, private val rotation: Double) : Action {
-    override fun run(p: TelemetryPacket): Boolean {
-        val current = Localizer.pose
-        val drive = Drive.instance
-
-        val latError = targetVector.y - current.y
-        val axialError = targetVector.x - current.x
-        val headingError = Angle.wrap(rotation + current.heading)
-
-        val lateral = drive.Ypid.calculate(latError)
-        val axial = drive.Xpid.calculate(axialError)
-        val turn = drive.Rpid.calculate(headingError)
-
-//        Log.d("Y", doubleArrayOf(axial,lateral,turn, targetVector.y, current.y).contentToString())
-
-        val h = -Localizer.pose.heading
-        val rotX = axial * cos(h) - lateral * sin(h)
-        val rotY = axial * sin(h) + lateral * cos(h)
-
-        drive.leftFront.power = (rotY + rotX + turn)
-        drive.leftBack.power = (rotY - rotX + turn)
-        drive.rightFront.power = (rotY - rotX - turn)
-        drive.rightBack.power = (rotY + rotX - turn)
-
-        return !arrayListOf(axialError, latError).all { abs(it) <= 3.0 } &&
-                abs(headingError) <= Math.toRadians(5.0)
-    }
-}
-
-
-
-class RunToNearest(private val targetVector: Vector2d) : Action {
-    override fun run(p: TelemetryPacket): Boolean {
-        val current = Localizer.pose
-        val drive = Drive.instance
-
-        val newTarget = FindNearestPoint.findNearestPoint(targetVector,current)
-
-        val latError = newTarget.y - current.y
-        val axialError = newTarget.x - current.x
-        val headingError = Angle.wrap(newTarget.heading + current.heading)
-
-        val lateral = drive.Ypid.calculate(latError)
-        val axial = drive.Xpid.calculate(axialError)
-        val turn = drive.Rpid.calculate(headingError)
-
-        val h = -Localizer.pose.heading
-        val rotX = axial * cos(h) - lateral * sin(h)
-        val rotY = axial * sin(h) + lateral * cos(h)
-
-        drive.leftFront.power = (rotY + rotX + turn)
-        drive.leftBack.power = (rotY - rotX + turn)
-        drive.rightFront.power = (rotY - rotX - turn)
-        drive.rightBack.power = (rotY + rotX - turn)
-
-        return !arrayListOf(axialError, latError).all { abs(it) <= 2.0 } &&
-                abs(headingError) <= Math.toRadians(11.0)
-    }
-
 }

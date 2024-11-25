@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 
 class ExampleAuto : LinearOpMode() {
@@ -22,12 +23,7 @@ class ExampleAuto : LinearOpMode() {
                     false
                 },
                 SequentialAction(
-//                    Positions.Rbasket.runToNearest,
-//                    Positions.RRbrick1.runToNearest,
-//                    Positions.Rbasket.runToNearest,
-//                    Positions.RRbrick2.runToNearest,
-//                    Positions.Rbasket.runToNearest,
-//                    Positions.RRbrick3.runToNearest
+
                 )
             )
         )

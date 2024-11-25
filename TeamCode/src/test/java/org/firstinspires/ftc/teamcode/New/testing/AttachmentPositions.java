@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.testing;
 
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentsJohn;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.CollectionOfAttachments;
 import org.firstinspires.ftc.teamcode.New.Slides;
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class AttachmentPositions {
     @Test
     public void Test(){
 
-        AttachmentsJohn.slideDegree = 0.0;
+        CollectionOfAttachments.slideDegree = 0.0;
 
         //make sure goal is coerced in range
 
@@ -42,7 +42,7 @@ public class AttachmentPositions {
 
         double length = Slides.INSTANCE.linearSlideExtension(11).slideLength;
         System.out.print(length);
-        Assert.assertEquals(length,AttachmentsJohn.minExtension,0);
+        Assert.assertEquals(length, CollectionOfAttachments.minExtension,0);
 
     }
 }

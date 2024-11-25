@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode.New.Opmodes.Auto
 
 import com.acmerobotics.dashboard.FtcDashboard
-import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Actions.Positions
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 
