@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.New
 import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositons
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentsJohn
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.CollectionOfAttachments
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import kotlin.math.PI
 import kotlin.math.abs
@@ -89,14 +89,14 @@ object Slides{
         val hypotenuse =
             sqrt(goalDistance * goalDistance + (clawLength - slidesFromGround) * (slidesFromGround - clawLength))
 
-        AttachmentsJohn.slideDegree = if (AttachmentsJohn.slideDegree < Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))) {
+        CollectionOfAttachments.slideDegree = if (CollectionOfAttachments.slideDegree < Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))) {
             10 + Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))
         } else {
             maxLinkageDegree
         }
 
         val angleOppGround = Math.toDegrees(atan(goalDistance / (clawLength - slidesFromGround)))
-        val angleOppArm: Double = AttachmentsJohn.slideDegree - (90 - angleOppGround)
+        val angleOppArm: Double = CollectionOfAttachments.slideDegree - (90 - angleOppGround)
         var insideArmAngle =
             Math.toDegrees(asin((hypotenuse * sin(Math.toRadians(angleOppArm))) / armLength))
 
