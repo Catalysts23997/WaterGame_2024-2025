@@ -51,6 +51,8 @@ public enum Positions {
 
     //new points
     RedBrickMiddle(new Vector2d( 58,-40), -PI * 0),
+    RedBrickMiddleLeft(new Vector2d( 58,-40), PI * .75),
+    RedBrickMiddleRight(new Vector2d( 58,-40), PI *.25),
     CornerOfRedZone(new Vector2d( 36,-70), -PI * 0),
 
 

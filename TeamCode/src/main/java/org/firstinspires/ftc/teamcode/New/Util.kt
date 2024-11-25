@@ -128,6 +128,8 @@ object FindNearestPoint {
      */
     fun findNearestPoint(targetPos: Vector2d, currentPos: Localizer.Poses): Localizer.Poses {
 
+        //Does not work if target x is the same as currentx, will create a divide by 0 error.
+
         //triangle with legs A and C, hypotenuse B
         val A = targetPos.x - currentPos.x
         val C = targetPos.y - currentPos.y
