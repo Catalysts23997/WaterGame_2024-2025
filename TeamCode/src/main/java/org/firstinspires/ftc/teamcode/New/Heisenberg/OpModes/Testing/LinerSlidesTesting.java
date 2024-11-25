@@ -15,7 +15,6 @@ public class LinerSlidesTesting extends LinearOpMode {
     DcMotor leftSlide;
     DcMotor rightslide;
 
-
     @Override
     public void runOpMode() throws InterruptedException {
         rightslide.getCurrentPosition();
