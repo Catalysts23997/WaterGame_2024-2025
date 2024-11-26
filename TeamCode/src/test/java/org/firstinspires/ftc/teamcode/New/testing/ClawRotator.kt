@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.testing
 
-import org.firstinspires.ftc.teamcode.New.ServoPoses
+import org.firstinspires.ftc.teamcode.New.ServoPoseCalculator
 import org.firstinspires.ftc.teamcode.New.ServoRange
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -17,7 +17,7 @@ class ClawRotator {
 
         for(i in 0..100){
             val randomAngle =  Random.nextDouble()*2*PI
-            val servoPose = ServoPoses.findServoPosBasedOnAngle(randomAngle,
+            val servoPose = ServoPoseCalculator.findServoPosBasedOnAngle(randomAngle,
                 ServoRange(
                     Random.nextDouble(),
                     Random.nextDouble()
@@ -42,7 +42,7 @@ class ClawRotator {
                 Random.nextDouble(),
                 Random.nextDouble()
             )
-            val servoPose = ServoPoses.findServoPosBasedOnAngle(angle,
+            val servoPose = ServoPoseCalculator.findServoPosBasedOnAngle(angle,
                 servoRange
             )
             assertEquals((servoRange.halfRotation-servoRange.zeroDegrees)/random +servoRange.zeroDegrees,servoPose,0.0)

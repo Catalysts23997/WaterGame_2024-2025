@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.New.Angle;
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer;
-import org.firstinspires.ftc.teamcode.New.ServoPoses;
+import org.firstinspires.ftc.teamcode.New.ServoPoseCalculator;
 import org.firstinspires.ftc.teamcode.New.ServoRange;
 
 public class ClawRotater {
@@ -21,38 +21,38 @@ public class ClawRotater {
     public State state = State.ZERO;
     public static double angle = 0.0;
 
+    ServoRange servoRange = new ServoRange(.34,1.0);
+    ServoPoseCalculator calc = new ServoPoseCalculator(servoRange);
+
     public void update() {
         switch (state) {
-            case ZERO:
-                angle = 0;
+            case ZERO: angle = 0;
                 break;
-            //todo setup/change
-            case INPUT:
+            case INPUT: break;
+            case ADJUSTING: angle = Angle.INSTANCE.wrapToPositive(Localizer.pose.getHeading());
                 break;
-            case ADJUSTING:
-                angle = Angle.INSTANCE.wrap(PI - Localizer.pose.getHeading());
-                break;
-            case HalfWay:
-                angle = PI/2;
+            case HalfWay: angle = PI/2;
                 break;
         }
-        angle = Angle.INSTANCE.wrapToPositive(angle);
-        clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
-            if(state == State.ZERO) clawRotater.setPosition(0.0);
-            if(state == State.HalfWay)  clawRotater.setPosition(0.0);
+        clawRotater.setPosition(calc.findPose(angle));
     }
 
-    double start = .34;
-    double end = 1.0;
-
-    public void updateTele(double left_stick_y) {
-
-        if(left_stick_y!=0.0){}
-        else angle = Math.abs(left_stick_y* PI);
-
-        angle = Angle.INSTANCE.wrapToPositive(angle);
-        clawRotater.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(angle, new ServoRange(start, end)));
-        if(state == State.HalfWay)  clawRotater.setPosition(.67);
+    /**
+     * Tele Update
+     * @param left_stick_y Gamepad input (inverted)
+     */
+    public void update(double left_stick_y) {
+        switch (state) {
+            case ZERO: angle = 0;
+                break;
+            case INPUT: angle = PI/2 * (1+left_stick_y);
+                break;
+            case ADJUSTING: angle = Angle.INSTANCE.wrapToPositive(Localizer.pose.getHeading());
+                break;
+            case HalfWay: angle = PI/2;
+                break;
+        }
+        clawRotater.setPosition(calc.findPose(angle));
     }
 
     public enum State {

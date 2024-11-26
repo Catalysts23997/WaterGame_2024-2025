@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.New.Old_Examples.subsystems.ShoudlerJohn;
-import org.firstinspires.ftc.teamcode.New.ServoPoses;
+import org.firstinspires.ftc.teamcode.New.ServoPoseCalculator;
 import org.firstinspires.ftc.teamcode.New.ServoRange;
 
 public class Wrist {
@@ -18,22 +18,23 @@ public class Wrist {
         Wrist.setDirection(Servo.Direction.REVERSE);
     }
 
-    //todo completely change the way wrist code is done - needs to be based off of arm angle
-    //0 degree - 0.0 - vertical
-    //180 degree - .62
+    //todo completely change the way wrist code is done - needs to be based off Inverse Kinematics
     public enum State {
         Upwards(0.0),
         HpDrop(.7),
         Basket(.34),
         SamplePrep(0.6),
         WallIntake(0.65),
-        Submersible(0.0); //not sure if we want to use arm angle or specified pose no matter angle
+        Submersible(0.0);
         public final double servoPos;
 
         State(double servoPos) {
             this.servoPos = servoPos;
         }
     }
+
+    ServoRange servoRange = new ServoRange(.94,.34);
+    ServoPoseCalculator calc = new ServoPoseCalculator(servoRange);
 
     public void update() {
         double targetAngle = ShoudlerJohn.angle;
@@ -45,11 +46,9 @@ public class Wrist {
         }
 
         if (state == State.Submersible || state == State.WallIntake || state == State.Upwards && targetAngle >0 ) {
-            Wrist.setPosition(ServoPoses.INSTANCE.findServoPosBasedOnAngle(
-                    targetAngle, new ServoRange(0.94, 0.34)));
+            Wrist.setPosition(calc.findPose(targetAngle));
         }
         else Wrist.setPosition(state.servoPos);
-        Log.d("YOO", String.valueOf(ShoudlerJohn.angle));
     }
 
 }

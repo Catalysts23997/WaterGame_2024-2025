@@ -34,7 +34,7 @@ public class Bromine {
 
     public void teleUpdate(Gamepad gamepad) {
         claw.update();
-        clawRotater.updateTele(gamepad.left_stick_y);
+        clawRotater.update(gamepad.left_stick_y);
         shoulder.update();
         wrist.update();
     }

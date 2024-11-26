@@ -18,8 +18,6 @@ public class ClawRotaterTest extends LinearOpMode {
         while (opModeIsActive()){
             clawRotater.clawRotater.setPosition(servoPose);
         }
-
-
     }
 }
 
