@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.PIDTuner.Constants;
+import org.firstinspires.ftc.teamcode.New.PIDTuner.Constants;
 
 import java.util.ArrayList;
 
@@ -65,4 +65,3 @@ public class SampleOpMode extends LinearOpMode {
         }
     }
 }
-//TODO HAVE accuracy be relative to robot voltage

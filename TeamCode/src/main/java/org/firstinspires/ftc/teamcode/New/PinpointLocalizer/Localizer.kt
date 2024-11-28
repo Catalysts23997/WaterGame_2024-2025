@@ -32,8 +32,8 @@ class Localizer(hwmap: HardwareMap, private val offset: Poses) {
 
     var Angleoffset = 0.0
     //todo add boolean just imu or not
-    fun update(){
-        odo.update()
+    fun update(justImu: Boolean = false){
+//        if (!justImu) odo.update() else odo.
         pose = Poses(offset.x - odo.position.getY(DistanceUnit.INCH),offset.y + odo.position.getX(DistanceUnit.INCH),Angle.wrap(odo.position.getHeading(AngleUnit.RADIANS) - Angleoffset +offset.heading))
     }
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.PIDTuner;
+package org.firstinspires.ftc.teamcode.New.PIDTuner;
 
 import android.util.Pair;
 
@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import ArmSpecific.ArmAngle;
 import CommonUtilities.Models;
 
 @TeleOp(name = "GravityTest", group = "Linear OpMode")

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.New.Controller;
 import org.firstinspires.ftc.teamcode.New.PIDParams;
-import org.firstinspires.ftc.teamcode.PIDTuner.Constants;
+import org.firstinspires.ftc.teamcode.New.PIDTuner.Constants;
 
 public class ShoudlerJohn {
     DcMotorEx Shoulder;
