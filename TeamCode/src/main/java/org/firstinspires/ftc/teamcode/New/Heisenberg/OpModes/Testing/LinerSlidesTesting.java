@@ -10,21 +10,20 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 @TeleOp(name = "LinerSlidesTesting", group = "Linear OpMode")
 public class LinerSlidesTesting extends LinearOpMode {
     public static double motorpose=0.0;
-//    DcMotor leftslide;
-//    DcMotor rightslide;
-
-    DcMotor leftslide = hardwareMap.get(DcMotorEx.class, "leftslide");
-    DcMotor rightslide = hardwareMap.get(DcMotorEx.class, "rightslide");
-
-
+    private DcMotor Leftslide;
+    private DcMotor Rightslide;
+    
     @Override
     public void runOpMode() throws InterruptedException {
+        DcMotor leftslide = hardwareMap.get(DcMotorEx.class, "leftslide");
+        DcMotor rightslide = hardwareMap.get(DcMotorEx.class, "rightslide");
         rightslide.getCurrentPosition();
         leftslide.getCurrentPosition();
-        double leftpos = leftslide.getCurrentPosition();
-        double rightpos = rightslide.getCurrentPosition();
+
         waitForStart();
         while (opModeIsActive()){
+            double leftpos = leftslide.getCurrentPosition();
+            double rightpos = rightslide.getCurrentPosition();
             telemetry.addData("LeftPosition",leftpos);
             telemetry.addData("RightPosition",rightpos);
 
