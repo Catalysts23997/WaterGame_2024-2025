@@ -17,13 +17,13 @@ class ClawRotator {
 
         for(i in 0..100){
             val randomAngle =  Random.nextDouble()*2*PI
-            val servoPose = ServoPoseCalculator.findServoPosBasedOnAngle(randomAngle,
+            val servoCalc = ServoPoseCalculator(
                 ServoRange(
                     Random.nextDouble(),
                     Random.nextDouble()
                 )
             )
-            assert(servoPose in 0.0..1.0)
+            assert(servoCalc.findPose(randomAngle) in 0.0..1.0)
         }
 
     }
@@ -42,9 +42,9 @@ class ClawRotator {
                 Random.nextDouble(),
                 Random.nextDouble()
             )
-            val servoPose = ServoPoseCalculator.findServoPosBasedOnAngle(angle,
-                servoRange
-            )
+            val servoPoseCalc = ServoPoseCalculator(servoRange)
+
+            val servoPose = (servoPoseCalc.findPose(angle))
             assertEquals((servoRange.halfRotation-servoRange.zeroDegrees)/random +servoRange.zeroDegrees,servoPose,0.0)
         }
 
