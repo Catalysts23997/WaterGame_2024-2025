@@ -60,7 +60,10 @@ public enum Positions {
     Test2(new Vector2d(-10, 20), -PI/2),
     Test3(new Vector2d(5, 15), PI/2),
     Test4(new Vector2d(0, 0), 0.0),
+
+    blah(new Vector2d(15, 15), 0.0),
     Test5(new Vector2d(-2, 45), PI);
+
 
     Positions(Vector2d vector, Double rotation) {
         runToNearest = new RunToNearest(vector);

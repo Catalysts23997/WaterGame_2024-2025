@@ -35,7 +35,6 @@ import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.GoBildaPinpointDrive
 import java.util.Locale;
 
 @TeleOp(name="goBILDA® PinPoint Odometry Example", group="Linear OpMode")
-@Disabled
 
 public class PinpointTest extends LinearOpMode {
 

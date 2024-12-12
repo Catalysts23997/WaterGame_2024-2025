@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 class TestingAuto : LinearOpMode() {
 
     override fun runOpMode() {
-        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
+        val localizer = Localizer(hardwareMap, Localizer.Poses(-31.0, -65.0, 0.0))
         waitForStart()
         runBlocking(
             ParallelAction(

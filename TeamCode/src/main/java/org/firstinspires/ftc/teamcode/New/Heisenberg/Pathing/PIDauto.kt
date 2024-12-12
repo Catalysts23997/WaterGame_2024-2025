@@ -35,8 +35,8 @@ class RunToExact(private val targetVector: Vector2d, private val rotation: Doubl
         drive.rightFront.power = (rotY - rotX - turn)
         drive.rightBack.power = (rotY + rotX - turn)
 
-        return !arrayListOf(axialError, latError).all { abs(it) <= 3.0 } &&
-                abs(headingError) <= Math.toRadians(5.0)
+        return !(arrayListOf(axialError, latError).all { abs(it) <= 3.0 } &&
+                abs(headingError) <= Math.toRadians(5.0))
     }
 }
 
@@ -66,6 +66,6 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
 
         return !(abs(latError) <= 5.0 &&
                 abs(axialError) <= 5.0 &&
-                abs(Angle.wrap(headingError)) <= Math.toRadians(10.0))
+                abs(Angle.wrap(headingError)) <= Math.toRadians(5.0))
     }
 }

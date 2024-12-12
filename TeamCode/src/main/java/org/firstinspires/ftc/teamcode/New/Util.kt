@@ -129,6 +129,7 @@ object FindNearestPoint {
     fun findNearestPoint(targetPos: Vector2d, currentPos: Localizer.Poses): Localizer.Poses {
 
         //Does not work if target x is the same as currentx, will create a divide by 0 error.
+        require(targetPos.x != currentPos.x) {"Target X is the same as Current X"}
 
         //triangle with legs A and C, hypotenuse B
         val A = targetPos.x - currentPos.x
@@ -158,7 +159,6 @@ class ServoPoseCalculator(val servo: ServoRange){
 }
 
 class BasicallyIK(private val wristLength: Double, private val armLength: Double) {
-    //todo make unit tests
     fun findWristAngle(targetAngle :Double, armAngle: Double): Double{
         val angleA = armAngle - targetAngle
         val sideA = wristLength
