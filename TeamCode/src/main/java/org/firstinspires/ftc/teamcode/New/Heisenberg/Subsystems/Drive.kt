@@ -28,7 +28,7 @@ class Drive(hwMap: HardwareMap) : SubSystems {
 
     val Xpid = Controller(PIDParams(0.2, 0.0001, 0.018, 0.0))
     val Ypid = Controller(PIDParams(0.2, 0.0001, 0.02, 0.0))
-    val Rpid = Controller(PIDParams(1.2, 0.0001, 0.1, 0.0))
+    val Rpid = Controller(PIDParams(1.4, 0.0001, 0.08, 0.0))
 
     override var state = States.Manual
 
@@ -89,6 +89,9 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         val h = -Localizer.pose.heading
         val rotX = axial * cos(h) - lateral * sin(h)
         val rotY = axial * sin(h) + lateral * cos(h)
+
+        //todo add rotational pid
+
 
         leftFront.power = (rotY + rotX + turn)
         leftBack.power = (rotY - rotX + turn)

@@ -26,7 +26,7 @@ public class AutoInJava extends LinearOpMode {
 
                 new ParallelAction(
                         telemetryPacket -> {
-                            //localizer.update();
+                            localizer.update(false);
                             return true;
                         },
                         new SequentialAction(

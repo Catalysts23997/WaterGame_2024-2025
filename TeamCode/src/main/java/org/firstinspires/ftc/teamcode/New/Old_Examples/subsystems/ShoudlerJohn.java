@@ -7,18 +7,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.New.Controller;
 import org.firstinspires.ftc.teamcode.New.PIDParams;
-import org.firstinspires.ftc.teamcode.New.PIDTuner.Constants;
 
 public class ShoudlerJohn {
     DcMotorEx Shoulder;
     public State state = State.IDLE;
-    Constants constants = new Constants();
     public boolean targetReached = false;
     public static double angle = 0.0;
     Controller pidFcontroller = new Controller(new PIDParams(.4, .01, .15, .32));
 
     public ShoudlerJohn(HardwareMap hardwareMap) {
-        Shoulder = hardwareMap.get(DcMotorEx.class, constants.motorName);
         Shoulder.setDirection(DcMotorSimple.Direction.REVERSE);
         Shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Shoulder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
