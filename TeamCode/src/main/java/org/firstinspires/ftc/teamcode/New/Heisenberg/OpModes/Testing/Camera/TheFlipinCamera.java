@@ -14,7 +14,7 @@ public class TheFlipinCamera extends LinearOpMode {
     final boolean USING_WEBCAM = false;
     final BuiltinCameraDirection INTERNAL_CAM_DIR = BuiltinCameraDirection.BACK;
     final int RESOLUTION_WIDTH = 1280;
-    final int RESOLUTION_HEIGHT = 800;
+    final int RESOLUTION_HEIGHT = 720;
 
     // Internal state
     boolean lastX;
