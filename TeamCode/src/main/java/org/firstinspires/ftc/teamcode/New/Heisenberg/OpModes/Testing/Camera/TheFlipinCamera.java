@@ -61,7 +61,7 @@ public class TheFlipinCamera extends LinearOpMode {
 
             if (capReqTime != 0)
             {
-                telemetry.addLine("\ngot a photo******!");
+                telemetry.addLine("\ngot a photo!");
             }
 
             if (capReqTime != 0 && System.currentTimeMillis() - capReqTime > 1000)
