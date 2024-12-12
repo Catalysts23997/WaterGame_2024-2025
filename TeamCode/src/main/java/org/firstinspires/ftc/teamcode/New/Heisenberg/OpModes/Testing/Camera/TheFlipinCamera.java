@@ -9,18 +9,20 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import java.util.Locale;
 
-@TeleOp(name = "CS3", group = "Utility")
+@TeleOp(name = "CS3", group = "camera")
 public class TheFlipinCamera extends LinearOpMode {
+
     final boolean USING_WEBCAM = false;
     final BuiltinCameraDirection INTERNAL_CAM_DIR = BuiltinCameraDirection.BACK;
-    final int RESOLUTION_WIDTH = 1280;
-    final int RESOLUTION_HEIGHT = 720;
+    final int RESOLUTION_WIDTH = 1920;
+    final int RESOLUTION_HEIGHT = 1080;
 
     // Internal state
     boolean lastX;
     int frameCount;
     long capReqTime;
 
+    @Override
     public void runOpMode()
     {
         VisionPortal portal;
@@ -46,20 +48,20 @@ public class TheFlipinCamera extends LinearOpMode {
 
             if (x && !lastX)
             {
-                portal.saveNextFrameRaw(String.format(Locale.US, "CameraFrameCapture-%06d", frameCount++));
+                portal.saveNextFrameRaw(String.format(Locale.US, "Ballin Photo -%06d", frameCount++));
                 capReqTime = System.currentTimeMillis();
             }
 
             lastX = x;
 
             telemetry.addLine("######## Camera Capture Utility ########");
-            telemetry.addLine(String.format(Locale.US, " > Resolution: %dx%d", RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
-            telemetry.addLine(" > Press X (or Square) to capture a frame");
+            telemetry.addLine(String.format(Locale.US, " > Curent Resolution: %dx%d", RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
+            telemetry.addLine(" > Press X (or Square) to take a picture");
             telemetry.addData(" > Camera Status", portal.getCameraState());
 
             if (capReqTime != 0)
             {
-                telemetry.addLine("\nCaptured Frame!");
+                telemetry.addLine("\ngot a photo******!");
             }
 
             if (capReqTime != 0 && System.currentTimeMillis() - capReqTime > 1000)
@@ -71,4 +73,3 @@ public class TheFlipinCamera extends LinearOpMode {
         }
     }
 }
-
