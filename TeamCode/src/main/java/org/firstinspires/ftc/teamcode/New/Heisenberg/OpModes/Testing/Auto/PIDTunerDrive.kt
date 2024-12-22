@@ -66,11 +66,7 @@ class PIDTunerDrive : LinearOpMode() {
                 },
 
                 SequentialAction(
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test3.runToExact,
-                    Positions.Test4.runToExact,
-                    Positions.Test5.runToExact,
+                    Positions.blah.runToNearest,
                     Action{
                         drive.StopRobot()
                         false

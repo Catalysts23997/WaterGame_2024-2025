@@ -4,12 +4,14 @@ import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositons
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.CollectionOfAttachments
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.SystemAngles
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.acos
 import kotlin.math.asin
 import kotlin.math.atan
+import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
@@ -124,11 +126,12 @@ object FindNearestPoint {
 
     /**
      * @param targetPos Target
-     * @param currentPos Localizer Pose
+     * @param currentPos Localizer Posewa
      */
     fun findNearestPoint(targetPos: Vector2d, currentPos: Localizer.Poses): Localizer.Poses {
 
         //Does not work if target x is the same as currentx, will create a divide by 0 error.
+        require(targetPos.x != currentPos.x) {"Target X is the same as Current X"}
 
         //triangle with legs A and C, hypotenuse B
         val A = targetPos.x - currentPos.x
@@ -158,7 +161,6 @@ class ServoPoseCalculator(val servo: ServoRange){
 }
 
 class BasicallyIK(private val wristLength: Double, private val armLength: Double) {
-    //todo make unit tests
     fun findWristAngle(targetAngle :Double, armAngle: Double): Double{
         val angleA = armAngle - targetAngle
         val sideA = wristLength
@@ -202,6 +204,31 @@ class Controller(var params: PIDParams) {
 //        Log.d("errorsss", ff.toString())
 //        Log.d("errorsss", Math.toDegrees(armAngle).toString())
         return controlEffort
+    }
+}
+
+object FindInverseKinematicsStuff{
+
+    //todo replace these with actual values
+
+    val wristLength1 = 5.0
+    val wristLength2 = 5.0
+
+    val slideLength = 10.0
+
+    fun findInverseKinematicsStuff(targetX: Double, targetY: Double, wristAngle2: Double):SystemAngles {
+        val changeInX = wristLength2 * cos(wristAngle2)
+        val changeInY = wristLength2 * sin(wristAngle2)
+
+        val endEffectorX = targetX - changeInX
+        val endEffectorY = targetY - changeInY
+
+        val wristAngle1 = acos((wristLength1.pow(2) + slideLength.pow(2) - endEffectorX.pow(2) - endEffectorY.pow(2))/(2 * slideLength * wristLength1))
+
+        val slideAngle = atan(endEffectorY/endEffectorX) + acos((slideLength.pow(2) + endEffectorY.pow(2) + endEffectorX.pow(2) - wristLength1.pow(2))/(2 * slideLength * sqrt(endEffectorX.pow(2) + endEffectorY.pow(2))))
+
+
+        return SystemAngles(wristAngle1, slideAngle)
     }
 }
 
