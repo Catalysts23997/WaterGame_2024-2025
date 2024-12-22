@@ -19,7 +19,6 @@ class comp2auto: LinearOpMode() {
             Positions.CornerOfRedZone.runToExact,
 
         )
-
-
+        
     }
 }
