@@ -11,10 +11,12 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 //import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
 //import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
+import org.firstinspires.ftc.teamcode.New.Poses
+
 class TestingAuto : LinearOpMode() {
 
     override fun runOpMode() {
-        val localizer = Localizer(hardwareMap, Localizer.Poses(-31.0, -65.0, 0.0))
+        val localizer = Localizer(hardwareMap, Poses(-31.0, -65.0, 0.0))
         waitForStart()
         runBlocking(
             ParallelAction(

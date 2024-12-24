@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Config
 @TeleOp(name = "LinerSlidesTesting", group = "Linear OpMode")
-public class LinerSlidesTesting extends LinearOpMode {
+public class Slides extends LinearOpMode {
     public static double motorpose=0.0;
     private DcMotor Leftslide;
     private DcMotor Rightslide;

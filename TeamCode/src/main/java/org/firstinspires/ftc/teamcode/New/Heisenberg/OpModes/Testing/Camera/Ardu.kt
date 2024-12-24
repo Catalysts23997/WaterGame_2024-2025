@@ -5,12 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AprilTagData
+import org.firstinspires.ftc.teamcode.New.Poses
+
 @Disabled
 @TeleOp(name = "ArduCamAprilTags",group = "Linear OpMode")
 class Ardu : LinearOpMode() {
 
     override fun runOpMode() {
-        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
+        val localizer = Localizer(hardwareMap, Poses(0.0, 0.0, 0.0))
         val aprilTagProcessor = AprilTagData(hardwareMap)
 waitForStart()
         while (opModeIsActive()){

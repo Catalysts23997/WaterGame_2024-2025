@@ -5,7 +5,6 @@ import android.util.Log;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.New.Old_Examples.subsystems.ShoudlerJohn;
 import org.firstinspires.ftc.teamcode.New.ServoPoseCalculator;
 import org.firstinspires.ftc.teamcode.New.ServoRange;
 

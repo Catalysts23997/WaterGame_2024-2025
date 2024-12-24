@@ -6,13 +6,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Poses
 
 @TeleOp(name = "DrivingPractice", group = "Linear OpMode")
 class DrivingPractice : LinearOpMode(){
     override fun runOpMode() {
         telemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
 
-        val localizer = Localizer(hardwareMap, Localizer.Poses(0.0, 0.0, 0.0))
+        val localizer = Localizer(hardwareMap, Poses(0.0, 0.0, 0.0))
         val drive = Drive(hardwareMap)
 
         waitForStart()

@@ -35,6 +35,7 @@ object Angle {
         return angle
     }
 }
+data class Poses (val x: Double, val y: Double, val heading: Double)
 
 data class PIDParams(val kp: Double, val ki: Double, val kd: Double, val kf: Double = 0.0)
 
@@ -128,7 +129,7 @@ object FindNearestPoint {
      * @param targetPos Target
      * @param currentPos Localizer Posewa
      */
-    fun findNearestPoint(targetPos: Vector2d, currentPos: Localizer.Poses): Localizer.Poses {
+    fun findNearestPoint(targetPos: Vector2d, currentPos: Poses): Poses {
 
         //Does not work if target x is the same as currentx, will create a divide by 0 error.
         require(targetPos.x != currentPos.x) {"Target X is the same as Current X"}
@@ -147,7 +148,7 @@ object FindNearestPoint {
         val y = C - yOffsetTarget + currentPos.y
         val angle = acos((A.pow(2) + B.pow(2) - C.pow(2)) / (2 * A * B))
 
-        return Localizer.Poses(x, y, angle)
+        return Poses(x, y, angle)
     }
 
 }

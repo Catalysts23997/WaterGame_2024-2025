@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.teamcode.New.Angle
+import org.firstinspires.ftc.teamcode.New.Poses
 
 
 class Localizer(hwmap: HardwareMap, private val offset: Poses) {
@@ -42,6 +43,4 @@ class Localizer(hwmap: HardwareMap, private val offset: Poses) {
     companion object{
         lateinit var pose: Poses
     }
-
-    data class Poses (val x: Double, val y: Double, val heading: Double)
 }

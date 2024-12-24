@@ -6,15 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ClawRotater;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
+
 @Config
 @TeleOp(name = "LinerSlidesTesting", group = "Linear OpMode")
-public class LinearSlideswithPID extends LinearOpMode{
+public class Tuning extends LinearOpMode{
         public static double motorpose=0.0;
         private DcMotorEx Leftslide;
         private DcMotorEx Rightslide;
