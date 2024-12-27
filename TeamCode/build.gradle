@@ -17,9 +17,23 @@ apply from: '../build.dependencies.gradle'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
+
+    defaultConfig {
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
+    }
     namespace = 'org.firstinspires.ftc.teamcode'
     kotlinOptions {
         jvmTarget = '17'
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.22.1'
+        }
     }
 
     packagingOptions {
