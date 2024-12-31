@@ -2,10 +2,10 @@ package org.firstinspires.ftc.teamcode.New
 
 import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositons
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.CollectionOfAttachments
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.SystemAngles
-import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.acos
@@ -79,12 +79,14 @@ object Wait {
 }
 
 object Slides{
-    fun linearSlideExtension(gD: Double): AttachmentPositons {
+
+    fun linearSlideExtension(gD: Double): AttachmentPositions {
 
         val clawLength = 6.5826772
         val armLength = 6.1338583
         val slidesFromGround = 2.976378
-        val maxLinkageDegree = 11.3809843
+        val minLinkageDegree = 11.3809843
+
 
 
         val goalDistance = gD.coerceIn(12.0,42.0)
@@ -92,14 +94,14 @@ object Slides{
         val hypotenuse =
             sqrt(goalDistance * goalDistance + (clawLength - slidesFromGround) * (slidesFromGround - clawLength))
 
-        CollectionOfAttachments.slideDegree = if (CollectionOfAttachments.slideDegree < Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))) {
+        val currentLinkageDegree = if (minLinkageDegree < Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))) {
             10 + Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))
         } else {
-            maxLinkageDegree
+            minLinkageDegree
         }
 
         val angleOppGround = Math.toDegrees(atan(goalDistance / (clawLength - slidesFromGround)))
-        val angleOppArm: Double = CollectionOfAttachments.slideDegree - (90 - angleOppGround)
+        val angleOppArm: Double = currentLinkageDegree - (90 - angleOppGround)
         var insideArmAngle =
             Math.toDegrees(asin((hypotenuse * sin(Math.toRadians(angleOppArm))) / armLength))
 
@@ -109,12 +111,12 @@ object Slides{
         }
         val angleOppSlides = 180 - insideArmAngle - angleOppArm
 
-        return AttachmentPositons(
-            (270 - angleOppGround - angleOppSlides),
-            (360 - insideArmAngle),
-            (armLength * sin(Math.toRadians(angleOppSlides))) / sin(Math.toRadians(angleOppArm))
+        return AttachmentPositions(
+            Math.toRadians(270 - angleOppGround - angleOppSlides),
+            Math.toRadians(360 - insideArmAngle),
+            (armLength * sin(Math.toRadians(angleOppSlides))) / sin(Math.toRadians(angleOppArm)),
+            Math.toRadians(currentLinkageDegree)
         )
-
     }
 }
 
@@ -208,28 +210,29 @@ class Controller(var params: PIDParams) {
     }
 }
 
-object FindInverseKinematicsStuff{
+object MoveArmToPoint {
 
     //todo replace these with actual values
 
-    val wristLength1 = 5.0
-    val wristLength2 = 5.0
+    val armLength = 6.1338583
+    val wristLength = 6.5826772
 
-    val slideLength = 10.0
 
-    fun findInverseKinematicsStuff(targetX: Double, targetY: Double, wristAngle2: Double):SystemAngles {
-        val changeInX = wristLength2 * cos(wristAngle2)
-        val changeInY = wristLength2 * sin(wristAngle2)
+    fun moveArmToPoint(targetX: Double, targetY: Double, wristAngle2: Double, slideLength: Double):AttachmentPositions {
+        slideLength.coerceIn(0.0, 33.0)
+
+        val changeInX = wristLength * cos(wristAngle2)
+        val changeInY = wristLength * sin(wristAngle2)
 
         val endEffectorX = targetX - changeInX
         val endEffectorY = targetY - changeInY
 
-        val wristAngle1 = acos((wristLength1.pow(2) + slideLength.pow(2) - endEffectorX.pow(2) - endEffectorY.pow(2))/(2 * slideLength * wristLength1))
+        val wristAngle1 = acos((armLength.pow(2) + slideLength.pow(2) - endEffectorX.pow(2) - endEffectorY.pow(2))/(2 * slideLength * armLength))
 
-        val slideAngle = atan(endEffectorY/endEffectorX) + acos((slideLength.pow(2) + endEffectorY.pow(2) + endEffectorX.pow(2) - wristLength1.pow(2))/(2 * slideLength * sqrt(endEffectorX.pow(2) + endEffectorY.pow(2))))
+        val slideAngle = atan(endEffectorY/endEffectorX) + acos((slideLength.pow(2) + endEffectorY.pow(2) + endEffectorX.pow(2) - armLength.pow(2))/(2 * slideLength * sqrt(endEffectorX.pow(2) + endEffectorY.pow(2))))
 
 
-        return SystemAngles(wristAngle1, slideAngle)
+        return AttachmentPositions(wristAngle2, wristAngle1, slideLength, slideAngle)
     }
 }
 

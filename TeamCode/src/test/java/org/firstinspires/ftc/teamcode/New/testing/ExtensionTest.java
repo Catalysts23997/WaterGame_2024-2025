@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.teamcode.New.testing;
 
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.CollectionOfAttachments;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos;
 import org.firstinspires.ftc.teamcode.New.Slides;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Random;
 
-public class AttachmentPositions {
+public class ExtensionTest {
+
+    double maxExtension = 37.7716535;
+    double minExtension= maxExtension - 33;
 
     /**
      * Testing extensions outside of the maximum extension - 42 inches
@@ -24,8 +27,8 @@ public class AttachmentPositions {
         for(int i = 0; i<1000; i++){
             double randomValue = min + (random.nextDouble() * (max - min));
             double randomValue2 = min + (random.nextDouble() * (max - min));
-            double claw =Slides.INSTANCE.linearSlideExtension(randomValue).clawServoRot;
-            double claw2 =Slides.INSTANCE.linearSlideExtension(randomValue2).clawServoRot;
+            double claw =Slides.INSTANCE.linearSlideExtension(randomValue).clawAngle;
+            double claw2 =Slides.INSTANCE.linearSlideExtension(randomValue2).clawAngle;
             Assert.assertEquals(claw,claw2,0.0);
         }
 
@@ -34,15 +37,9 @@ public class AttachmentPositions {
     @Test
     public void Test(){
 
-        CollectionOfAttachments.slideDegree = 0.0;
-
-        //make sure goal is coerced in range
-
-
-
         double length = Slides.INSTANCE.linearSlideExtension(11).slideLength;
         System.out.print(length);
-        Assert.assertEquals(length, CollectionOfAttachments.minExtension,0);
+        Assert.assertEquals(length, minExtension,0);
 
     }
 }
