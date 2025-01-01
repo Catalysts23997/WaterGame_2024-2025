@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ClawRotater;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ColorSensor;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Linkage;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.SystemAngles;
 import org.firstinspires.ftc.teamcode.New.SlidesEncoderConv;
 
 public class Heisenberg {
