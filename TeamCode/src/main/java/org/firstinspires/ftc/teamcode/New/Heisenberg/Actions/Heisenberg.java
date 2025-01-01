@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ColorSensor;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Linkage;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.SystemAngles;
+import org.firstinspires.ftc.teamcode.New.SlidesEncoderConv;
 
 public class Heisenberg {
     ArmServos armServos;
@@ -24,7 +25,9 @@ public class Heisenberg {
     ClawRotater clawRotater;
     ColorSensor colorSensor;
 
+    public final double circumferenceOfSpool = 24*Math.PI;
     AttachmentPositions attachmentPositons;
+    SlidesEncoderConv conv = new SlidesEncoderConv(circumferenceOfSpool);
 
     public void update() {
         armServos.update(attachmentPositons.armAngle, attachmentPositons.clawAngle);
@@ -56,12 +59,11 @@ public class Heisenberg {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             linearSlides.setState(LinearSlides.State.CLIP);
-            attachmentPositons = MoveArmToPoint.INSTANCE.moveArmToPoint(5.0, 5.0, Math.PI/4, linearSlides.getState().getEncoder());
+            attachmentPositons = MoveArmToPoint.INSTANCE.moveArmToPoint(10.0, 10.0, Math.PI/4, conv.toIn(linearSlides.getState().getEncoder()));
             armServos.armState = ArmServos.ArmState.INPUT;
             linkage.linkageState = Linkage.LinkageState.INPUT;
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotater.state = ClawRotater.State.HalfWay;
-
             return false;
         }
     };

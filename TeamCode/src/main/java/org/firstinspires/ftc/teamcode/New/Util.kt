@@ -2,10 +2,7 @@ package org.firstinspires.ftc.teamcode.New
 
 import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.SystemAngles
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.acos
@@ -234,5 +231,17 @@ object MoveArmToPoint {
 
         return AttachmentPositions(wristAngle2, wristAngle1, slideLength, slideAngle)
     }
+}
+
+//note circumference is inputted as mm
+class SlidesEncoderConv(var circumference: Double){
+
+    val ticksPerRev: Double = 28.0
+    val inPerMm: Double = 0.0393701
+
+    fun toIn(ticks: Double): Double {
+        return (ticks/ticksPerRev) * circumference * inPerMm
+    }
+
 }
 
