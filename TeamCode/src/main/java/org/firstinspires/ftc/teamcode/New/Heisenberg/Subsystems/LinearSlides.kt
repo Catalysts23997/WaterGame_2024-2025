@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.New.Controller
 import org.firstinspires.ftc.teamcode.New.PIDParams
+import org.firstinspires.ftc.teamcode.New.SlidesEncoderConv
 
 class LinearSlides(private val hwMap:HardwareMap) {
 
@@ -21,20 +22,12 @@ class LinearSlides(private val hwMap:HardwareMap) {
 
     //NOTE: Max encoder ticks is 311, otherwise we break hardware, lets
 
-    enum class State(val encoder: Int) {
-        HANG(5000),
-        BASKET(430),
-        CLIP(340),
-        INTAKE(550),
-        STATIONARY(220),
-        IDLE(0),
-        Manual(0)
-    }
+    private val circumferenceOfSpool: Double = 24 * Math.PI
+    var conv: SlidesEncoderConv = SlidesEncoderConv(circumferenceOfSpool)
 
-    var state = State.IDLE
-
-    fun update(){
-        val effort = pidController.calculate(state.encoder.toDouble())
+    fun update(input: Double){
+        val target = if(input != 0.0) InToTick(input) else 0.0
+        val effort = pidController.calculate(target)
         leftMotor.power = effort
         rightMotor.power = -effort
     }

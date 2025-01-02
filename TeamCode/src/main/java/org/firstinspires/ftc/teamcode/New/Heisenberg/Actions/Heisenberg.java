@@ -24,24 +24,16 @@ public class Heisenberg {
     ClawRotater clawRotater;
     ColorSensor colorSensor;
 
-    public final double circumferenceOfSpool = 24*Math.PI;
     AttachmentPositions attachmentPositons;
-    SlidesEncoderConv conv = new SlidesEncoderConv(circumferenceOfSpool);
+    double slideExtension = 40.0;
+    double clawRotatorAngle = 0.0;
 
     public void update() {
         armServos.update(attachmentPositons.armAngle, attachmentPositons.clawAngle);
-        linearSlides.update();
+        linearSlides.update(slideExtension);
         linkage.update(attachmentPositons.linkageDegree);
         claw.update();
-        clawRotater.update();
-    }
-
-    public void update(double leftStickY) {
-        armServos.update(attachmentPositons.armAngle, attachmentPositons.clawAngle);
-        linearSlides.update();
-        linkage.update(attachmentPositons.linkageDegree);
-        claw.update();
-        clawRotater.update(leftStickY);
+        clawRotater.update(clawRotatorAngle);
     }
 
     public Heisenberg(HardwareMap hardwareMap) {
@@ -57,12 +49,85 @@ public class Heisenberg {
     public Action template = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            linearSlides.setState(LinearSlides.State.CLIP);
-            attachmentPositons = MoveArmToPoint.INSTANCE.moveArmToPoint(10.0, 10.0, Math.PI/4, conv.toIn(linearSlides.getState().getEncoder()));
+            attachmentPositons = MoveArmToPoint.INSTANCE.moveArmToPoint(10.0, 10.0, Math.PI/4, slideExtension);
             armServos.armState = ArmServos.ArmState.INPUT;
             linkage.linkageState = Linkage.LinkageState.INPUT;
             claw.clawState = Claw.ClawState.CLOSED;
-            clawRotater.state = ClawRotater.State.HalfWay;
+            clawRotatorAngle = 0.0;
+            return false;
+        }
+    };
+
+
+    public Action grabFromSubmersible = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            //go to the specimen with positions class
+            //linkage----> horizontal
+            //slides----> intake
+            //claw ---> open
+            //sequential action for this
+            //color sensor if loop: if red, yellow, or blue detected, and distance value is good
+            // close claw. either put this in an if or while loop dependent on color sensor
+            //slides----> idle
+            //linkage---> idle
+
+
+            return false;
+        }
+    };
+    public Action Hang = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+//            LinearSlides linearSlides = new LinearSlides(hardwareMap);
+//            linearSlides.State = LinearSlides.State.HANG;
+//            Linear slides-----> hang
+//            claw----->open
+            //seqential action of once slides reach position then claw close???
+            //otherwise we could just have claw manually close
+            // fix this later! 𓆉
+
+
+            return false;
+        }
+    };
+
+
+    public Action grabFromGround = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            //shoulder
+            //claw rotator
+            //Not sure which exact servo position to use
+//            clawRotator.state = clawRotator.State.HalfWay;
+            return false;
+        }
+    };
+
+    public Action raiseandHangSpecimen = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            //move shoulder to be able to keep specimen straight
+            //raise slides slightly above bar height
+            //rotate claw to halfway (so hook can attach onto the bar)
+            //lower slides to put specimen on the bar
+            //claw - open to let go of specimen
+            return false;
+        }
+    };
+
+    public Action raisesanddropspixel = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+
+            //raiselinearslides
+            //shoulder
+            //drop using wrist
+            //claw release
+
+
             return false;
         }
     };

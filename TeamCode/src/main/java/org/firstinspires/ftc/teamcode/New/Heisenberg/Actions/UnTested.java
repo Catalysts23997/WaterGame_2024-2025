@@ -6,11 +6,12 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ClawRotater;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ColorSensor;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Wrist;
-import org.firstinspires.ftc.teamcode.New.Slides;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Linkage;
 
 public class UnTested {
 
@@ -22,70 +23,27 @@ public class UnTested {
     Grab from Submersible
     Raise and Hang the Specimen
     Raise and Drop in Basket
-//me
-    Idle
-
-
-
-
 
      */
 
-
-    public Action grabFromGround = new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-
-
-            // shoulder
-            //claw rotator
+    Linkage linkage;
+    Claw claw;
+    ClawRotater clawRotater;
+    ColorSensor colorSensor;
+    LinearSlides linearSlides;
+    ArmServos armServos;
 
 
-            return false;
-        }
-    };
 
-
-    public Action grabFromSubmersible= new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-           //go to the specimen with positions class
-            //linkage----> horizontal
-            //slides----> intake
-            //claw ---> open
-            //sequential action for this
-             //color sensor if loop: if red, yellow, or blue detected, and distance value is good
-                // close claw. either put this in an if or while loop dependent on color sensor
-             //slides----> idle
-            //linkage---> idle
+    public UnTested(HardwareMap hardwareMap){
 
 
 
 
-
-            return false;
-        }
-    };
-    public Action Hang = new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-//            LinearSlides linearSlides = new LinearSlides(hardwareMap);
-//            linearSlides.State = LinearSlides.State.HANG;
-//            Linear slides-----> hang
-//            claw----->open
-            //seqential action of once slides reach position then claw close???
-            //otherwise we could just have claw manually close
-            // fix this later! 𓆉
-
-
-
-
-            return false;
-        }
-    };
+    }
 
 
 
 }
+
+

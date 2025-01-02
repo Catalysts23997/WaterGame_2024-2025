@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
+import org.firstinspires.ftc.teamcode.New.PIDParams;
+
+import CommonUtilities.PIDFcontroller;
 
 @Config
 @TeleOp(name = "LinerSlidesTesting", group = "Linear OpMode")
@@ -34,6 +37,10 @@ public class Tuning extends LinearOpMode{
 //        Rightslide.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 //        leftslide.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 //        rightslide.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
+
+//        PIDFcontroller pidFcontroller = new (new PIDParams(p,i,d,0.0));
+
         @Override
         public void runOpMode() throws InterruptedException {
          LinearSlides slides = new LinearSlides(hardwareMap);
