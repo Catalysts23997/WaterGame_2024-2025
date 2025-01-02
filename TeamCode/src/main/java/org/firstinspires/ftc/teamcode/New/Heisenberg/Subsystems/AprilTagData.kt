@@ -6,25 +6,25 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
+import org.firstinspires.ftc.teamcode.New.Camera
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SubSystems
 import org.firstinspires.ftc.vision.VisionPortal
+import org.firstinspires.ftc.vision.VisionProcessor
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
 import kotlin.math.cos
 import kotlin.math.sin
 
-class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
+class AprilTagData(hardwareMap: HardwareMap) : Camera {
 
     enum class State {
         On, Off, TagDiscovered
     }
 
-    override var state = State.Off
+    var state = State.Off
 
-    private val camera: WebcamName = hardwareMap.get(WebcamName::class.java, "Arducam")
-
-    private var aprilTag: AprilTagProcessor = AprilTagProcessor.Builder()
+    override val camera: WebcamName = hardwareMap.get(WebcamName::class.java, "Arducam")
+    override val visionProcessor: VisionProcessor = AprilTagProcessor.Builder()
         .setDrawAxes(true)
         .setDrawTagOutline(true)
         .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
@@ -34,7 +34,7 @@ class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
         .build()
 
 
-    private var visionPortal: VisionPortal
+    override var visionPortal: VisionPortal
 
     init {
         val builder = VisionPortal.Builder()
@@ -42,7 +42,7 @@ class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
             .setCameraResolution(Size(1280, 720))
             .enableLiveView(false)
             .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-            .addProcessor(aprilTag)
+            .addProcessor(visionProcessor)
 
         visionPortal = builder.build()
         visionPortal.stopStreaming()
@@ -51,7 +51,8 @@ class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
     fun searchForTag(): Vector2d {
         visionPortal.resumeStreaming()
         visionPortal.resumeLiveView()
-        val currentDetections = aprilTag.detections
+        val currentDetections = (visionProcessor as AprilTagProcessor).detections
+
 
         for (detection in currentDetections) {
             if (detection.id == 12 || detection.id == 16) {
@@ -83,7 +84,7 @@ class AprilTagData(hardwareMap: HardwareMap) : SubSystems {
         return Vector2d(xPose, yPose)
     }
 
-    override fun update() {
+    fun update() {
         when (state) {
             State.On -> {
                 searchForTag()
