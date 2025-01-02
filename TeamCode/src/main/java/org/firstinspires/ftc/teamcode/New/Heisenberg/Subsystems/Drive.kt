@@ -1,23 +1,16 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
 
 import android.util.Log
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket
-import com.acmerobotics.roadrunner.Action
-import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.New.Angle
 import org.firstinspires.ftc.teamcode.New.Controller
-import org.firstinspires.ftc.teamcode.New.FindNearestPoint
 import org.firstinspires.ftc.teamcode.New.PIDParams
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SmoothInput
 import org.firstinspires.ftc.teamcode.New.SubSystems
-import kotlin.math.abs
+import org.firstinspires.ftc.teamcode.New.smoothGamepadInput
 import kotlin.math.cos
 import kotlin.math.sin
-
 
 
 //todo Make Java version
@@ -74,7 +67,7 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         y[x].power = .5
     }
 
-    fun StopRobot(){
+    fun StopRobot() {
         leftFront.power = 0.0
         leftBack.power = 0.0
         rightFront.power = 0.0
@@ -82,7 +75,7 @@ class Drive(hwMap: HardwareMap) : SubSystems {
     }
 
     private fun driveManual(gamepadInput: ArrayList<Float>) {
-        val input = gamepadInput.map { SmoothInput.gamepadStick(it.toDouble()) }
+        val input = gamepadInput.map { smoothGamepadInput(it.toDouble()) }
         Log.d("f", input.toString())
         val (axial, lateral, turn) = input
 

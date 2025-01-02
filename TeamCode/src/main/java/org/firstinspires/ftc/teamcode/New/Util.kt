@@ -23,19 +23,20 @@ object Angle {
         while (angle < -PI) angle += PI * 2
         return angle
     }
+
     fun wrapToPositive(theta: Double): Double {
         require(theta in -2 * PI..2 * PI)
         var angle = theta
         angle = wrap(angle)
-        while (angle>PI) angle -= PI
-        while (angle<0) angle += PI
+        while (angle > PI) angle -= PI
+        while (angle < 0) angle += PI
         return angle
     }
 }
-data class Poses (val x: Double, val y: Double, val heading: Double)
+
+data class Poses(val x: Double, val y: Double, val heading: Double)
 
 data class PIDParams(val kp: Double, val ki: Double, val kd: Double, val kf: Double = 0.0)
-
 
 
 object Wait {
@@ -75,110 +76,109 @@ object Wait {
 
 }
 
-object Slides{
+fun linearSlideExtension(gD: Double): AttachmentPositions {
 
-    fun linearSlideExtension(gD: Double): AttachmentPositions {
-
-        val clawLength = 6.5826772
-        val armLength = 6.1338583
-        val slidesFromGround = 2.976378
-        val minLinkageDegree = 11.3809843
+    val clawLength = 6.5826772
+    val armLength = 6.1338583
+    val slidesFromGround = 2.976378
+    val minLinkageDegree = 11.3809843
 
 
+    val goalDistance = gD.coerceIn(12.0, 42.0)
 
-        val goalDistance = gD.coerceIn(12.0,42.0)
+    val hypotenuse =
+        sqrt(goalDistance * goalDistance + (clawLength - slidesFromGround) * (slidesFromGround - clawLength))
 
-        val hypotenuse =
-            sqrt(goalDistance * goalDistance + (clawLength - slidesFromGround) * (slidesFromGround - clawLength))
-
-        val currentLinkageDegree = if (minLinkageDegree < Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))) {
+    val currentLinkageDegree =
+        if (minLinkageDegree < Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))) {
             10 + Math.toDegrees(atan((clawLength - slidesFromGround) / goalDistance))
         } else {
             minLinkageDegree
         }
 
-        val angleOppGround = Math.toDegrees(atan(goalDistance / (clawLength - slidesFromGround)))
-        val angleOppArm: Double = currentLinkageDegree - (90 - angleOppGround)
-        var insideArmAngle =
-            Math.toDegrees(asin((hypotenuse * sin(Math.toRadians(angleOppArm))) / armLength))
+    val angleOppGround = Math.toDegrees(atan(goalDistance / (clawLength - slidesFromGround)))
+    val angleOppArm: Double = currentLinkageDegree - (90 - angleOppGround)
+    var insideArmAngle =
+        Math.toDegrees(asin((hypotenuse * sin(Math.toRadians(angleOppArm))) / armLength))
 
-        //if the arm length can possibly make two triangles because of ASS and if it is currently chosing the longer one, switch to the shortest triangle
-        if ((armLength > hypotenuse * sin(Math.toRadians(angleOppArm))) && (armLength < hypotenuse) && (insideArmAngle < 90)) {
-            insideArmAngle = 180 - insideArmAngle
-        }
-        val angleOppSlides = 180 - insideArmAngle - angleOppArm
+    //if the arm length can possibly make two triangles because of ASS and if it is currently chosing the longer one, switch to the shortest triangle
+    if ((armLength > hypotenuse * sin(Math.toRadians(angleOppArm))) && (armLength < hypotenuse) && (insideArmAngle < 90)) {
+        insideArmAngle = 180 - insideArmAngle
+    }
+    val angleOppSlides = 180 - insideArmAngle - angleOppArm
 
-        return AttachmentPositions(
-            Math.toRadians(270 - angleOppGround - angleOppSlides),
-            Math.toRadians(360 - insideArmAngle),
-            (armLength * sin(Math.toRadians(angleOppSlides))) / sin(Math.toRadians(angleOppArm)),
-            Math.toRadians(currentLinkageDegree)
+    return AttachmentPositions(
+        Math.toRadians(270 - angleOppGround - angleOppSlides),
+        Math.toRadians(360 - insideArmAngle),
+        (armLength * sin(Math.toRadians(angleOppSlides))) / sin(Math.toRadians(angleOppArm)),
+        Math.toRadians(currentLinkageDegree)
+    )
+}
+
+
+//todo make unit tests
+//todo test full robot extension
+
+//length from center of robot to front in inches
+private const val OFFSET = 5.0
+
+/**
+ * @param targetPos Target
+ * @param currentPos Localizer Posewa
+ */
+fun findNearestPoint(targetPos: Vector2d, currentPos: Poses): Poses {
+
+    //Does not work if target x is the same as currentx, will create a divide by 0 error.
+    require(targetPos.x != currentPos.x) { "Target X is the same as Current X" }
+
+    //triangle with legs A and C, hypotenuse B
+    val A = targetPos.x - currentPos.x
+    val C = targetPos.y - currentPos.y
+    val B = sqrt(C.pow(2) + A.pow(2))
+
+    //find destination's offset from currentPose
+    val xOffsetFromTarget = OFFSET * (A.pow(2) + B.pow(2) - C.pow(2)) / (2 * A * B)
+    val yOffsetTarget = sqrt(OFFSET.pow(2) - xOffsetFromTarget.pow(2))
+
+    //Destinations Position
+    val x = A - xOffsetFromTarget + currentPos.x
+    val y = C - yOffsetTarget + currentPos.y
+    val angle = acos((A.pow(2) + B.pow(2) - C.pow(2)) / (2 * A * B))
+
+    return Poses(x, y, angle)
+}
+
+data class ServoRange(val zeroDegrees: Double, val halfRotation: Double)
+class ServoPoseCalculator(val servo: ServoRange) {
+    fun findPose(
+        angle: Double
+    ): Double {
+        return (((angle / (Math.PI)) * (servo.halfRotation - servo.zeroDegrees)) + servo.zeroDegrees).coerceIn(
+            0.0,
+            1.0
         )
     }
 }
 
-object FindNearestPoint {
-    //todo make unit tests
-    //todo test full robot extension
-
-    //length from center of robot to front in inches
-    private const val OFFSET = 5.0
-
-    /**
-     * @param targetPos Target
-     * @param currentPos Localizer Posewa
-     */
-    fun findNearestPoint(targetPos: Vector2d, currentPos: Poses): Poses {
-
-        //Does not work if target x is the same as currentx, will create a divide by 0 error.
-        require(targetPos.x != currentPos.x) {"Target X is the same as Current X"}
-
-        //triangle with legs A and C, hypotenuse B
-        val A = targetPos.x - currentPos.x
-        val C = targetPos.y - currentPos.y
-        val B = sqrt(C.pow(2) + A.pow(2))
-
-        //find destination's offset from currentPose
-        val xOffsetFromTarget = OFFSET*(A.pow(2)+B.pow(2)-C.pow(2))/(2*A*B)
-        val yOffsetTarget = sqrt(OFFSET.pow(2) - xOffsetFromTarget.pow(2))
-
-        //Destinations Position
-        val x = A - xOffsetFromTarget + currentPos.x
-        val y = C - yOffsetTarget + currentPos.y
-        val angle = acos((A.pow(2) + B.pow(2) - C.pow(2)) / (2 * A * B))
-
-        return Poses(x, y, angle)
-    }
-
-}
-data class ServoRange(val zeroDegrees: Double, val halfRotation:Double)
-class ServoPoseCalculator(val servo: ServoRange){
-    fun findPose(
-        angle: Double
-    ): Double {
-        return (((angle / (Math.PI)) * (servo.halfRotation - servo.zeroDegrees)) + servo.zeroDegrees).coerceIn(0.0,1.0)
-    }
-}
-
 class BasicallyIK(private val wristLength: Double, private val armLength: Double) {
-    fun findWristAngle(targetAngle :Double, armAngle: Double): Double{
+    fun findWristAngle(targetAngle: Double, armAngle: Double): Double {
         val angleA = armAngle - targetAngle
         val sideA = wristLength
         val sideB = armLength
-        return 2* PI + angleA + asin((sideB*sin(angleA))/sideA)
+        return 2 * PI + angleA + asin((sideB * sin(angleA)) / sideA)
     }
 }
-object SmoothInput{
-    fun gamepadStick(input: Double): Double{
-        return if(input>0)(input).pow(2.1)  else -1 * abs(input).pow(2.1)
-    }
+
+fun smoothGamepadInput(input: Double): Double {
+    return if (input > 0) (input).pow(2.1) else -1 * abs(input).pow(2.1)
 }
+
 
 class Controller(var params: PIDParams) {
     private var prevError = 0.0
     private var integral = 0.0
     val timer = ElapsedTime()
-    var pastTime=0.0
+    var pastTime = 0.0
     fun calculate(
         target: Double,
         armAngle: Double = 0.0
@@ -191,7 +191,10 @@ class Controller(var params: PIDParams) {
         prevError = error
 
         val ff =
-            if(params.kf !=0.0) if(armAngle< PI ) max(0.0, sin(armAngle)) * params.kf else min(0.0, -sin(PI-(armAngle - PI))) * params.kf else 0.0
+            if (params.kf != 0.0) if (armAngle < PI) max(0.0, sin(armAngle)) * params.kf else min(
+                0.0,
+                -sin(PI - (armAngle - PI))
+            ) * params.kf else 0.0
 
 
         val controlEffort =
@@ -207,40 +210,45 @@ class Controller(var params: PIDParams) {
     }
 }
 
-object MoveArmToPoint {
-
-    //todo replace these with actual values
-
-    val armLength = 6.1338583
-    val wristLength = 6.5826772
+val armLength = 6.1338583
+val wristLength = 6.5826772
 
 
-    fun moveArmToPoint(targetX: Double, targetY: Double, wristAngle2: Double, slideLength: Double):AttachmentPositions {
-        slideLength.coerceIn(0.0, 33.0)
+fun moveArmToPoint(
+    targetX: Double,
+    targetY: Double,
+    wristAngle2: Double,
+    slideLength: Double
+): AttachmentPositions {
 
-        val changeInX = wristLength * cos(wristAngle2)
-        val changeInY = wristLength * sin(wristAngle2)
+    val changeInX = wristLength * cos(wristAngle2)
+    val changeInY = wristLength * sin(wristAngle2)
 
-        val endEffectorX = targetX - changeInX
-        val endEffectorY = targetY - changeInY
+    val endEffectorX = targetX - changeInX
+    val endEffectorY = targetY - changeInY
 
-        val wristAngle1 = acos((armLength.pow(2) + slideLength.pow(2) - endEffectorX.pow(2) - endEffectorY.pow(2))/(2 * slideLength * armLength))
+    val wristAngle1 =
+        acos((armLength.pow(2) + slideLength.pow(2) - endEffectorX.pow(2) - endEffectorY.pow(2)) / (2 * slideLength * armLength))
 
-        val slideAngle = atan(endEffectorY/endEffectorX) + acos((slideLength.pow(2) + endEffectorY.pow(2) + endEffectorX.pow(2) - armLength.pow(2))/(2 * slideLength * sqrt(endEffectorX.pow(2) + endEffectorY.pow(2))))
+    val slideAngle = atan(endEffectorY / endEffectorX) + acos(
+        (slideLength.pow(2) + endEffectorY.pow(2) + endEffectorX.pow(2) - armLength.pow(2)) / (2 * slideLength * sqrt(
+            endEffectorX.pow(2) + endEffectorY.pow(2)
+        ))
+    )
 
 
-        return AttachmentPositions(wristAngle2, wristAngle1, slideLength, slideAngle)
-    }
+    return AttachmentPositions(wristAngle2, wristAngle1, slideLength, slideAngle)
 }
 
+
 //note circumference is inputted as mm
-class SlidesEncoderConv(var circumference: Double){
+class SlidesEncoderConv(var circumference: Double) {
 
     val ticksPerRev: Double = 28.0
     val inPerMm: Double = 0.0393701
 
     fun toIn(ticks: Double): Double {
-        return (ticks/ticksPerRev) * circumference * inPerMm
+        return (ticks / ticksPerRev) * circumference * inPerMm
     }
 
 }

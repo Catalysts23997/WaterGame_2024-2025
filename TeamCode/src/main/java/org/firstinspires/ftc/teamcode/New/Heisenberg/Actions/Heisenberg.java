@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.Actions;
 
+import static org.firstinspires.ftc.teamcode.New.UtilKt.moveArmToPoint;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.New.MoveArmToPoint;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Claw;
@@ -25,13 +26,14 @@ public class Heisenberg {
     ColorSensor colorSensor;
 
     AttachmentPositions attachmentPositons;
-    double slideExtension = 40.0;
+    double maxExtension = 40.0;
+    double slideExtension = maxExtension;
     double clawRotatorAngle = 0.0;
 
     public void update() {
         armServos.update(attachmentPositons.armAngle, attachmentPositons.clawAngle);
-        linearSlides.update(slideExtension);
         linkage.update(attachmentPositons.linkageDegree);
+        linearSlides.update(slideExtension);
         claw.update();
         clawRotater.update(clawRotatorAngle);
     }
@@ -43,17 +45,17 @@ public class Heisenberg {
         claw = new Claw(hardwareMap);
         clawRotater = new ClawRotater(hardwareMap);
         colorSensor = new ColorSensor(hardwareMap);
-
     }
 
     public Action template = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            attachmentPositons = MoveArmToPoint.INSTANCE.moveArmToPoint(10.0, 10.0, Math.PI/4, slideExtension);
+            attachmentPositons = moveArmToPoint(5.0, 40.0, Math.toRadians(180), slideExtension);
             armServos.armState = ArmServos.ArmState.INPUT;
             linkage.linkageState = Linkage.LinkageState.INPUT;
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
+            slideExtension  =50.0;
             return false;
         }
     };
