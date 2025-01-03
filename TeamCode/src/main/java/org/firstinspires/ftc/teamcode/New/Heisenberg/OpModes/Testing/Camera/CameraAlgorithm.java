@@ -37,6 +37,7 @@ public class CameraAlgorithm extends LinearOpMode {
             // Display the size (area) and center location for each Blob.
             for(ColorBlobLocatorProcessor.Blob b : blobs)
             {
+                
                 RotatedRect boxFit = b.getBoxFit();
                 telemetry.addLine(String.format("%5d  %4.2f   %5.2f  (%3d,%3d)",
                         b.getContourArea(), b.getDensity(), b.getAspectRatio(), (int) boxFit.center.x, (int) boxFit.center.y));

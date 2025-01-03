@@ -31,7 +31,7 @@ public class Heisenberg {
 
     public void update() {
         armServos.update(attachmentPositons.armAngle, attachmentPositons.clawAngle);
-        linkage.update(attachmentPositons.linkageDegree);
+        linkage.update(attachmentPositons.linkageAngle);
         linearSlides.update(slideExtension);
         claw.update();
         clawRotater.update(clawRotatorAngle);

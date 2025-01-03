@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.teamcode.New.Utilities
 
+import android.opengl.Matrix
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions
+import kotlin.math.cos
+import kotlin.math.sin
+
 data class Point2D(val x: Double, val y: Double)
 data class Point3D(
     val x: Double, val y: Double, val z: Double
@@ -49,3 +54,32 @@ fun findPositionOfSample(cameraPosition: Point3D, pixelCoordinates: Point2D): Po
     return projectToGround(cameraCoords, cameraPosition)
 }
 
+fun findCameraPosition(positions: AttachmentPositions): Point3D {
+    val lengths: DoubleArray = doubleArrayOf(positions.slideLength, 6.1338583, 6.5826772)
+    val ratios: Array<DoubleArray> = arrayOf(
+        doubleArrayOf(cos(positions.linkageAngle), cos(positions.linkageAngle - Math.PI + positions.armAngle), cos(positions.clawAngle)),
+        doubleArrayOf(sin(positions.linkageAngle), sin(positions.linkageAngle - Math.PI + positions.armAngle), sin(positions.clawAngle))
+    )
+    val products = multiply1DMatrixBy2D(lengths, ratios)
+
+    val x = products[0]
+    val y = 0.0
+    val z = products[1]
+
+    return Point3D(x,y,z)
+}
+
+fun multiply1DMatrixBy2D (matrix1: DoubleArray, matrix2: Array<DoubleArray>): DoubleArray{
+    //first matrix should be as wide as second is tall
+    val row1 = matrix1.size
+    val row2 = matrix2.size
+    val endMatrix = DoubleArray(row2) {0.0}
+
+
+    for (i in 0..row2){
+        for (j in 0..row1)
+        endMatrix[i] += matrix1[j].times(matrix2[i][j])
+    }
+
+    return endMatrix
+}
