@@ -33,4 +33,8 @@ class LinearSlides(private val hwMap:HardwareMap) {
         rightMotor.power = -effort
     }
 
+    private fun InToTick(input: Double): Double {
+        return 0.0
+    }
+
 }
