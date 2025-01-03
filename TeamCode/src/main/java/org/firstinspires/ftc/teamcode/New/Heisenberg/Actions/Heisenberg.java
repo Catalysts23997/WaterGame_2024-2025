@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.Actions;
 
-import static org.firstinspires.ftc.teamcode.New.UtilKt.moveArmToPoint;
+import static org.firstinspires.ftc.teamcode.New.Utilities.ArmLengthKt.moveArmToPoint;
 
 import androidx.annotation.NonNull;
 

@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.New.testing
 
-import org.firstinspires.ftc.teamcode.New.CameraParams
-import org.firstinspires.ftc.teamcode.New.Point2D
-import org.firstinspires.ftc.teamcode.New.Point3D
-import org.firstinspires.ftc.teamcode.New.findPositionOfSample
-import org.firstinspires.ftc.teamcode.New.pixelToCameraCoords
-import org.firstinspires.ftc.teamcode.New.projectToGround
+import org.firstinspires.ftc.teamcode.New.Utilities.CameraParams
+import org.firstinspires.ftc.teamcode.New.Utilities.Point2D
+import org.firstinspires.ftc.teamcode.New.Utilities.Point3D
+import org.firstinspires.ftc.teamcode.New.Utilities.pixelToCameraCoords
+import org.firstinspires.ftc.teamcode.New.Utilities.projectToGround
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
@@ -36,8 +34,10 @@ class CameraAlgorithmTest {
 
     @Test
     fun testProjectToGround() {
-        val cameraCoords = Point3D(x = 0.1, y = 0.075, z = 1.0) // Camera coordinates in normalized space
-        val cameraPosition = Point3D(x = 5.0, y = 5.0, z = 10.0) // Camera positioned above the ground
+        val cameraCoords =
+            Point3D(x = 0.1, y = 0.075, z = 1.0) // Camera coordinates in normalized space
+        val cameraPosition =
+            Point3D(x = 5.0, y = 5.0, z = 10.0) // Camera positioned above the ground
 
         // Correct expected result after projection, with small epsilon for comparison
         val expected = Point2D(x = 5.11111, y = 5.08333)
@@ -51,7 +51,8 @@ class CameraAlgorithmTest {
     @Test
     fun testProjectToGroundWhenCameraIsAtSameHeight() {
         val cameraCoords = Point3D(x = 0.1, y = 0.075, z = 1.0)
-        val cameraPosition = Point3D(x = 5.0, y = 5.0, z = 1.0) // Same height as the camera coordinate
+        val cameraPosition =
+            Point3D(x = 5.0, y = 5.0, z = 1.0) // Same height as the camera coordinate
 
         // Set up the expected exception using the ExpectedException rule
         expectedException.expect(ArithmeticException::class.java)

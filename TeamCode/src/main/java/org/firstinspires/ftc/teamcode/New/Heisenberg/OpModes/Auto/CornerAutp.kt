@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
-import org.firstinspires.ftc.teamcode.New.Poses
+import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
 @Autonomous(name = "CornerAutp", group = "Auto")
 class CornerAutp : LinearOpMode(){

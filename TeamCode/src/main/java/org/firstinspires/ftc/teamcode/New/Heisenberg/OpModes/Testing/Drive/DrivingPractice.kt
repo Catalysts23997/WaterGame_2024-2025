@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
-import org.firstinspires.ftc.teamcode.New.Poses
+import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
 @TeleOp(name = "DrivingPractice", group = "Linear OpMode")
 class DrivingPractice : LinearOpMode(){

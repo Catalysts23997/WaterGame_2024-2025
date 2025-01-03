@@ -5,7 +5,7 @@ import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
-import org.firstinspires.ftc.teamcode.New.Poses
+import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 import java.util.Locale
 
 @TeleOp(name = "Localizer Test", group = "Linear OpMode") //@Disabled

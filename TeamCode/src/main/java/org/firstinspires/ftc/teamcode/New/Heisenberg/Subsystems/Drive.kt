@@ -4,11 +4,11 @@ import android.util.Log
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.New.Controller
-import org.firstinspires.ftc.teamcode.New.PIDParams
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.SubSystems
-import org.firstinspires.ftc.teamcode.New.smoothGamepadInput
+import org.firstinspires.ftc.teamcode.New.Utilities.Controller
+import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
+import org.firstinspires.ftc.teamcode.New.Utilities.smoothGamepadInput
 import kotlin.math.cos
 import kotlin.math.sin
 

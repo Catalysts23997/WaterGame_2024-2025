@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.New.PinpointLocalizer
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.firstinspires.ftc.teamcode.New.Angle
-import org.firstinspires.ftc.teamcode.New.Poses
+import org.firstinspires.ftc.teamcode.New.Utilities.Angle
+import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
 
 class Localizer(hwmap: HardwareMap, private val offset: Poses) {
@@ -37,7 +37,8 @@ class Localizer(hwmap: HardwareMap, private val offset: Poses) {
     fun update(justImu: Boolean = false){
         odo.update()
 //        if (!justImu) odo.update() else odo.
-        pose = Poses(offset.x - odo.position.getY(DistanceUnit.INCH),offset.y + odo.position.getX(DistanceUnit.INCH),Angle.wrap(odo.position.getHeading(AngleUnit.RADIANS) - Angleoffset +offset.heading))
+        pose = Poses(offset.x - odo.position.getY(DistanceUnit.INCH),offset.y + odo.position.getX(DistanceUnit.INCH),
+            Angle.wrap(odo.position.getHeading(AngleUnit.RADIANS) - Angleoffset +offset.heading))
     }
 
     fun resetHeading(){Angleoffset += pose.heading}

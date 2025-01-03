@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Vector2d
-import org.firstinspires.ftc.teamcode.New.Angle
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.findNearestPoint
+import org.firstinspires.ftc.teamcode.New.Utilities.Angle
+import org.firstinspires.ftc.teamcode.New.Utilities.findNearestPoint
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin

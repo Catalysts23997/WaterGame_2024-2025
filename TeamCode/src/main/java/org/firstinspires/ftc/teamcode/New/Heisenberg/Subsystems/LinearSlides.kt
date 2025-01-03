@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
 
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.New.Controller
-import org.firstinspires.ftc.teamcode.New.PIDParams
-import org.firstinspires.ftc.teamcode.New.SlidesEncoderConv
+import org.firstinspires.ftc.teamcode.New.Utilities.Controller
+import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
+import org.firstinspires.ftc.teamcode.New.Utilities.SlidesEncoderConv
 
 class LinearSlides(private val hwMap:HardwareMap) {
 

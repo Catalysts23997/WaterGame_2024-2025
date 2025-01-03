@@ -4,7 +4,7 @@ import android.util.Size
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.New.Camera
-import org.firstinspires.ftc.teamcode.New.Point2D
+import org.firstinspires.ftc.teamcode.New.Utilities.Point2D
 import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor
 import org.firstinspires.ftc.vision.opencv.ColorRange

@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems;
 
 
-import static java.lang.Math.PI;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.New.Angle;
-import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer;
-import org.firstinspires.ftc.teamcode.New.ServoPoseCalculator;
-import org.firstinspires.ftc.teamcode.New.ServoRange;
+import org.firstinspires.ftc.teamcode.New.Utilities.ServoPoseCalculator;
+import org.firstinspires.ftc.teamcode.New.Utilities.ServoRange;
+
 
 public class ClawRotater {
     public Servo clawRotater;

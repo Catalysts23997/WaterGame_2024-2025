@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 //import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
 //import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.Poses
+import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
 class TestingAuto : LinearOpMode() {
 

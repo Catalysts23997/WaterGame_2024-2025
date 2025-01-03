@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
-import org.firstinspires.ftc.teamcode.New.PIDParams;
 
 import CommonUtilities.PIDFcontroller;
 
