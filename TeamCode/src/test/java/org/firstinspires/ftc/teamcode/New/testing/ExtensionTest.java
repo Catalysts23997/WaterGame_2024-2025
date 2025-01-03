@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.testing;
 
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos;
-import org.firstinspires.ftc.teamcode.New.Slides;
+import static org.firstinspires.ftc.teamcode.New.UtilKt.linearSlideExtension;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,8 +27,8 @@ public class ExtensionTest {
         for(int i = 0; i<1000; i++){
             double randomValue = min + (random.nextDouble() * (max - min));
             double randomValue2 = min + (random.nextDouble() * (max - min));
-            double claw =Slides.INSTANCE.linearSlideExtension(randomValue).clawAngle;
-            double claw2 =Slides.INSTANCE.linearSlideExtension(randomValue2).clawAngle;
+            double claw =linearSlideExtension(randomValue).clawAngle;
+            double claw2 =linearSlideExtension(randomValue2).clawAngle;
             Assert.assertEquals(claw,claw2,0.0);
         }
 
@@ -37,7 +37,7 @@ public class ExtensionTest {
     @Test
     public void Test(){
 
-        double length = Slides.INSTANCE.linearSlideExtension(11).slideLength;
+        double length = linearSlideExtension(11).slideLength;
         System.out.print(length);
         Assert.assertEquals(length, minExtension,0);
 

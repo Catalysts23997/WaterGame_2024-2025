@@ -4,9 +4,9 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Vector2d
 import org.firstinspires.ftc.teamcode.New.Angle
-import org.firstinspires.ftc.teamcode.New.FindNearestPoint
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
+import org.firstinspires.ftc.teamcode.New.findNearestPoint
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
@@ -45,7 +45,7 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
         val current = Localizer.pose
         val drive = Drive.instance
 
-        val newTarget = FindNearestPoint.findNearestPoint(targetVector, current)
+        val newTarget = findNearestPoint(targetVector, current)
 
         val latError = newTarget.y - current.y
         val axialError = newTarget.x - current.x

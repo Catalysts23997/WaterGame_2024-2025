@@ -4,6 +4,7 @@ import android.util.Size
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.New.Camera
+import org.firstinspires.ftc.teamcode.New.Point2D
 import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor
 import org.firstinspires.ftc.vision.opencv.ColorRange
@@ -35,6 +36,8 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
         .setCamera(camera)
         .build()
 
+    data class BlobInfo (val angle: Double, val position: Point2D)
+
     fun getBlobs(): List<ColorBlobLocatorProcessor.Blob> {
 
         val blobs = visionProcessor.blobs
@@ -60,6 +63,12 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
             20000.0,
             blobs
         )
+
+
+
+        blobs.forEach{ blob->
+//            blob.
+        }
 
         return blobs
     }

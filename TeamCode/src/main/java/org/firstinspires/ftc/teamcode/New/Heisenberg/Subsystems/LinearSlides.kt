@@ -26,7 +26,8 @@ class LinearSlides(private val hwMap:HardwareMap) {
     var conv: SlidesEncoderConv = SlidesEncoderConv(circumferenceOfSpool)
 
     fun update(input: Double){
-        val target = if(input != 0.0) InToTick(input) else 0.0
+        //in to tick
+        val target = if(input != 0.0) 0.0 else 0.0
         val effort = pidController.calculate(target)
         leftMotor.power = effort
         rightMotor.power = -effort

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.New
 
 import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions
 import kotlin.math.PI
 import kotlin.math.abs
@@ -237,7 +238,12 @@ fun moveArmToPoint(
     )
 
 
-    return AttachmentPositions(wristAngle2, wristAngle1, slideLength, slideAngle)
+    return AttachmentPositions(
+        wristAngle2,
+        wristAngle1,
+        slideLength,
+        slideAngle
+    )
 }
 
 
@@ -251,5 +257,54 @@ class SlidesEncoderConv(var circumference: Double) {
         return (ticks / ticksPerRev) * circumference * inPerMm
     }
 
+}
+
+data class Point2D(val x: Double, val y: Double)
+data class Point3D(
+    val x: Double, val y: Double, val z: Double
+)
+
+data class CameraParams(
+    val fx: Double,
+    val fy: Double,
+    val cx: Double,
+    val cy: Double
+)
+
+fun pixelToCameraCoords(pixel: Point2D, cameraParams: CameraParams): Point3D {
+    // Convert pixel to normalized camera coordinates
+    val x = (pixel.x - cameraParams.cx) / cameraParams.fx
+    val y = (pixel.y - cameraParams.cy) / cameraParams.fy
+    return Point3D(x, y, 1.0) // Assume z = 1 for normalized coordinates
+}
+
+fun projectToGround(cameraCoords: Point3D, cameraPosition: Point3D): Point2D {
+    // Check for potential division by zero
+    if (cameraPosition.z == cameraCoords.z) {
+        throw ArithmeticException("Camera is at the same height as the ground.")
+    }
+
+    // Calculate the scaling factor to project onto the ground
+    val scale = cameraPosition.z / (cameraPosition.z - cameraCoords.z)
+    val xGround = cameraCoords.x * scale + cameraPosition.x
+    val yGround = cameraCoords.y * scale + cameraPosition.y
+    return Point2D(xGround, yGround)
+}
+
+
+fun findPositionOfSample(cameraPosition: Point3D, pixelCoordinates: Point2D): Point2D {
+
+    val cameraParams = CameraParams(
+        fx = 800.0,  // Focal length in x
+        fy = 800.0,  // Focal length in y
+        cx = 320.0,  // Principal point x (image center)
+        cy = 240.0   // Principal point y (image center)
+    )
+
+    // Step 1: Convert 2D pixel coordinates to camera coordinates (normalized)
+    val cameraCoords = pixelToCameraCoords(pixelCoordinates, cameraParams)
+
+    // Step 2: Project the camera coordinates onto the ground plane
+    return projectToGround(cameraCoords, cameraPosition)
 }
 

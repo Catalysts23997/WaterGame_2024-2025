@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Wrist;
 
 @Config
 @TeleOp(name = "WristTest", group = "Linear OpMode")
@@ -14,12 +13,12 @@ public class WristTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Wrist wrist = new Wrist(hardwareMap);
-
-        waitForStart();
-        while (opModeIsActive()) {
-            wrist.Wrist.setPosition(servoPose);
-        }
+//        Wrist wrist = new Wrist(hardwareMap);
+//
+//        waitForStart();
+//        while (opModeIsActive()) {
+//            wrist.Wrist.setPosition(servoPose);
+//        }
     }
 }
 

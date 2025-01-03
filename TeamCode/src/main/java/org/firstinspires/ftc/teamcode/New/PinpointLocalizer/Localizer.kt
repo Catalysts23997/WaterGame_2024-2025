@@ -9,7 +9,8 @@ import org.firstinspires.ftc.teamcode.New.Poses
 
 class Localizer(hwmap: HardwareMap, private val offset: Poses) {
 
-    private val odo: GoBildaPinpointDriver = hwmap.get(GoBildaPinpointDriver::class.java, "odo")
+    private val odo: GoBildaPinpointDriver = hwmap.get(
+        GoBildaPinpointDriver::class.java, "odo")
     init {
         odo.setOffsets(-6 * 25.4, 4 * 25.4)
 

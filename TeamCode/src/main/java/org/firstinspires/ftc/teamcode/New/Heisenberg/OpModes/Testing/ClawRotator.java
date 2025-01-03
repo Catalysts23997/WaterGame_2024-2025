@@ -39,7 +39,7 @@ public class ClawRotator extends LinearOpMode {
             clawRotator.update(drive);
 
 
-            servoPos = ClawRotater.angle;
+//            servoPos = clawRotator.angle;
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             //Not sure how format param works
             telemetry.addData("Claw Rotator", "", servoPos);
