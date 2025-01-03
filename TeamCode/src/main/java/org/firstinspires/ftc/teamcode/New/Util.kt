@@ -253,3 +253,14 @@ class SlidesEncoderConv(var circumference: Double) {
 
 }
 
+fun getFocalLength(pixels: Double, sampleWidth: Double, distance:Double): Double {
+
+    return (pixels*distance)/sampleWidth
+}
+
+fun getDistance(pixels: Double, sampleWidth: Double):Double {
+    val focalLength = 400
+
+    return (sampleWidth*focalLength)/pixels
+
+}

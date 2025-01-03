@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.New.testing
 
-import org.firstinspires.ftc.teamcode.New.FindInverseKinematicsStuff
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.math.sqrt
+import org.firstinspires.ftc.teamcode.New.findNearestPoint
+import org.firstinspires.ftc.teamcode.New.moveArmToPoint
 
 class InverseKinematicsTest {
 
@@ -12,8 +13,8 @@ class InverseKinematicsTest {
     @Test
     fun testFlat(){
 
-        val wristAngle: Double = FindInverseKinematicsStuff.findInverseKinematicsStuff(20.0,0.0,0.0).wristAngle
-        val slideAngle: Double = FindInverseKinematicsStuff.findInverseKinematicsStuff(20.0,0.0,0.0).slideAngle
+        val wristAngle: Double = moveArmToPoint(20.0,0.0,0.0,10.0).armAngle
+        val slideAngle: Double = moveArmToPoint(20.0,0.0,0.0,10.0).linkageDegree
 
         assertEquals(wristAngle, Math.PI, 0.0)
         assertEquals(slideAngle, 0.0, 0.0)
@@ -23,8 +24,8 @@ class InverseKinematicsTest {
     @Test
     fun test306090(){
 
-        val wristAngle: Double = FindInverseKinematicsStuff.findInverseKinematicsStuff(10 * sqrt(3.0), 10.0,Math.PI/6).wristAngle
-        val slideAngle: Double = FindInverseKinematicsStuff.findInverseKinematicsStuff(10 * sqrt(3.0), 10.0,Math.PI/6).slideAngle
+        val wristAngle: Double = moveArmToPoint(10 * sqrt(3.0), 10.0,Math.PI/6,10.0).armAngle
+        val slideAngle: Double = moveArmToPoint(10 * sqrt(3.0), 10.0,Math.PI/6,10.0).linkageDegree
 
         assertEquals(Math.PI, wristAngle, 0.1)
         assertEquals(Math.PI/6, slideAngle, 0.1)
