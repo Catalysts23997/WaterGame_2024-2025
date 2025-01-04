@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositi
 import kotlin.math.cos
 import kotlin.math.sin
 
+
 data class Point2D(val x: Double, val y: Double)
 data class Point3D(
     val x: Double, val y: Double, val z: Double
@@ -55,8 +56,8 @@ fun findPositionOfSample(cameraPosition: Point3D, pixelCoordinates: Point2D): Po
 }
 
 fun findCameraPosition(positions: AttachmentPositions): Point3D {
-    val lengths: DoubleArray = doubleArrayOf(positions.slideLength, 6.1338583, 6.5826772)
-    val ratios: Array<DoubleArray> = arrayOf(
+    val lengths = doubleArrayOf(positions.slideLength, 6.1338583, 6.5826772)
+    val ratios = arrayOf(
         doubleArrayOf(cos(positions.linkageAngle), cos(positions.linkageAngle - Math.PI + positions.armAngle), cos(positions.clawAngle)),
         doubleArrayOf(sin(positions.linkageAngle), sin(positions.linkageAngle - Math.PI + positions.armAngle), sin(positions.clawAngle))
     )
@@ -69,17 +70,4 @@ fun findCameraPosition(positions: AttachmentPositions): Point3D {
     return Point3D(x,y,z)
 }
 
-fun multiply1DMatrixBy2D (matrix1: DoubleArray, matrix2: Array<DoubleArray>): DoubleArray{
-    //first matrix should be as wide as second is tall
-    val row1 = matrix1.size
-    val row2 = matrix2.size
-    val endMatrix = DoubleArray(row2) {0.0}
 
-
-    for (i in 0..row2){
-        for (j in 0..row1)
-        endMatrix[i] += matrix1[j].times(matrix2[i][j])
-    }
-
-    return endMatrix
-}
