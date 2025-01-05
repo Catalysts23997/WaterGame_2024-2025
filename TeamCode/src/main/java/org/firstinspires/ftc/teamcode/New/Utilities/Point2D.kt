@@ -58,8 +58,9 @@ fun findPositionOfSample(cameraPosition: Point3D, pixelCoordinates: Point2D): Po
 fun findCameraPosition(positions: AttachmentPositions): Point3D {
     val lengths = doubleArrayOf(positions.slideLength, 6.1338583, 6.5826772)
     val ratios = arrayOf(
-        doubleArrayOf(cos(positions.linkageAngle), cos(positions.linkageAngle - Math.PI + positions.armAngle), cos(positions.clawAngle)),
-        doubleArrayOf(sin(positions.linkageAngle), sin(positions.linkageAngle - Math.PI + positions.armAngle), sin(positions.clawAngle))
+        doubleArrayOf(cos(positions.linkageAngle), sin(positions.linkageAngle)),
+        doubleArrayOf(cos(positions.linkageAngle - Math.PI + positions.armAngle), sin(positions.linkageAngle - Math.PI + positions.armAngle)),
+        doubleArrayOf(cos(positions.clawAngle), sin(positions.clawAngle))
     )
     val products = multiply1DMatrixBy2D(lengths, ratios)
 
