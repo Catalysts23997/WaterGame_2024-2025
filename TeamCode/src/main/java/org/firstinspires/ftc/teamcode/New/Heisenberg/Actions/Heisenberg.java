@@ -6,8 +6,12 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Slides;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Claw;
@@ -64,30 +68,50 @@ public class Heisenberg {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //go to the specimen with positions class
-            //linkage----> horizontal
-            //slides----> intake
-            //claw ---> open
-            //sequential action for this
-            //color sensor if loop: if red, yellow, or blue detected, and distance value is good
-            // close claw. either put this in an if or while loop dependent on color sensor
-            //slides----> idle
-            //linkage---> idle
 
+            attachmentPositons = moveArmToPoint(5.0, 40.0, Math.toRadians(0), slideExtension);
+
+            new ParallelAction(
+                    Positions.BackRightSubmersableIntake.runToExact,
+                    claw.clawState = Claw.ClawState.OPEN,
+                    linkage.linkageState = Linkage.LinkageState.INPUT,
+                     slideExtension = 0.0,
+
+                    new SequentialAction(
+
+                            //colorsensor detection of pixel
+                            claw.clawState = Claw.ClawState.CLOSED,
+                            slideExtension = 0.0,
+                            linkage.linkageState = Linkage.LinkageState.IDLE,
+
+
+
+
+
+
+                    );
 
             return false;
         }
     };
+
     public Action Hang = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-//            LinearSlides linearSlides = new LinearSlides(hardwareMap);
-//            linearSlides.State = LinearSlides.State.HANG;
-//            Linear slides-----> hang
-//            claw----->open
-            //seqential action of once slides reach position then claw close???
+            attachmentPositons = moveArmToPoint(5.0, 40.0, Math.toRadians(0), slideExtension);
+            claw.clawState = Claw.ClawState.OPEN;
+            linkage.linkageState = Linkage.LinkageState.VERTICAL;
+            //requires gamepad or touch sensor input to close as this is only performed in teleop
+            //as a result i'm setting this up to put the robot in position, not to close it automatically
+            //sequential action of once slides reach position then claw close???
             //otherwise we could just have claw manually close
-            // fix this later! 𓆉
+            clawRotatorAngle = 90.0;
+            slideExtension = 50.0;
+            // i don't know how far to extend the slides
+            // i'll fix this later
+
+
+
 
 
             return false;
@@ -127,6 +151,20 @@ public class Heisenberg {
             //shoulder
             //drop using wrist
             //claw release
+
+
+            return false;
+        }
+    };
+    public Action idle = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            attachmentPositons = moveArmToPoint(5.0, 40.0, Math.toRadians(0), slideExtension);
+            claw.clawState = Claw.ClawState.CLOSED;
+            linkage.linkageState = Linkage.LinkageState.IDLE;
+            slideExtension = 0.0;
+            clawRotatorAngle= 90.0;
+
 
 
             return false;
