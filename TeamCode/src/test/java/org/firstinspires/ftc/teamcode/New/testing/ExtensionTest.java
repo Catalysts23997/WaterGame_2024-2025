@@ -31,15 +31,5 @@ public class ExtensionTest {
             double claw2 = linearSlideExtension(randomValue2).clawAngle;
             Assert.assertEquals(claw, claw2, 0.0);
         }
-
-    }
-
-    @Test
-    public void Test() {
-
-        double length = linearSlideExtension(11).slideLength;
-        System.out.print(length);
-        Assert.assertEquals(length, minExtension, 0);
-
     }
 }

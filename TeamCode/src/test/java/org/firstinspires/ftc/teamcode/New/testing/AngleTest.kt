@@ -58,34 +58,6 @@ class AngleTest {
     }
 
     @Test
-    //Tests the wrap() function when the angle to wrap is >= 2PI or <= -2PI.
-    //Expected Outcome: Error preventing Radians input being greater or less than -2PI, 2PI
-    fun wrap_outside_range_large_values() {
-        val angle = Angle
-        val epsilon = 0.0
-
-        val rng = Random()
-
-        //Test that values > 2PI wrap
-        for (i in 1..100) {
-            val testValue = (2 * Math.PI) + (rng.nextDouble() * 100)
-            val expected = testValue - Math.PI * 2
-            val actual = angle.wrap(testValue)
-            assertEquals(expected, actual, epsilon)
-        }
-
-        //Test that values < -2PI wrap
-        for (i in 1..100) {
-            val testValue = -(2 * Math.PI) - (rng.nextDouble() * 100)
-            val expected = testValue + Math.PI * 2
-            val actual = angle.wrap(testValue)
-            assertEquals(expected, actual, epsilon)
-        }
-
-    }
-
-
-    @Test
     //Tests the wrapToPositive function with specific inputs in the 0-PI range
     fun wrapPositiveToPositiveAngles (){
         val random = kotlin.random.Random

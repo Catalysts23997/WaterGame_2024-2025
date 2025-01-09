@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.New.Utilities.ServoPoseCalculator;
+import org.firstinspires.ftc.teamcode.New.Utilities.ServoRange;
 
 
 public class ArmServos {
@@ -14,8 +15,8 @@ public class ArmServos {
 
     public static double maxExtension = 37.7716535;
     public static double minExtension = maxExtension - 33;
-
-    ServoPoseCalculator calc;
+    ServoPoseCalculator armCalc  = new ServoPoseCalculator(new ServoRange(0.0,1.0));
+    ServoPoseCalculator clawCalc  = new ServoPoseCalculator(new ServoRange(0.0,1.0));
 
 
     public ArmServos(HardwareMap hardwareMap){
@@ -37,8 +38,8 @@ public class ArmServos {
 
     public void update(double armGoal, double clawGoal){
         if (armState == ArmState.INPUT){
-            armPitch.setPosition(calc.findPose(armGoal));
-            clawPitch.setPosition(calc.findPose(clawGoal));
+            armPitch.setPosition(armCalc.findPose(armGoal));
+            clawPitch.setPosition(clawCalc.findPose(clawGoal));
         }
         else {
             armPitch.setPosition(armState.armPos);
