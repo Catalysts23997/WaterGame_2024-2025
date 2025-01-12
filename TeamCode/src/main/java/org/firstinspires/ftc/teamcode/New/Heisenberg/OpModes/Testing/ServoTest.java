@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@TeleOp(name = "TestingServos", group = "Linear OpMode")
+@TeleOp(name = "ServoTest", group = "Linear OpMode")
 public class ServoTest extends LinearOpMode {
     List<Servo> servoList;
 
@@ -20,9 +20,10 @@ public class ServoTest extends LinearOpMode {
 
         servoList = Arrays.asList(hardwareMap.get(Servo.class, "port2"), hardwareMap.get(Servo.class, "port3"), hardwareMap.get(Servo.class, "port4"), hardwareMap.get(Servo.class, "port5"));
 
-        // port 2:
-        // port 3:
-
+        // port 2: wrist: 1 is 25 degrees below parallel with arm, 0 is 115 from parallel
+        // port 3: rotates claw, doesn't work
+        // port 4: armservo1 1 is 10 degrees in front of the slides, 0 is 45 degrees
+        // port 5: armservo2 0 is straight up, 1 is 45 degrees
 
         waitForStart();
 

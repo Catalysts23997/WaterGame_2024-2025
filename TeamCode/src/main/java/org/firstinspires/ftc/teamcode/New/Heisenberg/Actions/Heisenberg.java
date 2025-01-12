@@ -64,7 +64,7 @@ public class Heisenberg {
     };
 
 
-    public Action grabFromSubmersible = new Action() {
+    /*public Action grabFromSubmersible = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //go to the specimen with positions class
@@ -85,16 +85,16 @@ public class Heisenberg {
                             linkage.linkageState = Linkage.LinkageState.IDLE,
 
 
-
-
-
+                            )
 
                     );
 
             return false;
+
+
         }
     };
-
+*/
     public Action Hang = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
