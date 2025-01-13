@@ -19,9 +19,10 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ClawRotater;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ColorSensor;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Linkage;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Wrists;
 
 public class Heisenberg {
-    ArmServos armServos;
+    Wrists wrist;
     LinearSlides linearSlides;
     Linkage linkage;
     Claw claw;
@@ -34,7 +35,7 @@ public class Heisenberg {
     double clawRotatorAngle = 0.0;
 
     public void update() {
-        armServos.update(attachmentPositons.armAngle, attachmentPositons.clawAngle);
+        wrist.update();
         linkage.update(attachmentPositons.linkageAngle);
         linearSlides.update(slideExtension);
         claw.update();
@@ -42,7 +43,7 @@ public class Heisenberg {
     }
 
     public Heisenberg(HardwareMap hardwareMap) {
-        armServos = new ArmServos(hardwareMap);
+        wrist = new Wrists(hardwareMap);
         linearSlides = new LinearSlides(hardwareMap);
         linkage = new Linkage(hardwareMap);
         claw = new Claw(hardwareMap);
@@ -53,8 +54,8 @@ public class Heisenberg {
     public Action template = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            attachmentPositons = moveArmToPoint(5.0, 40.0, Math.toRadians(180), slideExtension);
-            armServos.armState = ArmServos.ArmState.INPUT;
+            attachmentPositons.linkageAngle = Math.PI;
+            wrist.state = Wrists.State.Deposit;
             linkage.linkageState = Linkage.LinkageState.INPUT;
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
