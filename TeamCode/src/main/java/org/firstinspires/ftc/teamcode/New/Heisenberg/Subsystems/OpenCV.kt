@@ -1,27 +1,30 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
 
+import android.graphics.Point
 import android.util.Size
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.New.Camera
 import org.firstinspires.ftc.teamcode.New.Utilities.Point2D
+import org.firstinspires.ftc.teamcode.New.Utilities.findCameraPosition
 import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor
 import org.firstinspires.ftc.vision.opencv.ColorRange
 import org.firstinspires.ftc.vision.opencv.ImageRegion
+import java.sql.Blob
 
 class OpenCV(hardwareMap: HardwareMap) : Camera {
-    var targetColor = ColorRange.BLUE
+    private var targetColor: ColorRange = ColorRange.RED
 
     override val visionProcessor: ColorBlobLocatorProcessor = ColorBlobLocatorProcessor.Builder()
         .setTargetColorRange(targetColor) // use a predefined color match
         .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY) // exclude blobs inside blobs
         .setRoi(
             ImageRegion.asUnityCenterCoordinates(
-                -0.5,
-                0.5,
-                0.5,
-                -0.5
+                -.7,
+                0.7,
+                0.7,
+                -0.7
             )
         ) // search central 1/4 of camera view
         .setDrawContours(true) // Show contours on the Stream Preview
@@ -32,13 +35,14 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
 
     override val visionPortal: VisionPortal = VisionPortal.Builder()
         .addProcessor(visionProcessor)
-        .setCameraResolution(Size(320, 240))
+        .setCameraResolution(Size(1920, 1080))
         .setCamera(camera)
+        .setAutoStartStreamOnBuild(true)
         .build()
 
-    data class BlobInfo (val angle: Double, val position: Point2D)
+    data class BlobInfo(val angle: Double, val position: Point2D,val size: Double)
 
-    fun getBlobs(): List<ColorBlobLocatorProcessor.Blob> {
+    fun getBlobs(attachmentPositions: AttachmentPositions): BlobInfo? {
 
         val blobs = visionProcessor.blobs
 
@@ -65,11 +69,45 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
         )
 
 
+//        val cameraPos = findCameraPosition(attachmentPositions)
+        val results = ArrayList<BlobInfo>()
+        blobs.forEach { blob ->
 
-        blobs.forEach{ blob->
-//            blob.
+            // Display the size (area) and center location for each Blob.
+            val boxFit = blob.boxFit
+
+//
+//            val d = blob.contour[boxFit.center.y.toInt(), boxFit.center.x.toInt()]
+//
+//            var isred = false
+//            var isyellow = false
+//            var isblue = false
+//
+//            if (d[2] > d[0]) {
+//                isred = true
+//                if ((d[2] + d[1]) / 2 > d[2]) {
+//                    isyellow = true
+//                    isred = false
+//                }
+//            } else {
+//                isblue = true
+//            }
+
+
+            val position = Point2D(boxFit.center.x,boxFit.center.y)
+            val angle = boxFit.angle
+            val size = boxFit.size.area()
+            results += BlobInfo(angle,position,size)
+
+
+
+//            positions += findPositionOfSample(cameraPos, Point2D(cvCenter.x,cvCenter.y))
         }
 
-        return blobs
+
+        val maxBlobInfo = results.maxByOrNull { it.size }
+
+        return maxBlobInfo
     }
 }
+

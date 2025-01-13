@@ -22,8 +22,8 @@ public class ServoTest extends LinearOpMode {
 
         // port 2: wrist: 1 is 25 degrees below parallel with arm, 0 is 115 from parallel
         // port 3: rotates claw, doesn't work
-        // port 4: armservo1 1 is 10 degrees in front of the slides, 0 is 45 degrees
-        // port 5: armservo2 0 is straight up, 1 is 45 degrees
+        // port 4: armservo1 1 is 10 degrees left of positive y axis, 0 is 45 degrees left of negative y axis
+        // port 5: armservo2 0 is straight up, 1 is 45 left negative y axis degrees
 
         waitForStart();
 
@@ -41,11 +41,6 @@ public class ServoTest extends LinearOpMode {
             if (gamepad1.y) {
                 moveServo(3);
             }
-            if (gamepad1.right_bumper) {
-                moveServo(4);
-            }
-
-
         }
     }
 

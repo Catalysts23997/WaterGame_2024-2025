@@ -6,7 +6,11 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 
-data class Point2D(val x: Double, val y: Double)
+data class Point2D(val x: Double, val y: Double){
+    override fun toString(): String {
+        return "($x,$y)"
+    }
+}
 data class Point3D(
     val x: Double, val y: Double, val z: Double
 )

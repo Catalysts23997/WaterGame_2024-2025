@@ -6,13 +6,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.New.Utilities.ServoPoseCalculator;
 import org.firstinspires.ftc.teamcode.New.Utilities.ServoRange;
 
-
 public class ArmServos {
     Servo armPitch;
     Servo clawPitch;
-
     public ArmState armState;
-
     public static double maxExtension = 37.7716535;
     public static double minExtension = maxExtension - 33;
     ServoPoseCalculator armCalc  = new ServoPoseCalculator(new ServoRange(0.0,1.0));

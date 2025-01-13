@@ -26,10 +26,10 @@ class Drive(hwMap: HardwareMap) : SubSystems {
     override var state = States.Manual
 
     //todo note it will differ on new dt - (use customTest)
-    val leftBack: DcMotor = hwMap.get(DcMotor::class.java, "rightBack") //good
-    val leftFront: DcMotor = hwMap.get(DcMotor::class.java, "leftFront") // good
-    val rightFront: DcMotor = hwMap.get(DcMotor::class.java, "leftBack") // good
-    val rightBack: DcMotor = hwMap.get(DcMotor::class.java, "rightFront")
+    val leftFront: DcMotor = hwMap.get(DcMotor::class.java, "rightBack") //good
+    val rightBack: DcMotor = hwMap.get(DcMotor::class.java, "leftFront") // good
+    val leftBack: DcMotor = hwMap.get(DcMotor::class.java, "leftBack") // good
+    val rightFront: DcMotor = hwMap.get(DcMotor::class.java, "rightFront")
 
     override fun update(gamepadInput: ArrayList<Float>) {
 
@@ -55,9 +55,9 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         leftFront.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rightBack.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         rightFront.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        leftBack.direction = DcMotorSimple.Direction.FORWARD
+        leftBack.direction = DcMotorSimple.Direction.REVERSE
         leftFront.direction = DcMotorSimple.Direction.REVERSE
-        rightFront.direction = DcMotorSimple.Direction.REVERSE
+        rightFront.direction = DcMotorSimple.Direction.FORWARD
         rightBack.direction = DcMotorSimple.Direction.FORWARD
 
     }

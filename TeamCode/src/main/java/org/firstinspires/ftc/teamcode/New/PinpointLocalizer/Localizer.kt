@@ -12,7 +12,15 @@ class Localizer(hwmap: HardwareMap, private val offset: Poses) {
     private val odo: GoBildaPinpointDriver = hwmap.get(
         GoBildaPinpointDriver::class.java, "odo")
     init {
-        odo.setOffsets(-6 * 25.4, 4 * 25.4)
+        /*
+        Set the odometry pod positions relative to the point that the odometry computer tracks around.
+        The X pod offset refers to how far sideways from the tracking point the
+        X (forward) odometry pod is. Left of the center is a positive number,
+        right of center is a negative number. the Y pod offset refers to how far forwards from
+        the tracking point the Y (strafe) odometry pod is. forward of center is a positive number,
+        backwards is a negative number.
+         */
+        odo.setOffsets(3.5 * 25.4, -4.3 * 25.4)
 
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD)
 
