@@ -4,7 +4,7 @@ public class AttachmentPositions {
     public final double clawAngle;
     public final double armAngle;
     public final double slideLength;
-    public final double linkageAngle;
+    public double linkageAngle;
 
 
     public AttachmentPositions(double clawAngle, double armAngle, double slideLength, double linkageAngle) {
