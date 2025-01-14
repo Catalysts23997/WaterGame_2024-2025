@@ -6,19 +6,14 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.ParallelAction;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Slides;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ArmServos;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ClawRotater;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ColorSensor;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Linkage;
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Linkage;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Wrists;
 
 public class Heisenberg {

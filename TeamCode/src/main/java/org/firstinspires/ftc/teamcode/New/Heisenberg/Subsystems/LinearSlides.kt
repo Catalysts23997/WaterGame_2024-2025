@@ -16,9 +16,6 @@ class LinearSlides(private val hwMap:HardwareMap) {
 
     private val pidController = Controller(PIDParams(0.0,0.0,0.0,0.0))
 
-    fun setPID(p: Double, i: Double, d: Double, f: Double) {
-        pidController.params = PIDParams(p,i,d,f)
-    }
 
     //NOTE: Max encoder ticks is 311, otherwise we break hardware, lets
 

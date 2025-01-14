@@ -9,7 +9,7 @@ import kotlin.math.sin
 class Controller(var params: PIDParams) {
     private var prevError = 0.0
     private var integral = 0.0
-    val timer = ElapsedTime()
+    private val timer = ElapsedTime()
     var pastTime = 0.0
     fun calculate(
         target: Double,
@@ -39,5 +39,9 @@ class Controller(var params: PIDParams) {
 //        Log.d("errorsss", ff.toString())
 //        Log.d("errorsss", Math.toDegrees(armAngle).toString())
         return controlEffort
+    }
+
+    fun setPID(p: Double, i: Double, d: Double, f: Double) {
+        params = PIDParams(p,i,d,f)
     }
 }
