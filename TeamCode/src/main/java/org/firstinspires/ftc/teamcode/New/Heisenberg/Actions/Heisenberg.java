@@ -37,7 +37,7 @@ public class Heisenberg {
     public void update() {
         wrist.update();
         linkage.update(attachmentPositons.linkageAngle);
-        linearSlides.update(slideExtension);
+        linearSlides.update();
         claw.update();
         clawRotater.update(clawRotatorAngle);
     }
@@ -60,6 +60,7 @@ public class Heisenberg {
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
             slideExtension  =50.0;
+            linearSlides.slidesState = LinearSlides.SlidesState.BAR;
             return false;
         }
     };

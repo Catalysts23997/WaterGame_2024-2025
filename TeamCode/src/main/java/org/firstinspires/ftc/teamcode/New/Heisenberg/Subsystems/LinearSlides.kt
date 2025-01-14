@@ -10,6 +10,7 @@ class LinearSlides(private val hwMap:HardwareMap) {
 
     private val leftMotor: DcMotorEx = hwMap.get(DcMotorEx::class.java, "leftSlide")
     private val rightMotor: DcMotorEx = hwMap.get(DcMotorEx::class.java, "rightMotor")
+    lateinit var slidesState: SlidesState
 
 
     //todo: Create an opmode that uses this subsytem - and sets the pid controller's paramters to ftc Dashboard numbers
@@ -20,14 +21,14 @@ class LinearSlides(private val hwMap:HardwareMap) {
         pidController.params = PIDParams(p,i,d,f)
     }
 
-    //NOTE: Max encoder ticks is 311, otherwise we break hardware, lets
+    //NOTE: Max encoder ticks is 311, otherwise we break hardware
 
     private val circumferenceOfSpool: Double = 24 * Math.PI
     var conv: SlidesEncoderConv = SlidesEncoderConv(circumferenceOfSpool)
 
-    fun update(input: Double){
+    fun update(){
         //in to tick
-        val target = if(input != 0.0) 0.0 else 0.0
+        val target = slidesState.distance
         val effort = pidController.calculate(target)
         leftMotor.power = effort
         rightMotor.power = -effort
@@ -35,6 +36,16 @@ class LinearSlides(private val hwMap:HardwareMap) {
 
     private fun InToTick(input: Double): Double {
         return 0.0
+    }
+
+
+    enum class SlidesState(Distance: Double) {
+        WALL(0.0),
+        INTAKE(10.0),
+        BAR(15.0),
+        HANG(20.0);
+
+        val distance = Distance
     }
 
 }
