@@ -44,4 +44,7 @@ class Controller(var params: PIDParams) {
     fun setPID(p: Double, i: Double, d: Double, f: Double) {
         params = PIDParams(p,i,d,f)
     }
+    fun setPID(pidParams: PIDParams) {
+        params = pidParams
+    }
 }
