@@ -116,6 +116,7 @@ public class ReleasingActions {
             if (elapsedTime.seconds() > 0.3){
                 //intake position is used to lower the slides slightly
                 linearSlides.slidesState = LinearSlides.SlidesState.INTAKE;
+                claw.clawState = Claw.ClawState.OPEN;
                 return false;
             }
             else {
