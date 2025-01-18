@@ -125,6 +125,25 @@ public class ReleasingActions {
         }
     };
 
+    public Action Basket = new Action() {
+        final ElapsedTime elapsedTime = new ElapsedTime();
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = Wrists.State.Basket;
+            linkage.setState(Linkage.State.Basket);
+            claw.clawState = Claw.ClawState.CLOSED;
+            clawRotatorAngle = 0.0;
+            linearSlides.slidesState = LinearSlides.SlidesState.BAR;
+            if (elapsedTime.seconds() > 0.3){
+                claw.clawState = Claw.ClawState.OPEN;
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    };
+
     public Action Hang = new Action() {
         final ElapsedTime elapsedTime = new ElapsedTime();
         @Override
