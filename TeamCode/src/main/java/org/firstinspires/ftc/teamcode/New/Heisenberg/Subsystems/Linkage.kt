@@ -15,7 +15,7 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
         Basket(70.0),
         SubmersibleStart(10.0);
     }
-    override val state = State.Basket
+    override var state = State.Basket
 
     override fun update() {
         val currentAngle = 0.0
