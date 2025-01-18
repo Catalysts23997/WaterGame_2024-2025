@@ -15,12 +15,8 @@ import org.firstinspires.ftc.vision.opencv.ImageRegion
 import java.sql.Blob
 
 class OpenCV(hardwareMap: HardwareMap) : Camera {
-    var targetRange: ColorRange
-    //todo find for two colors
-    init {
-        targetRange = if(Globals.color == Globals.GlobalState.Red) ColorRange.RED
-            else ColorRange.BLUE
-    }
+    private var targetRange: ColorRange = if(Globals.color == Globals.GlobalState.Red) ColorRange.RED
+        else ColorRange.BLUE
 
 
     override val visionProcessor: ColorBlobLocatorProcessor = ColorBlobLocatorProcessor.Builder()
@@ -70,7 +66,7 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
         visionPortal.resumeStreaming()
     }
 
-    fun getBlobs(attachmentPositions: AttachmentPositions): BlobInfo? {
+    fun getBlobs(): BlobInfo? {
 
         val blobs1 = visionProcessor.blobs
         val blobs2  = visionProcessor2.blobs

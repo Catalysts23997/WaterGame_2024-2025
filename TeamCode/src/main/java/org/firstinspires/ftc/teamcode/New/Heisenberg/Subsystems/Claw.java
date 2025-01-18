@@ -9,7 +9,7 @@ public class Claw {
     public ClawState clawState = ClawState.CLOSED;
 
     public Claw(HardwareMap hardwareMap){
-        claw = hardwareMap.get(Servo.class, "claw");
+        claw = hardwareMap.get(Servo.class, "port5");
     }
 
     public void update(){
@@ -17,8 +17,8 @@ public class Claw {
     }
 
     public enum ClawState {
-        CLOSED(0.0),
-        OPEN(.14);
+        CLOSED(.97),
+        OPEN(.85);
 
         public final double servoPos;
         ClawState(double servoPos) {

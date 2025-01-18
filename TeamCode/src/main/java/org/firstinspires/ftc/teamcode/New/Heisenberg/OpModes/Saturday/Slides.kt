@@ -34,6 +34,8 @@ class Slides: LinearOpMode() {
         left.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         right.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
 
+
+
         val calc = SlidesEncoderConv(24*Math.PI)
 
         while (opModeIsActive()){

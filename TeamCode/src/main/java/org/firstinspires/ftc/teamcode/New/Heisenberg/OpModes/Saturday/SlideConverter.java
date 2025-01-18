@@ -16,6 +16,7 @@ public class SlideConverter extends LinearOpMode {
     
     @Override
     public void runOpMode() throws InterruptedException {
+//        hardwareMap.logDevices();
         DcMotor leftslide = hardwareMap.get(DcMotorEx.class, "leftslide");
         DcMotor rightslide = hardwareMap.get(DcMotorEx.class, "rightslide");
         rightslide.getCurrentPosition();

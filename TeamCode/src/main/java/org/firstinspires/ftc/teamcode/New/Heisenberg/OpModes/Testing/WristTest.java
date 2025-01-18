@@ -5,22 +5,23 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ClawRotater;
 
-@Disabled
+
 @Config
-@TeleOp(name = "WristTest", group = "Linear OpMode")
+@TeleOp(name = "RotatorTest", group = "Linear OpMode")
 public class WristTest extends LinearOpMode {
 
-    public static double servoPose = 0.0;
+    public static double angle = 0.0;
 
     @Override
     public void runOpMode() {
-//        Wrist wrist = new Wrist(hardwareMap);
-//
-//        waitForStart();
-//        while (opModeIsActive()) {
-//            wrist.Wrist.setPosition(servoPose);
-//        }
+        ClawRotater wrist = new ClawRotater(hardwareMap);
+
+        waitForStart();
+        while (opModeIsActive()) {
+            wrist.update(angle);
+        }
     }
 }
 

@@ -14,30 +14,29 @@ public class Wrists {
     public State state;
 
     public Wrists(HardwareMap hardwareMap) {
-        Wrist = hardwareMap.get(Servo.class, "wrist");
+        Wrist = hardwareMap.get(Servo.class, "port2");
         Wrist.setDirection(Servo.Direction.FORWARD);
-        Wrist2 = hardwareMap.get(Servo.class, "wrist2");
+        Wrist2 = hardwareMap.get(Servo.class, "port4");
         Wrist2.setDirection(Servo.Direction.FORWARD);
     }
 
     public enum State {
-        WallGrab(0.0),
-        Intake(.7),
-        Deposit(.34),
-        Stationary(0.6);
+        Basket(1.0,.4),
+        IntakeGround(0.0,.53),
+        IntakeWall(0.5,.53),
+        DropSample(.485,.53);
         public final double servoPos;
+        public final double nextPose;
 
-        State(double servoPos) {
+        State(double servoPos, double nextPose) {
             this.servoPos = servoPos;
+            this.nextPose= nextPose;
         }
     }
 
-    ServoRange servoRange = new ServoRange(.94,Math.PI,.34);
-    ServoPoseCalculator calc = new ServoPoseCalculator(servoRange);
-
     public void update() {
         Wrist.setPosition(state.servoPos);
-        Wrist2.setPosition(0);
+        Wrist2.setPosition(state.nextPose);
     }
 
 }

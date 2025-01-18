@@ -50,7 +50,7 @@ public class Heisenberg {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             attachmentPositons.linkageAngle = Math.PI;
-            wrist.state = Wrists.State.Deposit;
+//            wrist.state = Wrists.State.Deposit;
             linkage.linkageState = Linkage.LinkageState.INPUT;
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
@@ -106,10 +106,6 @@ public class Heisenberg {
             slideExtension = 50.0;
             // i don't know how far to extend the slides
             // i'll fix this later
-
-
-
-
 
             return false;
         }
