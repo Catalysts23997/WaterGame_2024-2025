@@ -21,10 +21,10 @@ public class Wrists {
     }
 
     public enum State {
-        WallGrab(0.0),
-        Intake(.7),
-        Deposit(.34),
-        Stationary(0.6);
+        WallGrab(0.5),
+        Intake(0.0),
+        Deposit(1.0),
+        Stationary(0.5);
         public final double servoPos;
 
         State(double servoPos) {
