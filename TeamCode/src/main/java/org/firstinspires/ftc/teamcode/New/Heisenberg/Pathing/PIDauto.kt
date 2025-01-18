@@ -64,8 +64,8 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
         drive.rightFront.power = (rotY - rotX - turn)
         drive.rightBack.power = (rotY + rotX - turn)
 
-        return !(abs(latError) <= 5.0 &&
-                abs(axialError) <= 5.0 &&
-                abs(Angle.wrap(headingError)) <= Math.toRadians(5.0))
+        return !(abs(latError) <= 3.0 &&
+                abs(axialError) <= 3.0 &&
+                abs(Angle.wrap(headingError)) <= Math.toRadians(4.0))
     }
 }

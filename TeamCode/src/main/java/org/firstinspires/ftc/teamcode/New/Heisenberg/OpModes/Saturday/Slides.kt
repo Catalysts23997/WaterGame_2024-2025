@@ -1,18 +1,17 @@
-package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.PID
+package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday
 
 import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
-import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Utilities.Controller
 import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
 import org.firstinspires.ftc.teamcode.New.Utilities.SlidesEncoderConv
 
 @Config
 @TeleOp(group = "Linear OpMode", name = "PidTest- Slides")
-class AnyMotor: LinearOpMode() {
+class Slides: LinearOpMode() {
 
     companion object{
 
@@ -39,7 +38,7 @@ class AnyMotor: LinearOpMode() {
 
         while (opModeIsActive()){
 
-            pidController.setPID(p,i,d,f)
+            pidController.setPID(p, i, d, f)
             pidController.calculate(target)
 
             telemetry.addData("Position  - Left", calc.toIn(left.currentPosition))

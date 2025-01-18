@@ -16,7 +16,7 @@ public class ClawRotater {
     }
 
 
-    ServoRange servoRange = new ServoRange(.34, 1.0);
+    ServoRange servoRange = new ServoRange(.34, Math.PI,1.0);
     ServoPoseCalculator calc = new ServoPoseCalculator(servoRange);
 
     public void update(double angle) {

@@ -32,7 +32,7 @@ public class Wrists {
         }
     }
 
-    ServoRange servoRange = new ServoRange(.94,.34);
+    ServoRange servoRange = new ServoRange(.94,Math.PI,.34);
     ServoPoseCalculator calc = new ServoPoseCalculator(servoRange);
 
     public void update() {

@@ -10,6 +10,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
+@Disabled
 @TeleOp(name = "AprilTagTest", group = "Utility")
 public class AprilTagTest extends LinearOpMode {
     public static final boolean usewebcam = true;

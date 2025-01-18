@@ -17,6 +17,7 @@ import org.opencv.core.RotatedRect;
 
 import java.util.List;
 
+@Disabled
 @TeleOp(name = "Vision Color-Locator", group = "Linear OpMode")
 public class CameraAlgorithm extends LinearOpMode {
     @Override

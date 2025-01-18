@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,8 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
 
-import CommonUtilities.PIDFcontroller;
-
+@Disabled
 @Config
 @TeleOp(name = "LinerSlidesTesting", group = "Linear OpMode")
 public class Tuning extends LinearOpMode{

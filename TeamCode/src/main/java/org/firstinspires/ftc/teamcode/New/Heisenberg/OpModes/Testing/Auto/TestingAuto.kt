@@ -3,6 +3,7 @@ import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 //import org.firstinspires.ftc.teamcode.New.Competition.Actions.Bromine
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
+@Disabled
 class TestingAuto : LinearOpMode() {
 
     override fun runOpMode() {

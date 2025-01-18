@@ -12,8 +12,8 @@ public class ArmServos {
     public ArmState armState;
     public static double maxExtension = 37.7716535;
     public static double minExtension = maxExtension - 33;
-    ServoPoseCalculator armCalc  = new ServoPoseCalculator(new ServoRange(0.0,1.0));
-    ServoPoseCalculator clawCalc  = new ServoPoseCalculator(new ServoRange(0.0,1.0));
+    ServoPoseCalculator armCalc  = new ServoPoseCalculator(new ServoRange(0.0,Math.PI,1.0));
+    ServoPoseCalculator clawCalc  = new ServoPoseCalculator(new ServoRange(0.0,Math.PI,1.0));
 
 
     public ArmServos(HardwareMap hardwareMap){

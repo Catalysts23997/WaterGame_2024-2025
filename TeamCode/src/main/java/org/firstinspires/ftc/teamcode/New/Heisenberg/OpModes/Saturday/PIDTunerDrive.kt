@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.New.Opmodes.Auto
+package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday
 
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.roadrunner.Action
@@ -15,34 +15,34 @@ import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 //@Config
 @TeleOp(name = "TuningPIDd", group = "Linear OpMode")
 class PIDTunerDrive : LinearOpMode() {
-//    companion object {
-//        @JvmField
-//        var paTerm = 0.2
-//
-//        @JvmField
-//        var iaTerm = 0.0001
-//
-//        @JvmField
-//        var daTerm = 0.018
-//
-//        @JvmField
-//        var pTerm = 0.2
-//
-//        @JvmField
-//        var iTerm = 0.0001
-//
-//        @JvmField
-//        var dTerm = 0.02
-//
-//        @JvmField
-//        var spTerm = 1.2
-//
-//        @JvmField
-//        var siTerm = 0.0001
-//
-//        @JvmField
-//        var sdTerm = 0.1
-//    }
+    companion object {
+        @JvmField
+        var paTerm = 0.2
+
+        @JvmField
+        var iaTerm = 0.0001
+
+        @JvmField
+        var daTerm = 0.018
+
+        @JvmField
+        var pTerm = 0.2
+
+        @JvmField
+        var iTerm = 0.0001
+
+        @JvmField
+        var dTerm = 0.02
+
+        @JvmField
+        var spTerm = 1.2
+
+        @JvmField
+        var siTerm = 0.0001
+
+        @JvmField
+        var sdTerm = 0.1
+    }
 
     override fun runOpMode() {
         val telemetry = FtcDashboard.getInstance().telemetry
@@ -55,11 +55,9 @@ class PIDTunerDrive : LinearOpMode() {
             ParallelAction(
                 Action {
                     localizer.update()
-//                    drive.setPID(
-//                        doubleArrayOf(paTerm, pTerm, spTerm),
-//                        doubleArrayOf(iaTerm, iTerm, siTerm),
-//                        doubleArrayOf(daTerm, dTerm, sdTerm)
-//                    )
+                    drive.Xpid.setPID(paTerm, iaTerm, daTerm,0.0)
+                    drive.Xpid.setPID(pTerm, iTerm, dTerm,0.0)
+                    drive.Xpid.setPID(spTerm, siTerm, sdTerm,0.0)
                     telemetry.addData("x", Localizer.pose.x)
                     telemetry.addData("y", Localizer.pose.y)
                     telemetry.update()
@@ -67,11 +65,11 @@ class PIDTunerDrive : LinearOpMode() {
                 },
 
                 SequentialAction(
-                    Positions.blah.runToNearest,
-                    Action{
-                        drive.StopRobot()
-                        false
-                    }
+                    Positions.Test.runToExact,
+                    Positions.Test.runToExact,
+                    Positions.Test.runToExact,
+                    Positions.Test.runToExact,
+                    Positions.Test.runToExact,
                 )
             )
         )

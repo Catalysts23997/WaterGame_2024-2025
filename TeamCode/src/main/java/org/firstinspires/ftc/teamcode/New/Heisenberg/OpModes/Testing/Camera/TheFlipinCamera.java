@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Camera;
 
 import android.util.Size;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import java.util.Locale;
 
+@Disabled
 @TeleOp(name = "CS3", group = "camera")
 public class TheFlipinCamera extends LinearOpMode {
 

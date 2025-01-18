@@ -5,6 +5,7 @@ import android.util.Size
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.New.Camera
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Globals
 import org.firstinspires.ftc.teamcode.New.Utilities.Point2D
 import org.firstinspires.ftc.teamcode.New.Utilities.findCameraPosition
 import org.firstinspires.ftc.vision.VisionPortal
@@ -14,10 +15,30 @@ import org.firstinspires.ftc.vision.opencv.ImageRegion
 import java.sql.Blob
 
 class OpenCV(hardwareMap: HardwareMap) : Camera {
-    private var targetColor: ColorRange = ColorRange.RED
+    var targetRange: ColorRange
+    //todo find for two colors
+    init {
+        targetRange = if(Globals.color == Globals.GlobalState.Red) ColorRange.RED
+            else ColorRange.BLUE
+    }
+
 
     override val visionProcessor: ColorBlobLocatorProcessor = ColorBlobLocatorProcessor.Builder()
-        .setTargetColorRange(targetColor) // use a predefined color match
+        .setTargetColorRange(ColorRange.YELLOW) // use a predefined color match
+        .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY) // exclude blobs inside blobs
+        .setRoi(
+            ImageRegion.asUnityCenterCoordinates(
+                -.7,
+                0.7,
+                0.7,
+                -0.7
+            )
+        ) // search central 1/4 of camera view
+        .setDrawContours(true) // Show contours on the Stream Preview
+        .setBlurSize(5) // Smooth the transitions between different colors in image
+        .build()
+    val visionProcessor2: ColorBlobLocatorProcessor = ColorBlobLocatorProcessor.Builder()
+        .setTargetColorRange(targetRange) // use a predefined color match
         .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY) // exclude blobs inside blobs
         .setRoi(
             ImageRegion.asUnityCenterCoordinates(
@@ -34,7 +55,7 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
     override val camera: WebcamName = hardwareMap.get(WebcamName::class.java, "Webcam 1")
 
     override val visionPortal: VisionPortal = VisionPortal.Builder()
-        .addProcessor(visionProcessor)
+        .addProcessors(visionProcessor,visionProcessor2)
         .setCameraResolution(Size(1920, 1080))
         .setCamera(camera)
         .setAutoStartStreamOnBuild(true)
@@ -42,9 +63,19 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
 
     data class BlobInfo(val angle: Double, val position: Point2D,val size: Double)
 
+    fun turnOff(){
+        visionPortal.stopStreaming()
+    }
+    fun turnOn(){
+        visionPortal.resumeStreaming()
+    }
+
     fun getBlobs(attachmentPositions: AttachmentPositions): BlobInfo? {
 
-        val blobs = visionProcessor.blobs
+        val blobs1 = visionProcessor.blobs
+        val blobs2  = visionProcessor2.blobs
+
+        val blobs = blobs2 + blobs1
 
         /*
          * The list of Blobs can be filtered to remove unwanted Blobs.
@@ -99,11 +130,8 @@ class OpenCV(hardwareMap: HardwareMap) : Camera {
             val size = boxFit.size.area()
             results += BlobInfo(angle,position,size)
 
-
-
 //            positions += findPositionOfSample(cameraPos, Point2D(cvCenter.x,cvCenter.y))
         }
-
 
         val maxBlobInfo = results.maxByOrNull { it.size }
 
