@@ -162,6 +162,7 @@ public class ReleasingActions {
         final ElapsedTime elapsedTime = new ElapsedTime();
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            linearSlides.setState(LinearSlides.SlidesState.BAR);
             wrist.state = Wrists.State.IntakeGround;
             if (elapsedTime.seconds() > 0.3){
                 claw.clawState = Claw.ClawState.CLOSED;
@@ -174,4 +175,29 @@ public class ReleasingActions {
             }
         }
     };
+
+    public Action bringDOwnLinkage = new Action() {
+        final ElapsedTime elapsedTime = new ElapsedTime();
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            linkage.getMotor().setPower(-.6);
+            if (elapsedTime.seconds() > 0.25){
+                linkage.getMotor().setPower(0.0);
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    };
+
+    public Action slidesOut = new Action() {
+        final ElapsedTime elapsedTime = new ElapsedTime();
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            linearSlides.setState(LinearSlides.SlidesState.BAR);
+            return false;
+        }
+    };
+
 }

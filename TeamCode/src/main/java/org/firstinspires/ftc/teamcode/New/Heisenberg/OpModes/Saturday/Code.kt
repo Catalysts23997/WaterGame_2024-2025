@@ -32,14 +32,20 @@ class Code : LinearOpMode() {
         while (opModeIsActive()) {
 
             // actions you are running
-            if (gamepad2.right_trigger>=.8) {
+            if (gamepad2.x) {
                 runningActions.add(
                     robot.pickUp
                 )
             }
-            if(gamepad2.left_trigger >= .5){
+            if(gamepad2.b){
                 runningActions.add(
                     robot.HPdrop
+                )
+            }
+
+            if(gamepad2.a){
+                runningActions.add(
+                    robot.slidesOut
                 )
             }
 

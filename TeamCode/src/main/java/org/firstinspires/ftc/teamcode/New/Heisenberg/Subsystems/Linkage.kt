@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.New.Utilities.Controller
 import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
 
 class Linkage(hardwareMap: HardwareMap): SubSystems {
-    private val motor: DcMotorEx = hardwareMap.get(DcMotorEx::class.java,"linkage")
+    val motor: DcMotorEx = hardwareMap.get(DcMotorEx::class.java,"linkage")
 
     private val controller = Controller(PIDParams(1.8089531093740894, 0.15506403605488558, 0.15316684843308717, 0.23084969258387814))
     enum class State(val angle: Double){

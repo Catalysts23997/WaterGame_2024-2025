@@ -24,7 +24,7 @@ public class Wrists {
         Basket(1.0,.4),
         IntakeGround(.37,.53),
         IntakeWall(0.53,.53),
-        DropSample(.8,.53);
+        DropSample(1.0,.53);
         public final double servoPos;
         public final double nextPose;
 
