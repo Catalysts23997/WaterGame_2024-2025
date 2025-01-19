@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.New.Utilities.ServoRange;
 public class Wrists {
     public Servo Wrist;
     public Servo Wrist2;
-    public State state;
+    public State state = State.DropSample;
 
     public Wrists(HardwareMap hardwareMap) {
         Wrist = hardwareMap.get(Servo.class, "port2");
@@ -22,9 +22,9 @@ public class Wrists {
 
     public enum State {
         Basket(1.0,.4),
-        IntakeGround(0.0,.53),
-        IntakeWall(0.5,.53),
-        DropSample(.485,.53);
+        IntakeGround(.37,.53),
+        IntakeWall(0.53,.53),
+        DropSample(.8,.53);
         public final double servoPos;
         public final double nextPose;
 

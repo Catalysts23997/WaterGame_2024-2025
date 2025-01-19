@@ -11,7 +11,7 @@ object Angle {
     }
 
     fun wrapToPositive(theta: Double): Double {
-        require(theta in -2 * PI..2 * PI)
+//        require(theta in -2 * PI..2 * PI)
         var angle = theta
         angle = wrap(angle)
         while (angle > PI) angle -= PI

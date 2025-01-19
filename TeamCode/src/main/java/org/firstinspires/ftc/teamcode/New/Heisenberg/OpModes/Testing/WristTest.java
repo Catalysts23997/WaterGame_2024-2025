@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing;
 
+import static java.lang.Math.PI;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -20,7 +22,7 @@ public class WristTest extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            wrist.update(angle);
+            wrist.update(gamepad1.left_stick_y * Math.PI);
         }
     }
 }

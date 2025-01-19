@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.New.Utilities.SlidesEncoderConv;
+
 //todo add slide converter
 @Config
 @TeleOp(name = "TestConversionToInches", group = "Linear OpMode")
@@ -17,18 +19,19 @@ public class SlideConverter extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 //        hardwareMap.logDevices();
-        DcMotor leftslide = hardwareMap.get(DcMotorEx.class, "leftslide");
-        DcMotor rightslide = hardwareMap.get(DcMotorEx.class, "rightslide");
-        rightslide.getCurrentPosition();
-        leftslide.getCurrentPosition();
+        DcMotor slide = hardwareMap.get(DcMotorEx.class, "slide");
+        slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        SlidesEncoderConv calc = new SlidesEncoderConv(24*Math.PI);
 
         waitForStart();
         while (opModeIsActive()){
-            double leftpos = leftslide.getCurrentPosition();
-            double rightpos = rightslide.getCurrentPosition();
+            int leftpos = slide.getCurrentPosition();
             telemetry.addData("LeftPosition",leftpos);
-            telemetry.addData("RightPosition",rightpos);
 
+            telemetry.addData("Inches",calc.toIn(leftpos));
+            telemetry.update();
         }
 
     }

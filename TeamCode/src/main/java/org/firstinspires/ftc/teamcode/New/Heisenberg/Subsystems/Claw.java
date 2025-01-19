@@ -19,7 +19,6 @@ public class Claw {
     public enum ClawState {
         CLOSED(.97),
         OPEN(.85);
-
         public final double servoPos;
         ClawState(double servoPos) {
             this.servoPos = servoPos;

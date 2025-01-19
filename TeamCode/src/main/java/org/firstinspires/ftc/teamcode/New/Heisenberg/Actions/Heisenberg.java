@@ -54,8 +54,8 @@ public class Heisenberg {
             linkage.linkageState = Linkage.LinkageState.INPUT;
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
-            slideExtension  =50.0;
-            linearSlides.slidesState = LinearSlides.SlidesState.BAR;
+            slideExtension  = 50.0;
+            linearSlides.setState( LinearSlides.SlidesState.BAR);
             return false;
         }
     };
@@ -157,9 +157,6 @@ public class Heisenberg {
             linkage.linkageState = Linkage.LinkageState.IDLE;
             slideExtension = 0.0;
             clawRotatorAngle= 90.0;
-
-
-
             return false;
         }
     };

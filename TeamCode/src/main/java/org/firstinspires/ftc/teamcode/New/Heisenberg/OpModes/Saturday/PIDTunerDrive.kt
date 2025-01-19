@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday
 
 import com.acmerobotics.dashboard.FtcDashboard
+import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
@@ -12,36 +13,63 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
-//@Config
+/**
+ * var paTerm = 0.2
+ *
+ *         @JvmField
+ *         var iaTerm = 0.0001
+ *
+ *         @JvmField
+ *         var daTerm = 0.018
+ *
+ *         @JvmField
+ *         var pTerm = 0.2
+ *
+ *         @JvmField
+ *         var iTerm = 0.0001
+ *
+ *         @JvmField
+ *         var dTerm = 0.02
+ *
+ *         @JvmField
+ *         var spTerm = 1.2
+ *
+ *         @JvmField
+ *         var siTerm = 0.0001
+ *
+ *         @JvmField
+ *         var sdTerm = 0.1
+ */
+@Config
 @TeleOp(name = "TuningPIDd", group = "Linear OpMode")
 class PIDTunerDrive : LinearOpMode() {
     companion object {
         @JvmField
-        var paTerm = 0.2
+        var paTerm = 0.0
 
         @JvmField
-        var iaTerm = 0.0001
+        var iaTerm = 0.0
 
         @JvmField
-        var daTerm = 0.018
+        var daTerm = 0.0
 
         @JvmField
-        var pTerm = 0.2
+        var pTerm = 0.0
 
         @JvmField
-        var iTerm = 0.0001
+        var iTerm = 0.0
 
         @JvmField
-        var dTerm = 0.02
+        var dTerm = 0.0
 
         @JvmField
-        var spTerm = 1.2
+        var spTerm = 0.0
 
         @JvmField
-        var siTerm = 0.0001
+        var siTerm = 0.0
 
         @JvmField
-        var sdTerm = 0.1
+        var sdTerm = 0.0
     }
 
     override fun runOpMode() {
@@ -55,9 +83,9 @@ class PIDTunerDrive : LinearOpMode() {
             ParallelAction(
                 Action {
                     localizer.update()
-                    drive.Xpid.setPID(paTerm, iaTerm, daTerm,0.0)
-                    drive.Xpid.setPID(pTerm, iTerm, dTerm,0.0)
-                    drive.Xpid.setPID(spTerm, siTerm, sdTerm,0.0)
+                    Drive.instance.Xpid.setPID(paTerm, iaTerm, daTerm,0.0)
+                    Drive.instance.Xpid.setPID(pTerm, iTerm, dTerm,0.0)
+                    Drive.instance.Xpid.setPID(spTerm, siTerm, sdTerm,0.0)
                     telemetry.addData("x", Localizer.pose.x)
                     telemetry.addData("y", Localizer.pose.y)
                     telemetry.update()
@@ -66,10 +94,15 @@ class PIDTunerDrive : LinearOpMode() {
 
                 SequentialAction(
                     Positions.Test.runToExact,
+                    Positions.Test2.runToExact,
                     Positions.Test.runToExact,
+                    Positions.Test2.runToExact,
                     Positions.Test.runToExact,
+                    Positions.Test2.runToExact,
                     Positions.Test.runToExact,
+                    Positions.Test2.runToExact,
                     Positions.Test.runToExact,
+                    Positions.Test2.runToExact,
                 )
             )
         )

@@ -27,13 +27,15 @@ class RunToExact(private val targetVector: Vector2d, private val rotation: Doubl
 //        Log.d("Y", doubleArrayOf(axial,lateral,turn, targetVector.y, current.y).contentToString())
 
         val h = -Localizer.pose.heading
-        val rotX = axial * cos(h) - lateral * sin(h)
-        val rotY = axial * sin(h) + lateral * cos(h)
+        val rotX = -axial * cos(h) - lateral * sin(h)
+        val rotY = -axial * sin(h) + lateral * cos(h)
 
-        drive.leftFront.power = (rotY + rotX + turn)
-        drive.leftBack.power = (rotY - rotX + turn)
-        drive.rightFront.power = (rotY - rotX - turn)
-        drive.rightBack.power = (rotY + rotX - turn)
+        //todo add rotational pid
+
+        drive.leftFront.power = (rotY - rotX - turn)
+        drive.leftBack.power = (rotY + rotX - turn)
+        drive.rightFront.power = (rotY + rotX + turn)
+        drive.rightBack.power = (rotY - rotX + turn)
 
         return !(arrayListOf(axialError, latError).all { abs(it) <= 3.0 } &&
                 abs(headingError) <= Math.toRadians(5.0))
@@ -56,13 +58,15 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
         val turn = drive.Rpid.calculate(headingError)
 
         val h = -Localizer.pose.heading
-        val rotX = axial * cos(h) - lateral * sin(h)
-        val rotY = axial * sin(h) + lateral * cos(h)
+        val rotX = -axial * cos(h) - lateral * sin(h)
+        val rotY = -axial * sin(h) + lateral * cos(h)
 
-        drive.leftFront.power = (rotY + rotX + turn)
-        drive.leftBack.power = (rotY - rotX + turn)
-        drive.rightFront.power = (rotY - rotX - turn)
-        drive.rightBack.power = (rotY + rotX - turn)
+        //todo add rotational pid
+
+        drive.leftFront.power = (rotY - rotX - turn)
+        drive.leftBack.power = (rotY + rotX - turn)
+        drive.rightFront.power = (rotY + rotX + turn)
+        drive.rightBack.power = (rotY - rotX + turn)
 
         return !(abs(latError) <= 3.0 &&
                 abs(axialError) <= 3.0 &&

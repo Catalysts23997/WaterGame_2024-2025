@@ -19,17 +19,17 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         Manual, Auto
     }
 
-    val Xpid = Controller(PIDParams(0.2, 0.0001, 0.018, 0.0))
-    val Ypid = Controller(PIDParams(0.2, 0.0001, 0.02, 0.0))
-    val Rpid = Controller(PIDParams(1.4, 0.0001, 0.08, 0.0))
+    val Xpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
+    val Ypid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
+    val Rpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
 
     override var state = States.Manual
 
     //todo note it will differ on new dt - (use customTest)
-    val leftFront: DcMotor = hwMap.get(DcMotor::class.java, "rightBack") //good
-    val rightBack: DcMotor = hwMap.get(DcMotor::class.java, "leftFront") // good
-    val leftBack: DcMotor = hwMap.get(DcMotor::class.java, "leftBack") // good
-    val rightFront: DcMotor = hwMap.get(DcMotor::class.java, "rightFront")
+    val leftFront: DcMotor = hwMap.get(DcMotor::class.java, "backRight") //good
+    val rightBack: DcMotor = hwMap.get(DcMotor::class.java, "frontLeft") // good
+    val leftBack: DcMotor = hwMap.get(DcMotor::class.java, "frontRight") // good
+    val rightFront: DcMotor = hwMap.get(DcMotor::class.java, "backLeft")
 
     override fun update(gamepadInput: ArrayList<Float>) {
 
@@ -80,15 +80,15 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         val (axial, lateral, turn) = input
 
         val h = -Localizer.pose.heading
-        val rotX = axial * cos(h) - lateral * sin(h)
-        val rotY = axial * sin(h) + lateral * cos(h)
+        val rotX = -axial * cos(h) - lateral * sin(h)
+        val rotY = -axial * sin(h) + lateral * cos(h)
 
         //todo add rotational pid
 
-        leftFront.power = (rotY + rotX + turn)
+        leftFront.power = (rotY - rotX - turn)
         leftBack.power = (rotY + rotX - turn)
-        rightFront.power = (rotY - rotX + turn)
-        rightBack.power = (rotY - rotX - turn)
+        rightFront.power = (rotY + rotX + turn)
+        rightBack.power = (rotY - rotX + turn)
     }
 
     init {

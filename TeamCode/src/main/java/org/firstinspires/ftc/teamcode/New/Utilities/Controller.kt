@@ -6,7 +6,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
-class Controller(var params: PIDParams) {
+class Controller(private var params: PIDParams) {
     private var prevError = 0.0
     private var integral = 0.0
     private val timer = ElapsedTime()
