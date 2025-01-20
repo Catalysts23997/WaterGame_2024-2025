@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday
 
+import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -24,6 +25,7 @@ class SlideRotator: LinearOpMode() {
     }
 
     override fun runOpMode() {
+        telemetry = FtcDashboard.getInstance().telemetry
 
         val pidController = Controller(PIDParams(0.0,0.0,0.0,0.0))
         val motor = hardwareMap.get(DcMotorEx::class.java, "linkage")

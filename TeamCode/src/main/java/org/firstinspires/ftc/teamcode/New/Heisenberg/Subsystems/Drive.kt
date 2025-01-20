@@ -85,10 +85,10 @@ class Drive(hwMap: HardwareMap) : SubSystems {
 
         //todo add rotational pid
 
-        leftFront.power = (rotY - rotX - turn)
-        leftBack.power = (rotY + rotX - turn)
-        rightFront.power = (rotY + rotX + turn)
-        rightBack.power = (rotY - rotX + turn)
+        leftFront.power = (rotY - rotX + turn)
+        leftBack.power = (rotY + rotX + turn)
+        rightFront.power = (rotY + rotX - turn)
+        rightBack.power = (rotY - rotX - turn)
     }
 
     init {

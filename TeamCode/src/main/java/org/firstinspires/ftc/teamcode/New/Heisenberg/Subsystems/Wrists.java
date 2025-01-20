@@ -21,10 +21,10 @@ public class Wrists {
     }
 
     public enum State {
-        Basket(1.0,.4),
-        IntakeGround(.37,.53),
-        IntakeWall(0.53,.53),
-        DropSample(1.0,.53);
+        Basket(0.3,.3),
+        IntakeGround(0.0,0.7),
+        IntakeWall(0.0,0.7),
+        DropSample(0.3,.7);
         public final double servoPos;
         public final double nextPose;
 

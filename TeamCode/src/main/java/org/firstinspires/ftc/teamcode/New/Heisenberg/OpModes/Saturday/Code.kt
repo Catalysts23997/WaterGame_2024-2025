@@ -48,6 +48,12 @@ class Code : LinearOpMode() {
                     robot.slidesOut
                 )
             }
+            if(gamepad2.y){
+                runningActions.add(
+                    robot.slidesIn
+                )
+            }
+
 
             // update running actions
             val newActions = ArrayList<Action>()

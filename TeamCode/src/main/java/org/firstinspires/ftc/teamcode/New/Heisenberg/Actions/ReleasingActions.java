@@ -29,7 +29,7 @@ public class ReleasingActions {
     public void update(double cR) {
         wrist.update();
 //        linkage.update();
-//        linearSlides.update();
+        linearSlides.update();
         claw.update();
         clawRotatorAngle = Math.PI * cR;
         clawRotater.update(clawRotatorAngle);
@@ -37,7 +37,7 @@ public class ReleasingActions {
     public void update() {
         wrist.update();
 //        linkage.update();
-//        linearSlides.update();
+        linearSlides.update();
         claw.update();
         clawRotatorAngle = Localizer.pose.getHeading();
         clawRotater.update(clawRotatorAngle);
@@ -55,7 +55,7 @@ public class ReleasingActions {
     public Action HPdrop = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.DropSample;
+            wrist.state = Wrists.State.Basket;
 //            linkage.setState(Linkage.State.Horizontal);
             clawRotatorAngle = 0.0;
 //            linearSlides.setState(  LinearSlides.SlidesState.WALL);
@@ -162,12 +162,12 @@ public class ReleasingActions {
         final ElapsedTime elapsedTime = new ElapsedTime();
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            linearSlides.setState(LinearSlides.SlidesState.BAR);
+//            linearSlides.setState(LinearSlides.SlidesState.BAR);
             wrist.state = Wrists.State.IntakeGround;
-            if (elapsedTime.seconds() > 0.3){
+            if (elapsedTime.seconds() > 0.4){
                 claw.clawState = Claw.ClawState.CLOSED;
                 return true;
-            } else if (elapsedTime.seconds()>.6) {
+            } else if (elapsedTime.seconds()>.7) {
                 wrist.state = Wrists.State.DropSample;
                 return false;
             } else {
@@ -196,6 +196,16 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             linearSlides.setState(LinearSlides.SlidesState.BAR);
+            wrist.state  = Wrists.State.Basket;
+            return false;
+        }
+    };
+    public Action slidesIn = new Action() {
+        final ElapsedTime elapsedTime = new ElapsedTime();
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            linearSlides.setState(LinearSlides.SlidesState.IDLE);
+            wrist.state = Wrists.State.IntakeGround;
             return false;
         }
     };
