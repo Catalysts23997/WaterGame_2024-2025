@@ -3,22 +3,24 @@ package org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Vector2d
+import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Auto.AutoNewWork
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Angle
+import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 import org.firstinspires.ftc.teamcode.New.Utilities.findNearestPoint
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 
-class RunToExact(private val targetVector: Vector2d, private val rotation: Double) : Action {
+class RunToExact(private val pose: Poses) : Action {
     override fun run(p: TelemetryPacket): Boolean {
         val current = Localizer.pose
         val drive = Drive.instance
 
-        val latError = targetVector.y - current.y
-        val axialError = targetVector.x - current.x
-        val headingError = Angle.wrap(rotation + current.heading)
+        val latError = pose.y - current.y
+        val axialError = pose.x - current.x
+        val headingError = Angle.wrap(pose.heading + current.heading)
 
         val lateral = drive.Ypid.calculate(latError)
         val axial = drive.Xpid.calculate(axialError)
@@ -71,5 +73,13 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
         return !(abs(latError) <= 3.0 &&
                 abs(axialError) <= 3.0 &&
                 abs(Angle.wrap(headingError)) <= Math.toRadians(4.0))
+    }
+}
+
+
+class SetDriveTarget(val pose: Poses):Action{
+    override fun run(p: TelemetryPacket): Boolean {
+        AutoNewWork.robot_targetPosition = pose
+        return false
     }
 }

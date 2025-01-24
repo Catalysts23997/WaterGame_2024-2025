@@ -4,6 +4,8 @@ import static java.lang.Math.PI;
 
 import com.acmerobotics.roadrunner.Vector2d;
 
+import org.firstinspires.ftc.teamcode.New.Utilities.Poses;
+
 
 public enum Positions {
     // Blue side Bricks
@@ -73,7 +75,7 @@ public enum Positions {
 
     Positions(Vector2d vector, Double rotation) {
         runToNearest = new RunToNearest(vector);
-        runToExact = new RunToExact(vector, rotation);
+        runToExact = new RunToExact(new Poses(vector,rotation));
     }
 
     public final RunToNearest runToNearest;
