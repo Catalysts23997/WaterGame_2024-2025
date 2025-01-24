@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.Actions;
 
-import static java.lang.Math.PI;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -10,10 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Linkage;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.AttachmentPositions;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Claw;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ClawRotater;
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.ColorSensor;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.LinearSlides;
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Wrists;
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer;
@@ -53,73 +49,104 @@ public class ReleasingActions {
     }
 
     public Action HPdrop = new Action() {
+        final ElapsedTime elapsedTime = new ElapsedTime();
+        boolean start = true;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.Basket;
+            if (start){
+                elapsedTime.reset();
+                start=false;
+            }
+            wrist.state = Wrists.State.DropSample;
 //            linkage.setState(Linkage.State.Horizontal);
             clawRotatorAngle = 0.0;
 //            linearSlides.setState(  LinearSlides.SlidesState.WALL);
-           claw.clawState = Claw.ClawState.OPEN;
-           return false;
-        }
-    };
-
-    public Action WallGrab = new Action() {
-        final ElapsedTime elapsedTime = new ElapsedTime();
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.IntakeWall;
-            linkage.setState(Linkage.State.Horizontal);
-            claw.clawState = Claw.ClawState.OPEN;
-            clawRotatorAngle = 0.0;
-//            linearSlides.slidesState = LinearSlides.SlidesState.WALL;
-            if (elapsedTime.seconds() > 0.3){
-                claw.clawState = Claw.ClawState.CLOSED;
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-    };
-    public Action GroundIntake = new Action() {
-        final ElapsedTime elapsedTime = new ElapsedTime();
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.IntakeGround;
-            linkage.setState(Linkage.State.Horizontal);
-            claw.clawState = Claw.ClawState.OPEN;
-            clawRotatorAngle = 0.0;
-//            linearSlides.slidesState = LinearSlides.SlidesState.INTAKE;
-            //change elapsed time to camera output
-            if (elapsedTime.seconds() > 0.3){
-                claw.clawState = Claw.ClawState.CLOSED;
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-    };
-
-
-
-    public Action SpecimenHang = new Action() {
-        final ElapsedTime elapsedTime = new ElapsedTime();
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.Basket;
-            linkage.setState(Linkage.State.Basket);
-            claw.clawState = Claw.ClawState.CLOSED;
-            clawRotatorAngle = 0.0;
-//            linearSlides.slidesState = LinearSlides.SlidesState.BAR;
-            if (elapsedTime.seconds() > 0.3){
-                //intake position is used to lower the slides slightly
-//                linearSlides.slidesState = LinearSlides.SlidesState.INTAKE;
+           claw.clawState = Claw.ClawState.CLOSED;
+            if (elapsedTime.seconds() > 1.0){
                 claw.clawState = Claw.ClawState.OPEN;
                 return false;
             }
             else {
+                return true;
+            }
+        }
+    };
+
+    public Action WallGrab = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = Wrists.State.IntakeWall;
+            //linkage.setState(Linkage.State.Horizontal);
+            claw.clawState = Claw.ClawState.OPEN;
+            clawRotatorAngle = 0.0;
+//            linearSlides.slidesState = LinearSlides.SlidesState.WALL;
+                return false;
+
+        }
+    };
+    public Action ForwardIntake = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = Wrists.State.IntakeFront;
+            //linkage.setState(Linkage.State.Horizontal);
+            claw.clawState = Claw.ClawState.OPEN;
+            clawRotatorAngle = 0.0;
+//            linearSlides.slidesState = LinearSlides.SlidesState.INTAKE;
+            return false;
+        }
+    };
+
+    public Action Grab = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            claw.clawState = Claw.ClawState.CLOSED;
+            return false;
+        }
+    };
+
+    public Action BackIntake = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = Wrists.State.IntakeBack;
+            //linkage.setState(Linkage.State.Horizontal);
+            claw.clawState = Claw.ClawState.OPEN;
+            clawRotatorAngle = 0.0;
+//            linearSlides.slidesState = LinearSlides.SlidesState.INTAKE;
+            return false;
+        }
+    };
+
+
+
+    public Action SpecimenHangPrep = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = Wrists.State.SpecimenHang;
+//            linkage.setState(Linkage.State.Basket);
+            claw.clawState = Claw.ClawState.CLOSED;
+            clawRotatorAngle = 0.0;
+//            linearSlides.slidesState = LinearSlides.SlidesState.BAR;
+            return false;
+        }
+    };
+    public Action SpecimenHang = new Action() {
+        final ElapsedTime elapsedTime = new ElapsedTime();
+        boolean start = true;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (start){
+                elapsedTime.reset();
+                start=false;
+            }
+            wrist.state = Wrists.State.SpecimenHang;
+//            linkage.setState(Linkage.State.Basket);
+            claw.clawState = Claw.ClawState.CLOSED;
+            clawRotatorAngle = 0.0;
+//            linearSlides.slidesState = LinearSlides.SlidesState.WALL;
+            if (elapsedTime.seconds() > 0.3) {
+                claw.clawState = Claw.ClawState.OPEN;
+                return false;
+            } else {
                 return true;
             }
         }
@@ -130,26 +157,29 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.Basket;
-            linkage.setState(Linkage.State.Basket);
+//            linkage.setState(Linkage.State.Basket);
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
-//            linearSlides.slidesState = LinearSlides.SlidesState.BAR;
-            if (elapsedTime.seconds() > 0.3){
-                claw.clawState = Claw.ClawState.OPEN;
-                return false;
-            }
-            else {
-                return true;
-            }
+//            linearSlides.slidesState = LinearSlides.SlidesState.BASKET;
+            return false;
         }
     };
+    public Action Release = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            claw.clawState = Claw.ClawState.OPEN;
+            return false;
+        }
+    };
+
+
 
     public Action Hang = new Action() {
         final ElapsedTime elapsedTime = new ElapsedTime();
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.DropSample;
-            linkage.setState(Linkage.State.Basket);
+            wrist.state = Wrists.State.IntakeBack;
+//            linkage.setState(Linkage.State.Basket);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.HANG;
@@ -163,7 +193,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 //            linearSlides.setState(LinearSlides.SlidesState.BAR);
-            wrist.state = Wrists.State.IntakeGround;
+            wrist.state = Wrists.State.IntakeFront;
             if (elapsedTime.seconds() > 0.4){
                 claw.clawState = Claw.ClawState.CLOSED;
                 return true;
@@ -205,7 +235,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             linearSlides.setState(LinearSlides.SlidesState.IDLE);
-            wrist.state = Wrists.State.IntakeGround;
+            wrist.state = Wrists.State.IntakeFront;
             return false;
         }
     };

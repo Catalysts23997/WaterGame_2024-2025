@@ -62,7 +62,13 @@ public enum Positions {
     Test4(new Vector2d(0, 0), 0.0),
 
     blah(new Vector2d(15, 15), 0.0),
-    Test5(new Vector2d(-2, 45), PI);
+    Test5(new Vector2d(-2, 45), PI),
+
+    FirstSample(new Vector2d(19.7, -41.75), 1.05622859),
+    HP(new Vector2d(19.7, -41.75), 1.9),
+    SecondSample(new Vector2d(19.7, -41.75), 1.05622859),
+    ThirdSample(new Vector2d(19.7, -41.75), 1.05622859),
+    FirstSample2(new Vector2d(-2, 45), PI);
 
 
     Positions(Vector2d vector, Double rotation) {

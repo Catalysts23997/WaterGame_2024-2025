@@ -34,7 +34,7 @@ class Code : LinearOpMode() {
             // actions you are running
             if (gamepad2.x) {
                 runningActions.add(
-                    robot.pickUp
+                    robot.BackIntake
                 )
             }
             if(gamepad2.b){
@@ -42,17 +42,53 @@ class Code : LinearOpMode() {
                     robot.HPdrop
                 )
             }
-
-            if(gamepad2.a){
+            if (gamepad2.a) {
                 runningActions.add(
-                    robot.slidesOut
+                    robot.ForwardIntake
                 )
             }
             if(gamepad2.y){
                 runningActions.add(
-                    robot.slidesIn
+                    robot.Basket
                 )
             }
+            if(gamepad2.right_bumper){
+                runningActions.add(
+                    robot.WallGrab
+                )
+            }
+
+            if(gamepad2.left_bumper){
+                runningActions.add(
+                    robot.SpecimenHangPrep
+                )
+            }
+            if(gamepad2.left_trigger > 0.5){
+                runningActions.add(
+                    robot.Release
+                )
+            }
+            if(gamepad2.right_trigger >0.5){
+                runningActions.add(
+                    robot.Grab
+                )
+            }
+            if(gamepad2.dpad_up){
+                runningActions.add(
+                    robot.SpecimenHang
+                )
+            }
+
+//            if(gamepad2.a){
+//                runningActions.add(
+//                    robot.slidesOut
+//                )
+//            }
+//            if(gamepad2.y){
+//                runningActions.add(
+//                    robot.slidesIn
+//                )
+//            }
 
 
             // update running actions
@@ -72,13 +108,13 @@ class Code : LinearOpMode() {
 
             //update subsystems
             robot.update(gamepad2.left_stick_y.toDouble())
-            drive.update(
-                arrayListOf(
-                    gamepad1.left_stick_x,
-                    -gamepad1.left_stick_y,
-                    gamepad1.right_stick_x
-                )
-            )
+//            drive.update(
+//                arrayListOf(
+//                    gamepad1.left_stick_x,
+//                    -gamepad1.left_stick_y,
+//                    gamepad1.right_stick_x
+//                )
+//            )
             timer.reset()
         }
     }

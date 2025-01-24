@@ -23,7 +23,7 @@ public class ClawTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        List<Servo> servoList = Arrays.asList(hardwareMap.get(Servo.class, "port2"), hardwareMap.get(Servo.class, "port3"), hardwareMap.get(Servo.class, "port4"), hardwareMap.get(Servo.class, "port5"));
+        List<Servo> servoList = Arrays.asList(hardwareMap.get(Servo.class, "port0"), hardwareMap.get(Servo.class, "port1"), hardwareMap.get(Servo.class, "port2"), hardwareMap.get(Servo.class, "port3"), hardwareMap.get(Servo.class, "port4"));
 
         waitForStart();
         while (opModeIsActive()){
