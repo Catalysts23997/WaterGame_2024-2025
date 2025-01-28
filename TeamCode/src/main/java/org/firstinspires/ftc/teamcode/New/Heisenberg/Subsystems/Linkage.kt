@@ -22,7 +22,7 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
     override fun update() {
 
         val currentAngle  = (((motor.currentPosition*2*11/12)/1425.05923061 * 2 * Math.PI) *180/ Math.PI)/4 + 90
-        motor.power  =  controller.calculate(state.angle -(currentAngle * Math.PI/180),currentAngle * Math.PI/180)
+        motor.power  =  controller.calculate((state.angle -currentAngle) * Math.PI/180,currentAngle * Math.PI/180)
     }
 
 
