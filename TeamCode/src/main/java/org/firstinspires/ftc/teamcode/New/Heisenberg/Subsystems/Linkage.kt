@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
 
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday.SlideRotator
 import org.firstinspires.ftc.teamcode.New.SubSystems
 import org.firstinspires.ftc.teamcode.New.Utilities.Controller
 import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
@@ -9,27 +10,20 @@ import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
 class Linkage(hardwareMap: HardwareMap): SubSystems {
     val motor: DcMotorEx = hardwareMap.get(DcMotorEx::class.java,"linkage")
 
-    private val controller = Controller(PIDParams(1.8089531093740894, 0.15506403605488558, 0.15316684843308717, 0.23084969258387814))
+    private val controller = Controller(PIDParams(1.0, 0.0, .001, 0.2))
     enum class State(val angle: Double){
-        Horizontal(4.0+90),
-        Basket(108.0+90),
-        SubmersibleStart(4.0+90);
+        Horizontal(5.0),
+        Basket(80.0),
+        SubmersibleStart(11.0);
     }
+
     override var state = State.Basket
 
     override fun update() {
-        val currentAngle =  (((motor.currentPosition*2)/1425.05923061 * 2 * Math.PI) *180/ Math.PI)/4 + 90
 
-        val target = state.angle
-        val pidParams = if(currentAngle>target){
-            PIDParams(1.8089531093740894, 0.15506403605488558,
-                0.16316684843308718, 0.23084969258387814)
-        } else{
-            PIDParams(1.8089531093740894, 0.15506403605488558, 0.15316684843308717, 0.23084969258387814)
-        }
-
-        controller.setPID(pidParams)
-        motor.power  = controller.calculate(target,currentAngle*Math.PI/180.0)
-
+        val currentAngle  = (((motor.currentPosition*2*11/12)/1425.05923061 * 2 * Math.PI) *180/ Math.PI)/4 + 90
+        motor.power  =  controller.calculate(state.angle -(currentAngle * Math.PI/180),currentAngle * Math.PI/180)
     }
+
+
 }

@@ -24,15 +24,16 @@ public class ReleasingActions {
 
     public void update(double cR) {
         wrist.update();
-//        linkage.update();
+        linkage.update();
         linearSlides.update();
         claw.update();
         clawRotatorAngle = Math.PI * cR;
         clawRotater.update(clawRotatorAngle);
     }
+
     public void update() {
         wrist.update();
-//        linkage.update();
+        linkage.update();
         linearSlides.update();
         claw.update();
         clawRotatorAngle = Localizer.pose.getHeading();
@@ -58,7 +59,7 @@ public class ReleasingActions {
                 start=false;
             }
             wrist.state = Wrists.State.DropSample;
-//            linkage.setState(Linkage.State.Horizontal);
+            linkage.setState(Linkage.State.Horizontal);
             clawRotatorAngle = 0.0;
 //            linearSlides.setState(  LinearSlides.SlidesState.WALL);
            claw.clawState = Claw.ClawState.CLOSED;
@@ -76,7 +77,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.IntakeWall;
-            //linkage.setState(Linkage.State.Horizontal);
+            linkage.setState(Linkage.State.Horizontal);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.WALL;
@@ -88,7 +89,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.IntakeFront;
-            //linkage.setState(Linkage.State.Horizontal);
+            linkage.setState(Linkage.State.Horizontal);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.INTAKE;
@@ -108,7 +109,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.IntakeBack;
-            //linkage.setState(Linkage.State.Horizontal);
+            linkage.setState(Linkage.State.Horizontal);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.INTAKE;
@@ -122,7 +123,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.SpecimenHang;
-//            linkage.setState(Linkage.State.Basket);
+            linkage.setState(Linkage.State.Basket);
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.BAR;
@@ -139,7 +140,7 @@ public class ReleasingActions {
                 start=false;
             }
             wrist.state = Wrists.State.SpecimenHang;
-//            linkage.setState(Linkage.State.Basket);
+            linkage.setState(Linkage.State.Basket);
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.WALL;
@@ -157,7 +158,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.Basket;
-//            linkage.setState(Linkage.State.Basket);
+            linkage.setState(Linkage.State.Basket);
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.BASKET;
