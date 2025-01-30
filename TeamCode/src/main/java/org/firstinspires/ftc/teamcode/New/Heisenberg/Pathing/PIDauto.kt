@@ -80,6 +80,6 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
 class SetDriveTarget(val pose: Poses):Action{
     override fun run(p: TelemetryPacket): Boolean {
         AutoNewWork.robot_targetPosition = pose
-        return false
+        return Localizer.pose != pose
     }
 }

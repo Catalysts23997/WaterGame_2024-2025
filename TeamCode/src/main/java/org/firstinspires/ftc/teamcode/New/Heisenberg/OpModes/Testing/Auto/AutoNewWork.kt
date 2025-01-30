@@ -33,6 +33,7 @@ class AutoNewWork : LinearOpMode() {
 
                 SequentialAction(
                     SetDriveTarget(Poses(0.0,0.0,0.0)),
+                    //move arm
                     SetDriveTarget(Poses(0.0,0.0,0.0)),
                     SetDriveTarget(Poses(0.0,0.0,0.0)),
                     SetDriveTarget(Poses(0.0,0.0,0.0))
