@@ -2,12 +2,11 @@ package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit
-import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday.Slides
 import org.firstinspires.ftc.teamcode.New.Utilities.Controller
 import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
-import org.firstinspires.ftc.teamcode.New.Utilities.SlidesEncoderConv
 
 class LinearSlides(hwMap:HardwareMap) {
 
@@ -15,11 +14,12 @@ class LinearSlides(hwMap:HardwareMap) {
     init {
         motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         motor.mode  = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        motor.direction = DcMotorSimple.Direction.REVERSE
     }
 
     //todo: Create an opmode that uses this subsytem - and sets the pid controller's paramters to ftc Dashboard numbers
 
-    private val pidController = Controller(PIDParams(0.008,0.0,0.001,0.0))
+    private val pidController = Controller(PIDParams(.007,0.0,0.001,0.0))
 
 
     //NOTE: Max encoder ticks is 311, otherwise we break hardware
@@ -33,7 +33,7 @@ class LinearSlides(hwMap:HardwareMap) {
 
     fun update(){
         //in to tick
-        if(motor.getCurrent(CurrentUnit.AMPS) >= 7.0 && currentPos <= 700) offset+= motor.currentPosition
+        if(motor.getCurrent(CurrentUnit.AMPS) >= 9.0 && currentPos <= 700) offset+= motor.currentPosition
         currentPos = motor.currentPosition - offset
         motor.power = pidController.calculate(state.distance -currentPos)
     }
@@ -44,11 +44,13 @@ class LinearSlides(hwMap:HardwareMap) {
 
 
     enum class SlidesState(val distance: Double) {
-        WALL(1200.0),
-        INTAKE(1400.0),
-        BAR(1200.0),
+        WALL(1100.0),
+        INTAKE(1100.0),
+        BASKET(1200.0),
+        Specimen(800.0),
+        SpecimenHang(600.0),
         IDLE(0.0),
-        HANG(1000.0);
+        HANG(800.0);
     }
 
 }

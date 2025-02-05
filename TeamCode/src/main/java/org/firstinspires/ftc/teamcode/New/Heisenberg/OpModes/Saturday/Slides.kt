@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday
 
+import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.firstinspires.ftc.teamcode.New.Utilities.Controller
 import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
 import org.firstinspires.ftc.teamcode.New.Utilities.SlidesEncoderConv
@@ -24,12 +26,15 @@ class Slides: LinearOpMode() {
     }
 
     override fun runOpMode() {
+        telemetry = FtcDashboard.getInstance().telemetry
 
-        val pidController = Controller(PIDParams(0.001,0.0,0.008,0.0))
+        val pidController = Controller(PIDParams(0.0015,0.0,0.0015,0.0))
         val motor = hardwareMap.get(DcMotorEx::class.java, "slide")
 
         motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         motor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+
+        motor.direction = DcMotorSimple.Direction.REVERSE
 
 //        val calc = SlidesEncoderConv(24*Math.PI)
 

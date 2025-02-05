@@ -31,65 +31,17 @@ class Code : LinearOpMode() {
 
         while (opModeIsActive()) {
 
-            // actions you are running
-            if (gamepad2.x) {
-                runningActions.add(
-                    robot.BackIntake
-                )
-            }
-            if(gamepad2.b){
-                runningActions.add(
-                    robot.HPdrop
-                )
-            }
-            if (gamepad2.a) {
-                runningActions.add(
-                    robot.ForwardIntake
-                )
-            }
-            if(gamepad2.y){
-                runningActions.add(
-                    robot.Basket
-                )
-            }
-            if(gamepad2.right_bumper){
-                runningActions.add(
-                    robot.WallGrab
-                )
-            }
 
-            if(gamepad2.left_bumper){
+            if(gamepad2.left_trigger >= .5){
                 runningActions.add(
-                    robot.SpecimenHangPrep
+                    robot.pickUp
                 )
             }
-            if(gamepad2.left_trigger > 0.5){
+            if(gamepad2.right_trigger >= .5){
                 runningActions.add(
-                    robot.Release
+                    robot.Toggle
                 )
             }
-            if(gamepad2.right_trigger >0.5){
-                runningActions.add(
-                    robot.Grab
-                )
-            }
-            if(gamepad2.dpad_up){
-                runningActions.add(
-                    robot.SpecimenHang
-                )
-            }
-
-//            if(gamepad2.a){
-//                runningActions.add(
-//                    robot.slidesOut
-//                )
-//            }
-//            if(gamepad2.y){
-//                runningActions.add(
-//                    robot.slidesIn
-//                )
-//            }
-
 
             // update running actions
             val newActions = ArrayList<Action>()

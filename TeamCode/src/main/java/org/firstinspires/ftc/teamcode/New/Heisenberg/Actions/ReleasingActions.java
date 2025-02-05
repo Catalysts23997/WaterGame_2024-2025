@@ -159,16 +159,16 @@ public class ReleasingActions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.Basket;
             linkage.setState(Linkage.State.Basket);
-            claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
 //            linearSlides.slidesState = LinearSlides.SlidesState.BASKET;
             return false;
         }
     };
-    public Action Release = new Action() {
+    public Action Toggle = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            claw.clawState = Claw.ClawState.OPEN;
+            if(claw.clawState == Claw.ClawState.OPEN) claw.clawState = Claw.ClawState.CLOSED;
+            else claw.clawState = Claw.ClawState.OPEN;
             return false;
         }
     };
@@ -194,7 +194,9 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 //            linearSlides.setState(LinearSlides.SlidesState.BAR);
+            linkage.setState(Linkage.State.Horizontal);
             wrist.state = Wrists.State.IntakeFront;
+
             if (elapsedTime.seconds() > 0.4){
                 claw.clawState = Claw.ClawState.CLOSED;
                 return true;
@@ -219,25 +221,6 @@ public class ReleasingActions {
             else {
                 return true;
             }
-        }
-    };
-
-    public Action slidesOut = new Action() {
-        final ElapsedTime elapsedTime = new ElapsedTime();
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            linearSlides.setState(LinearSlides.SlidesState.BAR);
-            wrist.state  = Wrists.State.Basket;
-            return false;
-        }
-    };
-    public Action slidesIn = new Action() {
-        final ElapsedTime elapsedTime = new ElapsedTime();
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            linearSlides.setState(LinearSlides.SlidesState.IDLE);
-            wrist.state = Wrists.State.IntakeFront;
-            return false;
         }
     };
 

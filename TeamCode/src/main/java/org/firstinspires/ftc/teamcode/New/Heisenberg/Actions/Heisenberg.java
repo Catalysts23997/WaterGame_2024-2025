@@ -55,7 +55,7 @@ public class Heisenberg {
             claw.clawState = Claw.ClawState.CLOSED;
             clawRotatorAngle = 0.0;
             slideExtension  = 50.0;
-            linearSlides.setState( LinearSlides.SlidesState.BAR);
+            linearSlides.setState( LinearSlides.SlidesState.Specimen);
             return false;
         }
     };
