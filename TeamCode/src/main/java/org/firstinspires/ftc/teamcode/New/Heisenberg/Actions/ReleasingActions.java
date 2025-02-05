@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer;
 public class ReleasingActions {
     Wrists wrist;
     LinearSlides linearSlides;
-    Linkage linkage;
+    public Linkage linkage;
     Claw claw;
     ClawRotater clawRotater;
     double clawRotatorAngle = 0.0;
@@ -165,10 +165,19 @@ public class ReleasingActions {
         }
     };
     public Action Toggle = new Action() {
+
+        final ElapsedTime openTime = new ElapsedTime();
+        final ElapsedTime closedTime = new ElapsedTime();
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if(claw.clawState == Claw.ClawState.OPEN) claw.clawState = Claw.ClawState.CLOSED;
-            else claw.clawState = Claw.ClawState.OPEN;
+            if (claw.clawState == Claw.ClawState.OPEN && openTime.seconds() > 0.5) {
+                claw.clawState = Claw.ClawState.CLOSED;
+                closedTime.reset();
+            } else if (closedTime.seconds() > 0.5) {
+                claw.clawState = Claw.ClawState.OPEN;
+                openTime.reset();
+            }
             return false;
         }
     };

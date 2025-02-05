@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -14,13 +15,18 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
 
     private val controller = Controller(PIDParams(1.0, 0.0, .001, 0.2))
     enum class State(val angle: Double){
-        Horizontal(5.0),
-        Basket(80.0),
-        SubmersibleStart(11.0);
+        Horizontal(0.0),
+        Basket(Math.PI/2),
+        SubmersibleStart(Math.PI/16);
     }
 
 
     override var state = State.Horizontal
+
+    fun reset() {
+        motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        motor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+    }
 
     override fun update() {
         val currentAngle  = (Math.PI /180) * ((((motor.currentPosition*2*11/12)/1425.05923061 * 2 * Math.PI) *180/ Math.PI)/4 + 90)
