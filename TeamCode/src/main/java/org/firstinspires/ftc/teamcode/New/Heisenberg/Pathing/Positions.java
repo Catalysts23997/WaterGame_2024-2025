@@ -34,8 +34,8 @@ public enum Positions {
     BlueHumanIntake(new Vector2d(-57, 58), 0.0),
     RedHumanIntake(new Vector2d(57, -58), 0.0),
 
-    BlueSpecieminBar(new Vector2d(57, -58), 0.0),
-    RedSpecieminBar(new Vector2d(57, -58), 0.0),
+    BlueSpecieminBar(new Vector2d(0, 24.5), 0.0),
+    RedSpecieminBar(new Vector2d(0, -24.5), 0.0),
 
     // Places around the center area
     TopLeftSidePanel(new Vector2d(-23.5, 23), 0.0),
@@ -59,9 +59,10 @@ public enum Positions {
 
     //Not my point's blame arya
     Test(new Vector2d(0, 30), 0.0),
-    Test2(new Vector2d(0.0, 0.0), 0.0),
-    Test3(new Vector2d(5, 15), PI/2),
-    Test4(new Vector2d(0, 0), 0.0),
+    Test2(new Vector2d(-30.0, 10.0), -PI/2),
+    Test3(new Vector2d(-33, 40), 0.0),
+    Test4(new Vector2d(-33, 20), 0.0),
+//    Test4(new Vector2d(0, 0), 0.0),
 
     blah(new Vector2d(15, 15), 0.0),
     Test5(new Vector2d(-2, 45), PI),

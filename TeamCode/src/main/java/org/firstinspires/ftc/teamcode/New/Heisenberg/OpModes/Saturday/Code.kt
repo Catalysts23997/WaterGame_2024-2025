@@ -42,6 +42,11 @@ class Code : LinearOpMode() {
                     robot.Toggle
                 )
             }
+            if(gamepad2.a){
+                runningActions.add(
+                    robot.Basket
+                )
+            }
 
             // update running actions
             val newActions = ArrayList<Action>()

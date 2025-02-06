@@ -44,13 +44,13 @@ class LinearSlides(hwMap:HardwareMap) {
 
 
     enum class SlidesState(val distance: Double) {
-        WALL(1100.0),
-        INTAKE(1100.0),
-        BASKET(1200.0),
+        WALL(950.0),
+        INTAKE(950.0),
+        BASKET(950.0),
         Specimen(800.0),
         SpecimenHang(600.0),
         IDLE(0.0),
-        HANG(800.0);
+        HANG(700.0);
     }
 
 }

@@ -19,9 +19,13 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         Manual, Auto
     }
 
-    val Xpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Ypid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
-    val Rpid = Controller(PIDParams(0.0, 0.0, 0.0, 0.0))
+    companion object {
+        lateinit var instance: Drive
+    }
+
+    val Xpid = Controller(PIDParams(0.2, 0.0001, 0.018, 0.0))
+    val Ypid = Controller(PIDParams(0.2, 0.0001, 0.02, 0.0))
+    val Rpid = Controller(PIDParams(1.4, 0.0001, 0.08, 0.0))
 
     override var state = States.Manual
 
@@ -60,6 +64,8 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         rightFront.direction = DcMotorSimple.Direction.FORWARD
         rightBack.direction = DcMotorSimple.Direction.FORWARD
 
+        instance = this
+
     }
 
     fun WheelDebugger(x: Int) {
@@ -91,11 +97,6 @@ class Drive(hwMap: HardwareMap) : SubSystems {
         rightBack.power = (rotY - rotX - turn)
     }
 
-    init {
-        instance = this
-    }
 
-    companion object {
-        lateinit var instance: Drive
-    }
+
 }

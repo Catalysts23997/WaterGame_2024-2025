@@ -13,14 +13,14 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
-@Disabled
 @TeleOp(name = "TiegerAuto", group = "Linear OpMode")
 class TiegerAuto : LinearOpMode() {
     override fun runOpMode() {
         val telemetry = FtcDashboard.getInstance().telemetry
 
-        val localizer = Localizer(hardwareMap, Poses(30.5, -57.0, 0.0))
+//        val localizer = Localizer(hardwareMap, Poses(30.5, -57.0, 0.0))
         val drive = Drive(hardwareMap)
+        val localizer = Localizer(hardwareMap, Poses(0.0,0.0,0.0))
 
         waitForStart()
         runBlocking(
@@ -33,20 +33,15 @@ class TiegerAuto : LinearOpMode() {
                     true
                 },
                 SequentialAction(
+//                    Positions.Test.runToNearest,
+//                    Positions.Test2.runToNearest,
+//                    Positions.Test3.runToNearest,
 
-                    Positions.RedSpecieminBar.runToNearest,
-                    Positions.RedBrickMiddle.runToExact,
-                    Positions.RedBrickMiddleLeft.runToExact,
-                    Positions.RedBrickMiddle.runToExact,
-                    Positions.RedBrickMiddleRight.runToExact,
-                    Positions.RedBrickMiddle.runToExact,
-                    Positions.CornerOfRedZone.runToNearest,
-                    Positions.RedSpecieminBar.runToNearest,
-                    Positions.CornerOfRedZone.runToNearest,
-                    Positions.RedSpecieminBar.runToNearest,
-                    Positions.CornerOfRedZone.runToNearest,
-                    Positions.RedSpecieminBar.runToNearest,
-                    Positions.RedHumanIntake.runToExact
+                    Positions.Test.runToExact,
+                    Positions.Test2.runToExact,
+                    Positions.Test3.runToExact,
+                    Positions.Test4.runToExact,
+
 
                 )
             )

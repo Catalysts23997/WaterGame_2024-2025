@@ -160,7 +160,7 @@ public class ReleasingActions {
             wrist.state = Wrists.State.Basket;
             linkage.setState(Linkage.State.Basket);
             clawRotatorAngle = 0.0;
-//            linearSlides.slidesState = LinearSlides.SlidesState.BASKET;
+            linearSlides.setState(LinearSlides.SlidesState.BASKET);
             return false;
         }
     };

@@ -6,7 +6,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 //length from center of robot to front in inches
-private const val OFFSET = 5.0
+private const val OFFSET = 7.0
 
 /**
  * @param targetPos Target
