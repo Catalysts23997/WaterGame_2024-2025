@@ -20,7 +20,7 @@ class TiegerAuto : LinearOpMode() {
 
 //        val localizer = Localizer(hardwareMap, Poses(30.5, -57.0, 0.0))
         val drive = Drive(hardwareMap)
-        val localizer = Localizer(hardwareMap, Poses(0.0,0.0,0.0))
+        val localizer = Localizer(hardwareMap, Poses(19.0,-72.0,0.0))
 
         waitForStart()
         runBlocking(
@@ -33,14 +33,25 @@ class TiegerAuto : LinearOpMode() {
                     true
                 },
                 SequentialAction(
-//                    Positions.Test.runToNearest,
-//                    Positions.Test2.runToNearest,
-//                    Positions.Test3.runToNearest,
 
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test3.runToExact,
-                    Positions.Test4.runToExact,
+                    Positions.RedSpecimin1.runToExact,
+                    Positions.RedSample1.runToExact,
+                    Positions.RedPlayer1.runToExact,
+                    Positions.RedSample2.runToExact,
+                    Positions.RedPlayer2.runToExact,
+                    Positions.RedSample3.runToExact,
+                    Positions.RedPlayer3.runToExact,
+                    Positions.RedWallIntake.runToExact,
+                    Positions.RedSpecimin2.runToExact,
+                    Positions.RedWallIntake.runToExact,
+                    Positions.RedSpecimin3.runToExact,
+                    Positions.RedWallIntake.runToExact,
+                    Positions.RedSpecimin4.runToExact,
+                    Positions.RedWallIntake.runToExact,
+                    Positions.RedSpecimin5.runToExact,
+
+
+
 
 
                 )

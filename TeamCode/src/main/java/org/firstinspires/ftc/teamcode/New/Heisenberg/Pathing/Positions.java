@@ -71,7 +71,7 @@ public enum Positions {
 //    HP(new Vector2d(19.7, -41.75), 1.9),
 //    SecondSample(new Vector2d(19.7, -41.75), 1.05622859),
 //    ThirdSample(new Vector2d(19.7, -41.75), 1.05622859),
-    RedStart(new Vector2d(9.16667,-72), 0.0),
+    RedStart(new Vector2d(19,-72), 0.0),
     RedSpecimin1(new Vector2d(9.16667,-53.375), 0.0),
     RedSample1(new Vector2d(20.32881,-41.82188), 1.0446040425),
     RedPlayer1(new Vector2d(20.32881,-41.82188), 2.37181621996),
