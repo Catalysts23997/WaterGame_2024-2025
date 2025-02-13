@@ -34,25 +34,22 @@ class TiegerAuto : LinearOpMode() {
                 },
                 SequentialAction(
 
-                    Positions.RedSpecimin1.runToExact,
-                    Positions.RedSample1.runToExact,
-                    Positions.RedPlayer1.runToExact,
-                    Positions.RedSample2.runToExact,
-                    Positions.RedPlayer2.runToExact,
-                    Positions.RedSample3.runToExact,
-                    Positions.RedPlayer3.runToExact,
-                    Positions.RedWallIntake.runToExact,
-                    Positions.RedSpecimin2.runToExact,
-                    Positions.RedWallIntake.runToExact,
-                    Positions.RedSpecimin3.runToExact,
-                    Positions.RedWallIntake.runToExact,
-                    Positions.RedSpecimin4.runToExact,
-                    Positions.RedWallIntake.runToExact,
-                    Positions.RedSpecimin5.runToExact,
-
-
-
-
+                    Positions.Specimin1.runToExact,
+                    Positions.Sample1.runToExact,
+                    Positions.Player1.runToExact,
+                    Positions.Sample2.runToExact,
+                    Positions.Player2.runToExact,
+                    Positions.Sample3.runToExact,
+                    Positions.Player3.runToExact,
+                    Positions.WallIntake.runToExact,
+                    Positions.Specimin2.runToExact,
+                    Positions.WallIntake.runToExact,
+                    Positions.Specimin3.runToExact,
+                    Positions.WallIntake.runToExact,
+                    Positions.Specimin4.runToExact,
+                    Positions.WallIntake.runToExact,
+                    Positions.Specimin5.runToExact,
+                    Positions.End.runToExact,
 
                 )
             )

@@ -26,7 +26,6 @@ class Code : LinearOpMode() {
 
         val drive = Drive(hardwareMap)
         val localizer = Localizer(hardwareMap, Poses(0.0, 0.0, 0.0))
-        robot.linkage.reset()
 
         while (opModeInInit()) timer.reset()
 

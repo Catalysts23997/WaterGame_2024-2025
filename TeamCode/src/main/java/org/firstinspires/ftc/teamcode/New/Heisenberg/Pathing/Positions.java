@@ -71,19 +71,27 @@ public enum Positions {
 //    HP(new Vector2d(19.7, -41.75), 1.9),
 //    SecondSample(new Vector2d(19.7, -41.75), 1.05622859),
 //    ThirdSample(new Vector2d(19.7, -41.75), 1.05622859),
-    RedStart(new Vector2d(19,-72), 0.0),
-    RedSpecimin1(new Vector2d(9.16667,-53.375), 0.0),
-    RedSample1(new Vector2d(20.32881,-41.82188), 1.0446040425),
-    RedPlayer1(new Vector2d(20.32881,-41.82188), 2.37181621996),
-    RedSample2(new Vector2d(30.42994, -41.99474), 1.03834344965),
-    RedPlayer2(new Vector2d(30.42994, -41.99474), 2.12738091603),
-    RedSample3(new Vector2d(39.73853,-40.75964), 0.88282606647),
-    RedPlayer3(new Vector2d(39.73853,-40.75964), 2.17351756648),
-    RedWallIntake(new Vector2d(35.4,-53.375), Math.PI),
-    RedSpecimin2(new Vector2d(4.583334,-53.375), 0.0),
-    RedSpecimin3(new Vector2d(0,-53.375), 0.0),
-    RedSpecimin4(new Vector2d(-4.583334,-53.375), 0.0),
-    RedSpecimin5(new Vector2d(-9.16667,-53.375), 0.0);
+    StartYellow(new Vector2d(-19,-66), 0.0),
+    Yellow1(new Vector2d(-48, -57.75), 0.0),
+    Yellow2(new Vector2d(-58,-57.75), 0.0),
+    Yellow3(new Vector2d(-45.37258, -48.37742), Math.PI/4),
+    Basket(new Vector2d(-56.85062,-56.85062), 3*Math.PI/4),
+
+
+    Start(new Vector2d(19,-66), 0.0),
+    Specimin1(new Vector2d(9.16667,-53.375), 0.0),
+    Sample1(new Vector2d(20.32881,-41.82188), -1.0446040425),
+    Player1(new Vector2d(20.32881,-41.82188), -2.37181621996),
+    Sample2(new Vector2d(30.42994, -41.99474), -1.03834344965),
+    Player2(new Vector2d(30.42994, -41.99474), -2.12738091603),
+    Sample3(new Vector2d(39.73853,-40.75964), -0.88282606647),
+    Player3(new Vector2d(39.73853,-40.75964), -2.17351756648),
+    WallIntake(new Vector2d(35.4,-53.375), Math.PI),
+    Specimin2(new Vector2d(4.583334,-53.375), 0.0),
+    Specimin3(new Vector2d(0,-53.375), 0.0),
+    Specimin4(new Vector2d(-4.583334,-53.375), 0.0),
+    Specimin5(new Vector2d(-9.16667,-53.375), 0.0),
+    End(new Vector2d(43,-63), 0.0);
 
 
 

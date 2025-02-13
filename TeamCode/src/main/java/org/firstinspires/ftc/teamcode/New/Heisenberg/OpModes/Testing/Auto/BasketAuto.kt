@@ -13,14 +13,14 @@ import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
-@Disabled
-@TeleOp(name = "TiegerAuto", group = "Linear OpMode")
-class AnishAuto : LinearOpMode() {
+@TeleOp(name = "Basket Auto", group = "Linear OpMode")
+class BasketAuto : LinearOpMode() {
     override fun runOpMode() {
         val telemetry = FtcDashboard.getInstance().telemetry
 
-        val localizer = Localizer(hardwareMap, Poses(30.5, -57.0, 0.0))
+//        val localizer = Localizer(hardwareMap, Poses(30.5, -57.0, 0.0))
         val drive = Drive(hardwareMap)
+        val localizer = Localizer(hardwareMap, Poses(-19.0,-72.0,0.0))
 
         waitForStart()
         runBlocking(
@@ -34,15 +34,16 @@ class AnishAuto : LinearOpMode() {
                 },
                 SequentialAction(
 
-//                    Positions.Bluebasket.runToNearest,
-//                    Positions.Blueleftbrick1.runToExact,
-//                    Positions.Bluebasket.runToNearest,
-//                    Positions.Blueleftbrick2.runToNearest,
-//                    Positions.Bluebasket.runToNearest,
-//                    Positions.Blueleftbrick3.runToNearest,
-//                    Positions.Bluebasket.runToNearest,
-//                    Positions.BackLeftSubmersableIntake.runToNearest,
-                )
+                    Positions.Basket.runToExact,
+                    Positions.Yellow1.runToExact,
+                    Positions.Basket.runToExact,
+                    Positions.Yellow2.runToExact,
+                    Positions.Basket.runToExact,
+                    Positions.Yellow3.runToExact,
+                    Positions.Basket.runToExact,
+                    Positions.End.runToExact,
+
+                    )
             )
         )
     }
