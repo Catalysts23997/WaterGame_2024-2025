@@ -72,10 +72,12 @@ public enum Positions {
 //    SecondSample(new Vector2d(19.7, -41.75), 1.05622859),
 //    ThirdSample(new Vector2d(19.7, -41.75), 1.05622859),
     StartYellow(new Vector2d(-19,-66), 0.0),
-    Yellow1(new Vector2d(-48, -57.75), 0.0),
+        Yellow1(new Vector2d(-48, -57.75), 0.0),
     Yellow2(new Vector2d(-58,-57.75), 0.0),
     Yellow3(new Vector2d(-45.37258, -48.37742), Math.PI/4),
     Basket(new Vector2d(-56.85062,-56.85062), 3*Math.PI/4),
+    SubmersibleEnd(new Vector2d(-23.75,-10), -Math.PI/2),
+
 
 
     Start(new Vector2d(19,-66), 0.0),
