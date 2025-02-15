@@ -98,10 +98,8 @@ public enum Positions {
 
 
     Positions(Vector2d vector, Double rotation) {
-        runToNearest = new RunToNearest(vector);
-        runToExact = new RunToExact(new Poses(vector,rotation));
+        runToExact = new SetDriveTarget(new Poses(vector,rotation));
     }
 
-    public final RunToNearest runToNearest;
-    public final RunToExact runToExact;
+    public final SetDriveTarget runToExact;
 }

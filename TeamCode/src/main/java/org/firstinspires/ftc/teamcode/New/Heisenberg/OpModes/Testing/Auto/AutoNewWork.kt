@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Auto
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
+import com.acmerobotics.roadrunner.SleepAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
@@ -27,6 +28,7 @@ class AutoNewWork : LinearOpMode() {
         val localizer = Localizer(hardwareMap, robot_targetPosition)
         val drive = Drive(hardwareMap)
 
+
         waitForStart()
         runBlocking(
             ParallelAction(
@@ -37,8 +39,8 @@ class AutoNewWork : LinearOpMode() {
                 },
 
                 SequentialAction(
-
                     SetDriveTarget(Poses(5.0,20.0,0.0)),
+                    SleepAction(1.0),
                     //move arm
                     SetDriveTarget(Poses(-35.0,10.0,-Math.PI*.7)),
                     SetDriveTarget(Poses(5.0,20.0,0.0)),

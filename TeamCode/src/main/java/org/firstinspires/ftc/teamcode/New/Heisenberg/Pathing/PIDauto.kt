@@ -5,6 +5,8 @@ import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Vector2d
 import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Auto.AutoNewWork
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.BasketAuto
+import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.TiegerAuto
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Angle
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
@@ -76,8 +78,7 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
     }
 }
 
-class RunToExactForever(private val pose: Poses) : Action {
-    override fun run(p: TelemetryPacket): Boolean {
+fun RunToExactForever(pose: Poses): Boolean {
         val current = Localizer.pose
         val drive = Drive.instance
 
@@ -102,14 +103,20 @@ class RunToExactForever(private val pose: Poses) : Action {
         drive.rightFront.power = (rotY + rotX + turn)
         drive.rightBack.power = (rotY - rotX + turn)
 
-        return true
-    }
+    return true
 }
 
+object T {
+    var autoType = true
+}
 
 class SetDriveTarget(val pose: Poses):Action{
     override fun run(p: TelemetryPacket): Boolean {
-        AutoNewWork.robot_targetPosition = pose
-        return Localizer.pose != pose
+        if(T.autoType) BasketAuto.reT = pose
+        else TiegerAuto.rT = pose
+
+        return !(abs(Localizer.pose.x - TiegerAuto.rT.x) <= 3.0 &&
+                abs(Localizer.pose.y - TiegerAuto.rT.y) <= 3.0 &&
+                abs(Angle.wrap(Localizer.pose.heading - TiegerAuto.rT.heading)) <= Math.toRadians(5.0))
     }
 }

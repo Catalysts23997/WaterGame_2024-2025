@@ -12,8 +12,8 @@ data class Poses(val x: Double, val y: Double, val heading: Double){
 
         if(other !is Poses) return false // throw exception
 
-        return abs(other.x - this.x )<= 3.0 &&
-                abs( other.y - this.y )<= 3.0 &&
-                abs(Angle.wrap(other.heading - this.heading)) <= Math.toRadians(5.0)
+        return (abs(other.x - this.x )<= 2.0 &&
+                abs( other.y - this.y )<= 2.0 &&
+                abs(Angle.wrap(other.heading - this.heading)) <= Math.toRadians(4.0))
     }
 }
