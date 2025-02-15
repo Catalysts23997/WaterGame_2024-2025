@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
 import org.firstinspires.ftc.teamcode.New.Utilities.SlidesEncoderConv
 
 @Config
-@TeleOp(group = "Linear OpMode", name = "PidTest- Slides")
+@TeleOp(group = "Linear OpMode", name = "PidTest- SlidesRotater")
 class SlideRotator: LinearOpMode() {
 
     companion object{

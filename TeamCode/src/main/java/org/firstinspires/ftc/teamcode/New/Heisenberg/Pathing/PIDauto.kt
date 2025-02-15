@@ -39,7 +39,7 @@ class RunToExact(private val pose: Poses) : Action {
         drive.rightFront.power = (rotY + rotX + turn)
         drive.rightBack.power = (rotY - rotX + turn)
 
-        return !(arrayListOf(axialError, latError).all { abs(it) <= 3.0 } &&
+        return !(arrayListOf(axialError, latError).all { abs(it) <= 1.0 } &&
                 abs(headingError) <= Math.toRadians(5.0))
     }
 }
@@ -73,6 +73,36 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
         return !(abs(latError) <= 3.0 &&
                 abs(axialError) <= 3.0 &&
                 abs(Angle.wrap(headingError)) <= Math.toRadians(4.0))
+    }
+}
+
+class RunToExactForever(private val pose: Poses) : Action {
+    override fun run(p: TelemetryPacket): Boolean {
+        val current = Localizer.pose
+        val drive = Drive.instance
+
+        val latError = pose.y - current.y
+        val axialError = pose.x - current.x
+        val headingError = Angle.wrap(pose.heading + current.heading)
+
+        val lateral = drive.Ypid.calculate(latError)
+        val axial = drive.Xpid.calculate(axialError)
+        val turn = drive.Rpid.calculate(headingError)
+
+//        Log.d("Y", doubleArrayOf(axial,lateral,turn, targetVector.y, current.y).contentToString())
+
+        val h = -Localizer.pose.heading
+        val rotX = -axial * cos(h) - lateral * sin(h)
+        val rotY = -axial * sin(h) + lateral * cos(h)
+
+        //todo add rotational pid
+
+        drive.leftFront.power = (rotY - rotX - turn)
+        drive.leftBack.power = (rotY + rotX - turn)
+        drive.rightFront.power = (rotY + rotX + turn)
+        drive.rightBack.power = (rotY - rotX + turn)
+
+        return true
     }
 }
 

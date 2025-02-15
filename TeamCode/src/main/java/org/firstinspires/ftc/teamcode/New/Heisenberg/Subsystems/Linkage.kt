@@ -17,12 +17,16 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
         motor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
     }
 
+    //1.27 mult
+
     private val controller = Controller(PIDParams(1.7, 0.0, .002, 0.4))
     enum class State(val angle: Double){
         Horizontal(15.0 + 90),
         Basket(80.0 + 90),
         SubmersibleStart(11.0 + 90);
     }
+
+    val mult = 1.27
 
 
     override var state = State.Horizontal

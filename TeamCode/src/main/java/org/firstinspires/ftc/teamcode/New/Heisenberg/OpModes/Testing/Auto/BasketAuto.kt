@@ -41,7 +41,7 @@ class BasketAuto : LinearOpMode() {
                     Positions.Basket.runToExact,
                     Positions.Yellow3.runToExact,
                     Positions.Basket.runToExact,
-                    Positions.SubmersibleEnd.runToExact,
+                    Positions.End.runToExact,
 
                     )
             )

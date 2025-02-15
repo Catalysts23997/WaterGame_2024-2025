@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.RunToExact
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.RunToExactForever
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.SetDriveTarget
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
@@ -31,6 +32,7 @@ class AutoNewWork : LinearOpMode() {
             ParallelAction(
                 Action {
                     localizer.update()
+                    RunToExactForever(robot_targetPosition)
                     true
                 },
 
@@ -41,12 +43,7 @@ class AutoNewWork : LinearOpMode() {
                     SetDriveTarget(Poses(-35.0,10.0,-Math.PI*.7)),
                     SetDriveTarget(Poses(5.0,20.0,0.0)),
 
-                ),
-
-                Action {
-                    RunToExact(robot_targetPosition)
-                    true
-                }
+                )
             )
         )
 
