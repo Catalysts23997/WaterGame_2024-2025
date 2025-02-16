@@ -88,12 +88,13 @@ public class ReleasingActions {
             linkage.setState(Linkage.State.Horizontal);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
-            if (elapsedTime.seconds() > 0.4) {
-                linearSlides.setState(LinearSlides.SlidesState.INTAKE);
-                return true;
-            } else if (elapsedTime.seconds()>0.7){
+            if (elapsedTime.seconds() > 0.7) {
                 wrist.state = Wrists.State.IntakeFront;
                 return false;
+
+            } else if (elapsedTime.seconds()>0.4){
+                linearSlides.setState(LinearSlides.SlidesState.INTAKE);
+                return true;
             }
             else {
                 return true;
