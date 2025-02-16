@@ -81,6 +81,7 @@ class FullSpecimenAuto : LinearOpMode() {
                         Positions.WallIntake.runToExact,
                         actions.WallGrab,
                     ),
+                    Positions.WallIntakeFinal.runToExact,
                     actions.Grab,
                     ParallelAction(
                         Positions.Specimin2.runToExact,
@@ -91,6 +92,7 @@ class FullSpecimenAuto : LinearOpMode() {
                         Positions.WallIntake.runToExact,
                         actions.WallGrab,
                     ),
+                    Positions.WallIntakeFinal.runToExact,
                     actions.Grab,
                     ParallelAction(
                         Positions.Specimin3.runToExact,
@@ -101,6 +103,7 @@ class FullSpecimenAuto : LinearOpMode() {
                         Positions.WallIntake.runToExact,
                         actions.WallGrab,
                     ),
+                    Positions.WallIntakeFinal.runToExact,
                     actions.Grab,
                     ParallelAction(
                         Positions.Specimin4.runToExact,
@@ -111,6 +114,7 @@ class FullSpecimenAuto : LinearOpMode() {
                         Positions.WallIntake.runToExact,
                         actions.WallGrab,
                     ),
+                    Positions.WallIntakeFinal.runToExact,
                     actions.Grab,
                     ParallelAction(
                         Positions.Specimin5.runToExact,

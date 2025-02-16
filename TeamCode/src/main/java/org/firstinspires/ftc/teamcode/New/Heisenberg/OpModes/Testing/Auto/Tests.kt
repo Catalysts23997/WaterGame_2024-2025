@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.SequentialAction
+import com.acmerobotics.roadrunner.SleepAction
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
@@ -34,12 +35,13 @@ class Tests : LinearOpMode() {
 
             if(gamepad2.left_trigger >= .5){
                 runningActions.add(
-                    robot.SpecimenHangPrep
+                    robot.Release
                 )
             }
+            robot.SpecimenHang
             if(gamepad2.right_trigger >= .5){
                 runningActions.add(
-                    robot.SpecimenHang
+                    robot.Grab
                 )
             }
             if(gamepad2.a){
@@ -49,22 +51,26 @@ class Tests : LinearOpMode() {
             }
             if(gamepad2.b){
                 runningActions.add(
-                    robot.Grab
-                )
-            }
-            if(gamepad2.x){
-                runningActions.add(
-                    robot.HPdrop
+                    SequentialAction(
+                        robot.HPdrop,
+                        SleepAction(1.0),
+                        robot.WallGrab
+                    )
                 )
             }
             if(gamepad2.y){
                 runningActions.add(
-                    robot.Basket
+                    robot.SpecimenHangPrep
+                )
+            }
+            if(gamepad2.x){
+                runningActions.add(
+                    robot.SpecimenHang
                 )
             }
             if(gamepad2.right_bumper){
                 runningActions.add(
-                    robot.Release
+                    robot.Basket
                 )
             }
             if(gamepad2.left_bumper){

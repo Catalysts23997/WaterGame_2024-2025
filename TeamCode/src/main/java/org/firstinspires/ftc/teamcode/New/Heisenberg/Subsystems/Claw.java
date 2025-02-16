@@ -17,7 +17,7 @@ public class Claw {
     }
 
     public enum ClawState {
-        CLOSED(.97),
+        CLOSED(1.0),
         OPEN(.85);
         public final double servoPos;
         ClawState(double servoPos) {

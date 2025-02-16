@@ -54,7 +54,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
-            wrist.state = Wrists.State.DropSample;
+            wrist.state = Wrists.State.In;
             linkage.setState(Linkage.State.Horizontal);
             clawRotatorAngle = 0.0;
             linearSlides.setState(LinearSlides.SlidesState.WALL);
@@ -67,7 +67,7 @@ public class ReleasingActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             wrist.state = Wrists.State.IntakeWall;
-            linkage.setState(Linkage.State.Basket);
+            linkage.setState(Linkage.State.Vertical);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
             linearSlides.setState(LinearSlides.SlidesState.WALL);
@@ -76,14 +76,28 @@ public class ReleasingActions {
         }
     };
     public Action ForwardIntake = new Action() {
+        ElapsedTime elapsedTime = new ElapsedTime();
+        boolean start =true;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.IntakeFront;
+            if (start){
+                elapsedTime.reset();
+                start = false;
+            }
+            wrist.state = Wrists.State.DropSample;
             linkage.setState(Linkage.State.Horizontal);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
-            linearSlides.setState(LinearSlides.SlidesState.INTAKE);
-            return false;
+            if (elapsedTime.seconds() > 0.4) {
+                linearSlides.setState(LinearSlides.SlidesState.INTAKE);
+                return true;
+            } else if (elapsedTime.seconds()>0.7){
+                wrist.state = Wrists.State.IntakeFront;
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     };
 
@@ -105,7 +119,6 @@ public class ReleasingActions {
     public Action BackIntake = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.IntakeBack;
             linkage.setState(Linkage.State.Vertical);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
@@ -155,6 +168,7 @@ public class ReleasingActions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
             linearSlides.setState(LinearSlides.SlidesState.IDLE);
+            wrist.state = Wrists.State.DropSample;
 
             return false;
         }
@@ -194,7 +208,6 @@ public class ReleasingActions {
         final ElapsedTime elapsedTime = new ElapsedTime();
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.state = Wrists.State.IntakeBack;
 //            linkage.setState(Linkage.State.Basket);
             claw.clawState = Claw.ClawState.OPEN;
             clawRotatorAngle = 0.0;
