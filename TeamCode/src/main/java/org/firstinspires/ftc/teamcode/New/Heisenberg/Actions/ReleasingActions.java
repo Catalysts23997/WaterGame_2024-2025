@@ -97,7 +97,7 @@ public class ReleasingActions {
     public Action Release = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            claw.clawState = Claw.ClawState.CLOSED;
+            claw.clawState = Claw.ClawState.OPEN;
             return false;
         }
     };
