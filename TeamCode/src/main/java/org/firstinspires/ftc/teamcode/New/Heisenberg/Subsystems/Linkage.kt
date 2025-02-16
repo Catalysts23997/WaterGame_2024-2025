@@ -23,6 +23,8 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
     enum class State(val angle: Double){
         Horizontal(15.0 + 90),
         Basket(80.0 + 90),
+        Vertical(90.0+90),
+        Specimin(45.0 +90),
         SubmersibleStart(11.0 + 90);
     }
 
@@ -33,7 +35,7 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
 
     override fun update() {
         val currentAngle  = (Math.PI /180) * ((((motor.currentPosition*2*11/12)/1425.05923061 * 2 * Math.PI) *180/ Math.PI)/4 + 90)
-        motor.power  =  controller.calculate((state.angle* Math.PI/180 -currentAngle),currentAngle)
+        motor.power  =  controller.calculate((state.angle* Math.PI/180*mult -currentAngle),currentAngle)
     }
 
 

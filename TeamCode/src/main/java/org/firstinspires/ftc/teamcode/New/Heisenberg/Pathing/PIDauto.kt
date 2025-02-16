@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.Vector2d
 import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Auto.AutoNewWork
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
 import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.BasketAuto
+import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.FullSpecimenAuto
 import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.TiegerAuto
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Angle
@@ -113,10 +114,10 @@ object T {
 class SetDriveTarget(val pose: Poses):Action{
     override fun run(p: TelemetryPacket): Boolean {
         if(T.autoType) BasketAuto.reT = pose
-        else TiegerAuto.rT = pose
+        else FullSpecimenAuto.rT = pose
 
-        return !(abs(Localizer.pose.x - TiegerAuto.rT.x) <= 3.0 &&
-                abs(Localizer.pose.y - TiegerAuto.rT.y) <= 3.0 &&
-                abs(Angle.wrap(Localizer.pose.heading - TiegerAuto.rT.heading)) <= Math.toRadians(5.0))
+        return !(abs( FullSpecimenAuto.rT.x -Localizer.pose.x) <= 3.0 &&
+                abs( FullSpecimenAuto.rT.y-Localizer.pose.y) <= 3.0 &&
+                abs(Angle.wrap(FullSpecimenAuto.rT.heading -Localizer.pose.heading)) <= Math.toRadians(5.0))
     }
 }
