@@ -150,6 +150,15 @@ public class ReleasingActions {
             }
         }
     };
+    public Action Retract = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            linearSlides.setState(LinearSlides.SlidesState.IDLE);
+
+            return false;
+        }
+    };
 
     public Action Basket = new Action() {
         final ElapsedTime elapsedTime = new ElapsedTime();

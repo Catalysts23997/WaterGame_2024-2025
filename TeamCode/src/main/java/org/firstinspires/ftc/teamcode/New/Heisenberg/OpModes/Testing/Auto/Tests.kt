@@ -72,6 +72,11 @@ class Tests : LinearOpMode() {
                     robot.BackIntake
                 )
             }
+            if(gamepad2.dpad_down){
+                runningActions.add(
+                    robot.Retract
+                )
+            }
 
             // update running actions
             val newActions = ArrayList<Action>()
