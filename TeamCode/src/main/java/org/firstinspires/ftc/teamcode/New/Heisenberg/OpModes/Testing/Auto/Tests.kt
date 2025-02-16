@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.New.Old_Examples.OpModes.Teleop
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
+import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.SleepAction
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
@@ -32,55 +33,57 @@ class Tests : LinearOpMode() {
 
         while (opModeIsActive()) {
 
-
             if(gamepad2.left_trigger >= .5){
                 runningActions.add(
                     robot.Release
                 )
             }
-            robot.SpecimenHang
+//            robot.SpecimenHang
             if(gamepad2.right_trigger >= .5){
                 runningActions.add(
-                    robot.Grab
+                    SequentialAction(
+                        robot.GrabPre, SleepAction(1.3), robot.Grab
+                    )
                 )
             }
+
             if(gamepad2.a){
                 runningActions.add(
                     robot.ForwardIntake
                 )
             }
-            if(gamepad2.b){
-                runningActions.add(
-                    SequentialAction(
-                        robot.HPdrop,
-                        SleepAction(1.0),
-                        robot.WallGrab
-                    )
-                )
-            }
-            if(gamepad2.y){
-                runningActions.add(
-                    robot.SpecimenHangPrep
-                )
-            }
+//            if(gamepad2.b){
+//                runningActions.add(
+//                    SequentialAction(
+//                        robot.HPdrop,
+//                        SleepAction(1.0),
+//                        robot.WallGrab
+//                    )
+//                )
+//            }
+//            if(gamepad2.y){
+//                runningActions.add(
+//                    robot.SpecimenHangPrep
+//                )
+//            }
+//            if(gamepad2.x){
+//                runningActions.add(
+//                    robot.SpecimenHang
+//                )
+//            }
+//            if(gamepad2.right_bumper){
+//                runningActions.add(
+//                    robot.Basket
+//                )
+//            }
+//            if(gamepad2.left_bumper){
+//                runningActions.add(
+//                    robot.BackIntake
+//                )
+//            }
             if(gamepad2.x){
                 runningActions.add(
-                    robot.SpecimenHang
-                )
-            }
-            if(gamepad2.right_bumper){
-                runningActions.add(
-                    robot.Basket
-                )
-            }
-            if(gamepad2.left_bumper){
-                runningActions.add(
-                    robot.BackIntake
-                )
-            }
-            if(gamepad2.dpad_down){
-                runningActions.add(
-                    robot.Retract
+                   robot.Retract
                 )
             }
 

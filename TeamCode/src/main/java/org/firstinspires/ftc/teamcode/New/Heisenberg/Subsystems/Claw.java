@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Claw {
     public Servo claw;
-
     public ClawState clawState = ClawState.CLOSED;
 
     public Claw(HardwareMap hardwareMap){

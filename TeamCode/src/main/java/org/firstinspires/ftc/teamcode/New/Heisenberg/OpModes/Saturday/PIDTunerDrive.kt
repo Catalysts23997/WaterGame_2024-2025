@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
@@ -41,6 +42,7 @@ import org.firstinspires.ftc.teamcode.New.Utilities.Poses
  *         var sdTerm = 0.1
  */
 @Config
+@Disabled
 @TeleOp(name = "TuningPIDd", group = "Linear OpMode")
 class PIDTunerDrive : LinearOpMode() {
     companion object {
@@ -92,18 +94,18 @@ class PIDTunerDrive : LinearOpMode() {
                     true
                 },
 
-                SequentialAction(
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                    Positions.Test.runToExact,
-                    Positions.Test2.runToExact,
-                )
+//                SequentialAction(
+//                    Positions.Test.runToExact,
+//                    Positions.Test2.runToExact,
+//                    Positions.Test.runToExact,
+//                    Positions.Test2.runToExact,
+//                    Positions.Test.runToExact,
+//                    Positions.Test2.runToExact,
+//                    Positions.Test.runToExact,
+//                    Positions.Test2.runToExact,
+//                    Positions.Test.runToExact,
+//                    Positions.Test2.runToExact,
+//                )
             )
         )
     }

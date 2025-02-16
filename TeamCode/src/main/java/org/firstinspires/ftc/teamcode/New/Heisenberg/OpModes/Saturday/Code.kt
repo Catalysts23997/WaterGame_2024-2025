@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.SequentialAction
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
 //todo test after getting wheels in right directions
+@Disabled
 @TeleOp(name = "Code", group = "Linear OpMode")
 class Code : LinearOpMode() {
 
@@ -35,11 +37,6 @@ class Code : LinearOpMode() {
             if(gamepad2.left_trigger >= .5){
                 runningActions.add(
                     robot.pickUp
-                )
-            }
-            if(gamepad2.right_trigger >= .5){
-                runningActions.add(
-                    robot.Toggle
                 )
             }
             if(gamepad2.a){

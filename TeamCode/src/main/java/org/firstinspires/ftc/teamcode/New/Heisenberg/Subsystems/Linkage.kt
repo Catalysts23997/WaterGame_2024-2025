@@ -19,7 +19,7 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
 
     //1.27 mult
 
-    private val controller = Controller(PIDParams(4.0, 0.01, .2, 0.15))
+    private val controller = Controller(PIDParams(3.5, 0.01, .27, 0.15))
     enum class State(val angle: Double){
         Horizontal(15.0 + 90),
         Basket(80.0 + 90),
@@ -35,8 +35,8 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
 
     override fun update() {
         val currentAngle  = (Math.PI /180) * ((((motor.currentPosition*2*11/12)/1425.05923061 * 2 * Math.PI) *180/ Math.PI)/4 + 105)
-        motor.power  =  controller.calculate((state.angle* Math.PI/180 * mult -currentAngle),currentAngle)
         if(state == State.Horizontal) motor.power = 0.0
+        else motor.power  =  controller.calculate((state.angle* Math.PI/180 * mult -currentAngle),currentAngle)
     }
 
 

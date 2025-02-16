@@ -76,29 +76,29 @@ public class ReleasingActions {
         }
     };
     public Action ForwardIntake = new Action() {
-        ElapsedTime elapsedTime = new ElapsedTime();
-        boolean start =true;
+        ElapsedTime t = new ElapsedTime(); // Ensure initialization at declaration
+        boolean start = true;
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if (start){
-                elapsedTime.reset();
+            if (start) {
+                t.reset(); // Properly reset time every execution
                 start = false;
             }
-            wrist.state = Wrists.State.DropSample;
-            linkage.setState(Linkage.State.Horizontal);
-            claw.clawState = Claw.ClawState.OPEN;
-            clawRotatorAngle = 0.0;
-            if (elapsedTime.seconds() > 0.7) {
-                wrist.state = Wrists.State.IntakeFront;
-                return false;
 
-            } else if (elapsedTime.seconds()>0.4){
+            wrist.state = Wrists.State.In;
+            linkage.setState(Linkage.State.Horizontal);
+            clawRotatorAngle = 0.0;
+
+            if (t.seconds() > 0.4) {
                 linearSlides.setState(LinearSlides.SlidesState.INTAKE);
-                return true;
+                claw.clawState = Claw.ClawState.OPEN;
+                wrist.state = Wrists.State.DropSample;
+//                start = true;
+                return false;
             }
-            else {
-                return true;
-            }
+
+            return true; // Continue running
         }
     };
 
@@ -108,11 +108,19 @@ public class ReleasingActions {
             claw.clawState = Claw.ClawState.CLOSED;
             return false;
         }
+    };public Action GrabPre = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.state = Wrists.State.IntakeFront;
+            return false;
+        }
     };
+
     public Action Release = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             claw.clawState = Claw.ClawState.OPEN;
+            wrist.state = Wrists.State.In;
             return false;
         }
     };
@@ -169,7 +177,7 @@ public class ReleasingActions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
             linearSlides.setState(LinearSlides.SlidesState.IDLE);
-            wrist.state = Wrists.State.DropSample;
+            wrist.state = Wrists.State.In;
 
             return false;
         }

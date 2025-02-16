@@ -19,7 +19,7 @@ class LinearSlides(hwMap:HardwareMap) {
 
     //todo: Create an opmode that uses this subsytem - and sets the pid controller's paramters to ftc Dashboard numbers
 
-    private val pidController = Controller(PIDParams(.009,0.0,0.001,0.0))
+    private val pidController = Controller(PIDParams(.0085,0.0,0.0007,0.0))
 
 
     //NOTE: Max encoder ticks is 311, otherwise we break hardware
@@ -33,7 +33,7 @@ class LinearSlides(hwMap:HardwareMap) {
 
     fun update(){
         //in to tick
-        if(motor.getCurrent(CurrentUnit.AMPS) >= 9.0 && currentPos <= 300) offset+= motor.currentPosition
+//        if(motor.getCurrent(CurrentUnit.AMPS) >= 9.0 && currentPos <= 300) offset+= motor.currentPosition
         currentPos = motor.currentPosition - offset
         motor.power = pidController.calculate(state.distance -currentPos)
     }

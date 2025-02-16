@@ -114,10 +114,10 @@ object T {
 class SetDriveTarget(val pose: Poses):Action{
     override fun run(p: TelemetryPacket): Boolean {
         if(T.autoType) BasketAuto.reT = pose
-        else FullSpecimenAuto.rT = pose
+        else TiegerAuto.rT = pose
 
-        return !(abs( FullSpecimenAuto.rT.x -Localizer.pose.x) <= 3.0 &&
-                abs( FullSpecimenAuto.rT.y-Localizer.pose.y) <= 3.0 &&
-                abs(Angle.wrap(FullSpecimenAuto.rT.heading -Localizer.pose.heading)) <= Math.toRadians(5.0))
+        return !(abs( TiegerAuto.rT.x -Localizer.pose.x) <= 3.0 &&
+                abs( TiegerAuto.rT.y-Localizer.pose.y) <= 3.0 &&
+                abs(Angle.wrap(TiegerAuto.rT.heading +Localizer.pose.heading)) <= Math.toRadians(5.0))
     }
 }
