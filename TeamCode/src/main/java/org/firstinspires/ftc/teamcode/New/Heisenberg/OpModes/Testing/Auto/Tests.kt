@@ -3,14 +3,13 @@ package org.firstinspires.ftc.teamcode.New.Old_Examples.OpModes.Teleop
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
-import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.SleepAction
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Actions.ReleasingActions
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
@@ -26,7 +25,7 @@ class Tests : LinearOpMode() {
         val robot = ReleasingActions(hardwareMap)
         val timer = ElapsedTime()
 
-        val drive = Drive(hardwareMap)
+        val drive = Drivetrain(hardwareMap)
         val localizer = Localizer(hardwareMap, Poses(0.0, 0.0, 0.0))
 
         while (opModeInInit()) timer.reset()

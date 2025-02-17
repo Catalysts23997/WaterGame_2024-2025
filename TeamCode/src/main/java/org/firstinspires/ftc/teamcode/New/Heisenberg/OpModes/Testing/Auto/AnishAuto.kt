@@ -8,8 +8,7 @@ import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
@@ -20,7 +19,7 @@ class AnishAuto : LinearOpMode() {
         val telemetry = FtcDashboard.getInstance().telemetry
 
         val localizer = Localizer(hardwareMap, Poses(30.5, -57.0, 0.0))
-        val drive = Drive(hardwareMap)
+        val drive = Drivetrain(hardwareMap)
 
         waitForStart()
         runBlocking(

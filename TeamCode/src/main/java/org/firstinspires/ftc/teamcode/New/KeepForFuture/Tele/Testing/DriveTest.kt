@@ -1,15 +1,16 @@
-package org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Saturday//package org.firstinspires.ftc.teamcode.Kotlin_Bromine_Arya.Opmodes.`Testing$Tuning`.Auto.Localizer
+package org.firstinspires.ftc.teamcode.New.KeepForFuture.Tele.Testing//package org.firstinspires.ftc.teamcode.Kotlin_Bromine_Arya.Opmodes.`Testing$Tuning`.Auto.Localizer
 
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
-import org.firstinspires.ftc.teamcode.New.Utilities.Poses
+
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Subsystems.Drivetrain
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.PinpointLocalizer.Localizer
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.Poses
 
 @TeleOp(name = "DrivingPractice", group = "Linear OpMode")
-class DrivingPractice : LinearOpMode(){
+class DriveTest : LinearOpMode(){
     override fun runOpMode() {
         telemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
 

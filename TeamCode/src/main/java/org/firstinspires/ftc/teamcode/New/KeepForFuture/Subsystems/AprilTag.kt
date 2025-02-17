@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
+package org.firstinspires.ftc.teamcode.New.KeepForFuture.Subsystems
 
 import android.util.Size
 import com.acmerobotics.roadrunner.Vector2d
@@ -6,17 +6,18 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.firstinspires.ftc.teamcode.New.Camera
-import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
+
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Interfaces.Camera
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.PinpointLocalizer.Localizer
+
 import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.VisionProcessor
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
-
 import kotlin.math.cos
 import kotlin.math.sin
 
-class AprilTagData(hardwareMap: HardwareMap) : Camera {
+class AprilTag(hardwareMap: HardwareMap) : Camera {
 
     enum class State {
         On, Off, TagDiscovered

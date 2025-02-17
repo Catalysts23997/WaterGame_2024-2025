@@ -7,15 +7,12 @@ import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.SleepAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Actions.ReleasingActions
-import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Auto.AutoNewWork.Companion.robot_targetPosition
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.RunToExactForever
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.T
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
@@ -32,7 +29,7 @@ class TiegerAuto : LinearOpMode() {
 
         val robot = ReleasingActions(hardwareMap)
         val localizer = Localizer(hardwareMap, TiegerAuto.rT)
-        val drive = Drive(hardwareMap)
+        val drive = Drivetrain(hardwareMap)
 
         T.autoType = false
 

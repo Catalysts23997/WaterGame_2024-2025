@@ -4,10 +4,9 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
 @Autonomous(name = "CornerAutp", group = "Auto")
@@ -18,7 +17,7 @@ class CornerAutp : LinearOpMode(){
         telemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
 
         val localizer = Localizer(hardwareMap, Poses(0.0,0.0,0.0))
-        val drive = Drive(hardwareMap)
+        val drive = Drivetrain(hardwareMap)
         val timer= ElapsedTime()
 
         waitForStart()

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 @Disabled
 @TeleOp(name = "Comp2", group = "Linear OpMode")
@@ -15,7 +15,7 @@ class Comp2 : LinearOpMode(){
         telemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
 
         val localizer = Localizer(hardwareMap, Poses(0.0, 0.0, 0.0))
-        val drive = Drive(hardwareMap)
+        val drive = Drivetrain(hardwareMap)
 
         waitForStart()
         while (opModeIsActive() && !isStopRequested) {

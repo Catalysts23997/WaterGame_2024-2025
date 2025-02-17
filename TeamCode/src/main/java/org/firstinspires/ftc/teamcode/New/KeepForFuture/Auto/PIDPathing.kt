@@ -1,15 +1,15 @@
-package org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing
+package org.firstinspires.ftc.teamcode.New.KeepForFuture.Auto
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Vector2d
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
-import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.BasketAuto
-import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.TiegerAuto
-import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.Utilities.Angle
-import org.firstinspires.ftc.teamcode.New.Utilities.Poses
-import org.firstinspires.ftc.teamcode.New.Utilities.findNearestPoint
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.PinpointLocalizer.Localizer
+
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Subsystems.Drivetrain
+import org.firstinspires.ftc.teamcode.New.Opmodes.Auto.ExampleAuto
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.Angles
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.Poses
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.findNearestPoint
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
@@ -21,7 +21,7 @@ class RunToExact(private val pose: Poses) : Action {
 
         val latError = pose.y - current.y
         val axialError = pose.x - current.x
-        val headingError = Angle.wrap(pose.heading + current.heading)
+        val headingError = Angles.wrap(pose.heading + current.heading)
 
         val lateral = drive.Ypid.calculate(latError)
         val axial = drive.Xpid.calculate(axialError)
@@ -54,7 +54,7 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
 
         val latError = newTarget.y - current.y
         val axialError = newTarget.x - current.x
-        val headingError = Angle.wrap(newTarget.heading + current.heading)
+        val headingError = Angles.wrap(newTarget.heading + current.heading)
 
         val lateral = drive.Ypid.calculate(latError)
         val axial = drive.Xpid.calculate(axialError)
@@ -73,7 +73,7 @@ class RunToNearest(private val targetVector: Vector2d) : Action {
 
         return !(abs(latError) <= 3.0 &&
                 abs(axialError) <= 3.0 &&
-                abs(Angle.wrap(headingError)) <= Math.toRadians(4.0))
+                abs(Angles.wrap(headingError)) <= Math.toRadians(4.0))
     }
 }
 
@@ -83,7 +83,7 @@ fun RunToExactForever(pose: Poses): Boolean {
 
         val latError = pose.y - current.y
         val axialError = pose.x - current.x
-        val headingError = Angle.wrap(pose.heading + current.heading)
+        val headingError = Angles.wrap(pose.heading + current.heading)
 
         val lateral = drive.Ypid.calculate(latError)
         val axial = drive.Xpid.calculate(axialError)
@@ -111,11 +111,10 @@ object T {
 
 class SetDriveTarget(val pose: Poses):Action{
     override fun run(p: TelemetryPacket): Boolean {
-        if(T.autoType) BasketAuto.reT = pose
-        else TiegerAuto.rT = pose
+        ExampleAuto.rT = pose
 
-        return !(abs( TiegerAuto.rT.x -Localizer.pose.x) <= 3.0 &&
-                abs( TiegerAuto.rT.y-Localizer.pose.y) <= 3.0 &&
-                abs(Angle.wrap(TiegerAuto.rT.heading +Localizer.pose.heading)) <= Math.toRadians(5.0))
+        return !(abs( ExampleAuto.rT.x -Localizer.pose.x) <= 3.0 &&
+                abs( ExampleAuto.rT.y-Localizer.pose.y) <= 3.0 &&
+                abs(Angles.wrap(ExampleAuto.rT.heading +Localizer.pose.heading)) <= Math.toRadians(5.0))
     }
 }

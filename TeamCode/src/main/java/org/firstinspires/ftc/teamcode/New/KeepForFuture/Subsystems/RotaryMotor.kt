@@ -1,13 +1,14 @@
-package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
+package org.firstinspires.ftc.teamcode.New.KeepForFuture.Subsystems
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.New.SubSystems
-import org.firstinspires.ftc.teamcode.New.Utilities.Controller
-import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
 
-class Linkage(hardwareMap: HardwareMap): SubSystems {
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Interfaces.SubSystems
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.PIDController
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.PIDParams
+
+class RotaryMotor(hardwareMap: HardwareMap): SubSystems {
     val motor: DcMotorEx = hardwareMap.get(DcMotorEx::class.java,"linkage")
 
     init {
@@ -17,7 +18,7 @@ class Linkage(hardwareMap: HardwareMap): SubSystems {
 
     //1.27 mult
 
-    private val controller = Controller(PIDParams(3.5, 0.01, .27, 0.15))
+    private val controller = PIDController(PIDParams(3.5, 0.01, .27, 0.15))
     enum class State(val angle: Double){
         Horizontal(15.0 + 90),
         Basket(80.0 + 90),

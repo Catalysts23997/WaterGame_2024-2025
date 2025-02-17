@@ -6,7 +6,7 @@ import org.junit.Test
 import java.util.Random
 import kotlin.math.PI
 
-class AngleTest {
+class AnglesTest {
 
     @Test
     //Tests the wrap() function when the angle to wrap is within

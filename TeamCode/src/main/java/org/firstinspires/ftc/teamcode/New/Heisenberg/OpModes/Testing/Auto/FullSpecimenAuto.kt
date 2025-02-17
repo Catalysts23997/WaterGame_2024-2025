@@ -4,18 +4,14 @@ import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
-import com.acmerobotics.roadrunner.SleepAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.New.Heisenberg.OpModes.Testing.Auto.AutoNewWork.Companion.robot_targetPosition
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Actions.ReleasingActions
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.Positions
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.RunToExactForever
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.SetDriveTarget
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.T
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
@@ -33,7 +29,7 @@ class FullSpecimenAuto : LinearOpMode() {
         FullSpecimenAuto.rT = Poses(19.0,-72.0,0.0)
 
         val localizer = Localizer(hardwareMap, FullSpecimenAuto.rT)
-        val drive = Drive(hardwareMap)
+        val drive = Drivetrain(hardwareMap)
 
         T.autoType = false
 

@@ -7,14 +7,11 @@ import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.SleepAction
 import com.acmerobotics.roadrunner.ftc.runBlocking
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.RunToExact
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.RunToExactForever
 import org.firstinspires.ftc.teamcode.New.Heisenberg.Pathing.SetDriveTarget
-import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drive
+import org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems.Drivetrain
 import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
 import org.firstinspires.ftc.teamcode.New.Utilities.Poses
 
@@ -26,7 +23,7 @@ class AutoNewWork : LinearOpMode() {
     override fun runOpMode() {
 
         val localizer = Localizer(hardwareMap, robot_targetPosition)
-        val drive = Drive(hardwareMap)
+        val drive = Drivetrain(hardwareMap)
 
 
         waitForStart()

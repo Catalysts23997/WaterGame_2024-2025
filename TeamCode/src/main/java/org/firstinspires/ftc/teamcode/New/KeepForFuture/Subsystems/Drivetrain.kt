@@ -1,31 +1,33 @@
-package org.firstinspires.ftc.teamcode.New.Heisenberg.Subsystems
+package org.firstinspires.ftc.teamcode.New.KeepForFuture.Subsystems
 
 import android.util.Log
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.teamcode.New.PinpointLocalizer.Localizer
-import org.firstinspires.ftc.teamcode.New.SubSystems
-import org.firstinspires.ftc.teamcode.New.Utilities.Controller
-import org.firstinspires.ftc.teamcode.New.Utilities.PIDParams
-import org.firstinspires.ftc.teamcode.New.Utilities.smoothGamepadInput
+
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.PinpointLocalizer.Localizer
+
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Interfaces.SubSystems
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.PIDController
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.PIDParams
+import org.firstinspires.ftc.teamcode.New.KeepForFuture.Utilities.smoothGamepadInput
 import kotlin.math.cos
 import kotlin.math.sin
 
 
 //todo Make Java version
-class Drive(hwMap: HardwareMap) : SubSystems {
+class Drivetrain(hwMap: HardwareMap) : SubSystems {
     enum class States {
         Manual, Auto
     }
 
     companion object {
-        lateinit var instance: Drive
+        lateinit var instance: Drivetrain
     }
 
-    val Xpid = Controller(PIDParams(0.2, 0.0001, 0.018, 0.0))
-    val Ypid = Controller(PIDParams(0.2, 0.0001, 0.02, 0.0))
-    val Rpid = Controller(PIDParams(1.4, 0.0001, 0.08, 0.0))
+    val Xpid = PIDController(PIDParams(0.2, 0.0001, 0.018, 0.0))
+    val Ypid = PIDController(PIDParams(0.2, 0.0001, 0.02, 0.0))
+    val Rpid = PIDController(PIDParams(1.4, 0.0001, 0.08, 0.0))
 
     override var state = States.Manual
 
