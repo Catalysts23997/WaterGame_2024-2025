@@ -94,6 +94,26 @@ public enum Positions {
     Specimin3(new Vector2d(0,-53.375), 0.0),
     Specimin4(new Vector2d(-4.583334,-53.375), 0.0),
     Specimin5(new Vector2d(-9.16667,-53.375), 0.0),
+
+    Pos1(new Vector2d(38,-15.75), 0.0),
+    GotoSample1(new Vector2d(46,-15.75), 0.0),
+    PushtoSample1(new Vector2d(48,-60), 0.0),
+    GotoSample2(new Vector2d(58,-15.75), 0.0),
+    PushtoSample2(new Vector2d(58,-60), 0.0),
+    GotoSample3(new Vector2d(66,-15.75), 0.0),
+    PushtoSample3(new Vector2d(66,-60), 0.0),
+
+    Pos1Y(new Vector2d(-38,-15.75), 0.0),
+    GotoSample1Y(new Vector2d(-46,-15.75), 0.0),
+    PushtoSample1Y(new Vector2d(-50,-60), -0.1),
+    GotoSample2Y(new Vector2d(-58,-15.75), 0.0),
+    PushtoSample2Y(new Vector2d(-58,-60), 0.0),
+    GotoSample3Y(new Vector2d(-66,-15.75), 0.0),
+    PushtoSample3Y(new Vector2d(-66,-55), 0.0),
+    YEnd(new Vector2d(-30,-10), 0.0),
+
+
+
     End(new Vector2d(43,-63), 0.0);
 
 

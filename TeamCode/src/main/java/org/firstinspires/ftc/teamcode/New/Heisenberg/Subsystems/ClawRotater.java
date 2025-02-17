@@ -23,9 +23,9 @@ public class ClawRotater {
     ServoPoseCalculator calc = new ServoPoseCalculator(servoRange);
 
     public void update(double angle) {
-        double angleTarget = Angle.INSTANCE.wrap(angle -(1-0.14)*Math.PI);
-        double position = (angleTarget+Math.PI) / (2 * PI);
+//        double angleTarget = Angle.INSTANCE.wrap(angle -(1-0.14)*Math.PI);
+//        double position = (angleTarget+Math.PI) / (2 * PI);
 
-        clawRotater.setPosition(position);
+        clawRotater.setPosition(angle);
     }
 }

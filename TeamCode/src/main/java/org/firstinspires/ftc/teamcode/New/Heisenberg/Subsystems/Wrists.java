@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Wrists {
     public Servo Elbow;
     public Servo Wrist;
-    public State state = State.In;
+    public State state = State.IntakeFront;
 
     public Wrists(HardwareMap hardwareMap) {
         Elbow = hardwareMap.get(Servo.class, "port0");
@@ -19,7 +19,7 @@ public class Wrists {
 
     public enum State {
         Basket(0.5,1.0),
-        IntakeFront(0.6,0.5),
+        IntakeFront(0.6,0.45),
         IntakeWall(0.0,1.0),
         In(0.6,1.0),
         SpecimenHang(0.6,1.0),
