@@ -55,6 +55,7 @@ class ExampleAuto : LinearOpMode() {
                     AutoPoints.PushtoSample1Y.runToExact,
                     AutoPoints.GotoSample1Y.runToExact,
                     AutoPoints.GotoSample2Y.runToExact,
+                    robot.example,
                     AutoPoints.PushtoSample2Y.runToExact,
                     AutoPoints.GotoSample2Y.runToExact,
                     AutoPoints.GotoSample3Y.runToExact,
